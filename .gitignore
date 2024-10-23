@@ -1,0 +1,6 @@
+target/
+src/frontend/.angular
+src/frontend/dist/
+src/frontend/node
+src/frontend/node_modules/
+src/frontend/package-lock.json
