@@ -25,7 +25,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
   private final UserDetailsService userDetailsService;
   private final HandlerExceptionResolver handlerExceptionResolver;
 
-  public JwtAuthenticationFilter(JwtService jwtService, UserDetailsService userDetailsService,
+  public JwtAuthenticationFilter(
+      JwtService jwtService,
+      UserDetailsService userDetailsService,
       HandlerExceptionResolver handlerExceptionResolver) {
     this.jwtService = jwtService;
     this.userDetailsService = userDetailsService;
