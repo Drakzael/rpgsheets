@@ -30,7 +30,8 @@ public class SecurityConfiguration {
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http.csrf(AbstractHttpConfigurer::disable)
+    http.securityMatcher("/api/**")
+        .csrf(AbstractHttpConfigurer::disable)
         .authorizeHttpRequests(
             request -> request
                 .requestMatchers("/api/auth/login").permitAll()
@@ -49,6 +50,7 @@ public class SecurityConfiguration {
     configuration.setAllowedOrigins(List.of("*"));
     configuration.setAllowedMethods(List.of("*"));
     configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+    configuration.setAllowCredentials(true);
 
     final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
     source.registerCorsConfiguration("/**", configuration);
