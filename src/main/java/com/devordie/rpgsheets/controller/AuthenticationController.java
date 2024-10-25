@@ -30,6 +30,9 @@ public class AuthenticationController {
     final User authenticatedUser = authenticationService.authenticate(login);
     final String jwtToken = jwtService.generateToken(authenticatedUser);
 
-    return ResponseEntity.ok(new LoginResponse(jwtToken, jwtService.getExpirationTime()));
+    return ResponseEntity.ok(new LoginResponse()
+        .setAlias(authenticatedUser.getAlias())
+        .setToken(jwtToken)
+        .setExpiresIn(jwtService.getExpirationTime()));
   }
 }
