@@ -1,0 +1,7 @@
+<div class="sheet rows">
+  <app-row *ngFor="let gridRow of metadata.gridRows"
+    [row]="gridRow"
+    [metadata]="metadata"
+    [sheet]="sheet"
+    [viewMode]="viewMode"/>
+</div>

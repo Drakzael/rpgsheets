@@ -1,0 +1,12 @@
+.dots {
+  display: grid;
+  grid-template-columns: auto max-content;
+}
+
+.values {
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
+  column-gap: 0.1em;
+
+}

@@ -1,5 +1,5 @@
 export class User {
-  username?: string;
-  // password?: string;
+  alias?: string;
   token?: string;
+  expiresIn?: number;
 }

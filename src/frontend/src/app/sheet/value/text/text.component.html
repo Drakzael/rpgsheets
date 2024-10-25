@@ -1,0 +1,7 @@
+<div class="text">
+  <div>{{ value.name }}</div>
+  <div *ngIf="!edit">{{ text }}</div>
+  <div *ngIf="edit">
+    <input #textValue class="value" type="text" (change)="updateText(textValue.value)" value="{{ text }} "/>
+  </div>
+</div>

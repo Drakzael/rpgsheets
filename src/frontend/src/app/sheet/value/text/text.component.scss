@@ -1,0 +1,12 @@
+.text {
+  display: grid;
+  grid-template-columns: max-content auto;
+}
+
+.value {
+  border: none;
+  border-bottom: 1px solid black;
+  width: calc(100% - 0.5em - 2em);
+  margin-left: 2em;
+  text-align: right;
+}

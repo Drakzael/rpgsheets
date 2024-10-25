@@ -1,0 +1,16 @@
+<app-text *ngIf="editorType === 'text'"
+  [sheet]="sheet"
+  [value]="value"
+  [viewMode]="viewMode"/>
+<app-dots *ngIf="editorType === 'dots'"
+  [sheet]="sheet"
+  [value]="value"
+  [editorCode]="editor"
+  [metadata]="metadata"
+  [viewMode]="viewMode"/>
+<app-dots-squares *ngIf="editorType === 'dots_squares'"
+  [sheet]="sheet"
+  [value]="value"
+  [editorCode]="editor"
+  [metadata]="metadata"
+  [viewMode]="viewMode"/>

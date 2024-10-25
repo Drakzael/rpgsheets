@@ -1,0 +1,11 @@
+.sheet {
+  border: 1px solid black;
+  width: 21cm;
+  padding: 0.5em;
+}
+
+.rows {
+  display: grid;
+  grid-auto-flow: row;
+  row-gap: 0.8em;
+}

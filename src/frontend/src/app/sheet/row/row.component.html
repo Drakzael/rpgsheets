@@ -1,0 +1,9 @@
+<div *ngIf="row.title" class="title">{{ row.title }}</div>
+<div class="columns">
+  <app-column *ngFor="let gridColumn of row.gridColumns"
+    [column]="gridColumn"
+    [metadata]="metadata"
+    [sheet]="sheet"
+    [defaultType]="defaultType || row.defaultType"
+    [viewMode]="viewMode"/>
+</div>

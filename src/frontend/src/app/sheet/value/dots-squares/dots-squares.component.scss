@@ -1,0 +1,17 @@
+.name {
+  text-align: center;
+}
+
+.values {
+  display: table;
+  margin: 0 auto;
+}
+
+.dots, .squares {
+  display: table-row;
+}
+
+.dots fa-icon, .squares fa-icon {
+  display: table-cell;
+  padding: 0 0.2em;
+}
