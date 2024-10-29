@@ -1,6 +1,7 @@
 import { GameMetadata } from "../_models/gamemetadata";
 
 export const werewolfApocalypse: GameMetadata = {
+  name: "Mockup Werewolf",
   code: "werewolf.apocalypse",
   editors: {
     attribute: { type: "dots", min: 1, max: 5 },

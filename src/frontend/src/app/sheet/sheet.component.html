@@ -1,7 +1,20 @@
-<div class="sheet rows">
-  <app-row *ngFor="let gridRow of metadata.gridRows"
-    [row]="gridRow"
-    [metadata]="metadata"
-    [sheet]="sheet"
-    [viewMode]="viewMode"/>
+<div *ngIf="metadata && sheet">
+  <div class="actions">
+    <button *ngIf="!isEdit"><fa-icon [icon]="iconEdit" (click)="edit()"/> Editer</button>
+    <button *ngIf="isEdit"><fa-icon [icon]="iconSave" (click)="save()"/> Sauvegarger</button>
+    <button *ngIf="isEdit"><fa-icon [icon]="iconCancel" (click)="cancel()"/> Annuler</button>
+  </div>
+  <div class="sheet rows">
+    <app-row *ngFor="let gridRow of metadata.gridRows"
+      [row]="gridRow"
+      [metadata]="metadata"
+      [sheet]="sheet"
+      [viewMode]="viewMode"/>
+  </div>
+</div>
+<div *ngIf="isNewSheet">
+  <select #sheetGame>
+    <option *ngFor="let game of games" value="{{ game.code }}">{{ game.name }}</option>
+  </select>
+  <button (click)="newSheet(this.sheetGame.value)">Créer</button>
 </div>

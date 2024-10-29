@@ -8,6 +8,6 @@ export const routes: Routes = [
   { path: "", redirectTo: "home", pathMatch: "full" },
   { path: "home", component: HomeComponent, canActivate: [AuthGuard] },
   { path: "sheet", component: SheetComponent },
+  { path: "sheet/:sheetId", component: SheetComponent },
   { path: "login", component: LoginComponent }
-  // { path: "**", redirectTo: "" }
 ];

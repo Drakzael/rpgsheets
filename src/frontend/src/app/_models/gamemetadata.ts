@@ -31,7 +31,13 @@ export class GameMetadataRow {
 }
 
 export class GameMetadata {
+  name!: string;
   code!: string;
   editors?: { [key: string] : GameMetadataEditor };
   gridRows!: GameMetadataRow[];
+}
+
+export class GameMetadataOverview {
+  code!: string;
+  name!: string;
 }
