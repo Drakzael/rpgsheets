@@ -7,13 +7,13 @@ import java.nio.file.Path;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public class LocalRepositoryTools {
-	private static final Log LOGGER = LogFactory.getLog(LocalRepositoryTools.class);
+public abstract class LocalRepository {
+	private static final Log LOGGER = LogFactory.getLog(LocalRepository.class);
   private static final Path LOCAL_REPOSITORY = Path.of("./data");
   private static final Path HOME_REPOSITORY = Path.of(".rpgsheets");
-  private static Path path = null;
+  private Path path = null;
 
-  public static Path getPath() {
+  protected Path getBasePath() {
     if (path == null) {
       if (Files.isDirectory(LOCAL_REPOSITORY)) {
         LOGGER.info("Found local directory " + LOCAL_REPOSITORY.toAbsolutePath().toString());
@@ -32,7 +32,7 @@ public class LocalRepositoryTools {
         }
       }
       LOGGER.info("Found home directory " + path.toAbsolutePath().toString());
-      LocalRepositoryTools.path = path;
+      this.path = path;
     }
     return path;
   }
