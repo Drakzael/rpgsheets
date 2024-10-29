@@ -1,9 +1,7 @@
 <div class="login-container">
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <label>Username</label>
-    <input type="text" formControlName="username" [ngClass]="{'is-invalid': submitted}" placeholder="User name">
-    <label for="password">Password</label>
-    <input type="password" formControlName="password" [ngClass]="{'is-invalid': submitted}" placeholder="User name">
-    <button [disabled]="loading">Login</button>
+    <input type="text"     class="login" formControlName="username" [ngClass]="{'is-invalid': submitted}" placeholder="User name">
+    <input type="password" class="login" formControlName="password" [ngClass]="{'is-invalid': submitted}" placeholder="Password">
+    <button class="login" [disabled]="loading">Connection</button>
   </form>
 </div>
