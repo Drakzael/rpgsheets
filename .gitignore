@@ -1,7 +1,10 @@
-target/
-src/frontend/.angular
-src/frontend/dist/
-src/frontend/node
-src/frontend/node_modules/
-src/frontend/package-lock.json
 .vscode/
+
+server/target/
+
+client/.angular
+client/dist/
+client/target/
+client/node
+client/node_modules/
+client/package-lock.json
