@@ -3,13 +3,15 @@ import { RouterOutlet } from '@angular/router';
 import { User } from './_models/user';
 import { AccountService } from './_services/account.service';
 import { CommonModule } from '@angular/common';
+import { MenuComponent } from './menu/menu.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
     CommonModule,
-    RouterOutlet
+    RouterOutlet,
+    MenuComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

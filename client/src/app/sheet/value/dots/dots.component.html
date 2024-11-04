@@ -1,6 +1,6 @@
 <div class="dots">
   <div>{{ value.name }}</div>
   <div class="values">
-    <fa-icon [icon]="i <= score ? iconDotFill : iconDotEmpty" *ngFor="let i of values" (click)="clickDot(i)"/>
+    <fa-icon [icon]="i <= score ? iconDotFill : iconDotEmpty" *ngFor="let i of values" (click)="clickDot(i)" class="{{ isEdit ? 'button' : '' }}"/>
   </div>
 </div>

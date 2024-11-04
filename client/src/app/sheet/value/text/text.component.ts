@@ -18,18 +18,27 @@ export class TextComponent implements OnInit {
   @Input() sheet!: Sheet;
   @Input() viewMode!: ViewMode;
 
-  edit!: boolean;
+  get isEdit(): boolean {
+    return !this.value.readonly && this.viewMode === ViewMode.Edit;
+  }
 
   get text(): string {
-    return this.sheet.stringValues[this.value.value as string];
+    if (this.value.value === "$sheet.name") {
+      return this.sheet.name;
+    } else {
+      return this.sheet.stringValues[this.value.value as string];
+    }
   }
 
   set text(s: string) {
-    this.sheet.stringValues[this.value.value as string] = s;
+    if (this.value.value === "$sheet.name") {
+      this.sheet.name = s;
+    } else {
+      this.sheet.stringValues[this.value.value as string] = s;
+    }
   }
 
   ngOnInit(): void {
-    this.edit = !this.value.readonly && this.viewMode === ViewMode.Edit;
   }
 
   updateText(s: string) {

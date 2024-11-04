@@ -7,7 +7,7 @@ import { ViewMode } from '../_models/viewmode';
 import { SheetService } from '../_services/sheet.service';
 import { ActivatedRoute } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faPen, faSave, faCancel } from '@fortawesome/free-solid-svg-icons';
+import { faPen, faSave, faCancel, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-sheet',
@@ -33,6 +33,7 @@ export class SheetComponent implements OnInit {
   iconSave = faSave;
   iconEdit = faPen;
   iconCancel = faCancel;
+  iconDelete = faTrash;
 
   constructor(
     private route: ActivatedRoute,
@@ -44,28 +45,39 @@ export class SheetComponent implements OnInit {
     return this.viewMode === ViewMode.Edit;
   }
 
+  get isDelete() {
+    return this.viewMode === ViewMode.Delete;
+  }
+
   ngOnInit(): void {
-    // mockup;
     this.sheetId = this.route.snapshot.paramMap.get("sheetId");
+    this.route.paramMap.subscribe(() => {
+      this.sheetId = this.route.snapshot.paramMap.get("sheetId");
+      this.getSheet();
+    })
     if (this.sheetId === null) {
       this.prepareNewSheet();
     } else {
       this.getSheet();
     }
-    this.sheetService.listSheets().subscribe();
   }
 
   getSheet() {
-    this.sheetService.getSheet(this.sheetId as string).subscribe(sheet => {
+    if (this.sheetId) {
+    this.sheetService.getSheet(this.sheetId!).subscribe(sheet => {
       this.sheet = sheet;
-      this.sheetService.getMetadata(this.sheet.game).subscribe(game => this.metadata = game);
+      if (!this.metadata || this.metadata.code !== sheet.game) {
+        this.metadata = undefined;
+        this.sheetService.getMetadata(sheet.game).subscribe(game => this.metadata = game);
+      }
     });
+  }
   }
 
   prepareNewSheet() {
     this.metadata = undefined;
     this.sheet = undefined;
-    this.sheetService.listMetadata().subscribe(games => {      
+    this.sheetService.listMetadata().subscribe(games => {
       this.games = games;
       this.isNewSheet = true;
     });
@@ -88,23 +100,33 @@ export class SheetComponent implements OnInit {
   save() {
     if (this.sheetId === null) {
       this.sheetService.createSheet(this.sheet!).subscribe(id => {
-        this.sheetId = id;
-        this.getSheet();
+        this.sheetService.navigateToSheet(id);
       });
     } else {
-      this.sheetService.saveSheet(this.sheetId, this.sheet!).subscribe(() => this.getSheet());
+      this.sheetService.saveSheet(this.sheetId, this.sheet!).subscribe(() => {
+        this.sheetService.navigateToSheet(this.sheetId!);
+      });
     }
+    this.viewMode = ViewMode.View;
   }
 
   cancel() {
     if (this.sheetId === null) {
-      this.prepareNewSheet();
+      this.sheetService.navigateToNewSheet();
     } else {
-      this.getSheet();
+      this.sheetService.navigateToSheet(this.sheetId);
     }
+    this.viewMode = ViewMode.View;
   }
 
   delete() {
-    this.sheetService.deleteSheet(this.sheetId!).subscribe();
+    if (this.isDelete) {
+      this.sheetService.deleteSheet(this.sheetId!).subscribe(() => {
+        this.sheetService.navigateToNewSheet();
+      });
+      this.viewMode = ViewMode.View;
+    } else {
+      this.viewMode = ViewMode.Delete;
+    }
   }
 }

@@ -1,0 +1,4 @@
+<nav>
+<div *ngFor="let sheet of sheets" [routerLink]="['/sheet', sheet.id]">{{ sheet.name }}</div>
+<div [routerLink]="['/sheet']">Nouvelle feuille</div>
+  </nav>

@@ -20,7 +20,7 @@ public class SheetRepository extends LocalRepository {
       .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
   public List<SheetOverview> listAllSheets() {
-    try (Stream<Path> files = Files.list(this.getBasePath().resolve("sheets"))) {
+    try (Stream<Path> files = Files.list(getSheetsPath())) {
       List<SheetOverview> sheets = new ArrayList<>();
       for (final Path file : files.filter(file -> file.toString().endsWith(".json")).toList()) {
         final String filename = file.getFileName().toString();
@@ -33,9 +33,62 @@ public class SheetRepository extends LocalRepository {
     }
   }
 
-  public Sheet getSheet(String id) {
+  public Sheet getSheet(String sheetId) {
     try {
-      return MAPPER.readValue(Files.readAllBytes(this.getBasePath().resolve("sheets").resolve(id + ".json")), Sheet.class).setId(id);
+      return MAPPER
+          .readValue(Files.readAllBytes(getSheetPath(sheetId)), Sheet.class)
+          .setId(sheetId);
+    } catch (IOException ex) {
+      throw new IllegalStateException();
+    }
+  }
+
+  public String createSheet(Sheet sheet) {
+    final String sheetId = getNewSheetId();
+    saveSheet(sheet.setId(sheetId));
+    return sheetId;
+  }
+
+  public void saveSheet(Sheet sheet) {
+    try {
+      MAPPER.writeValue(Files.newOutputStream(getSheetPath(sheet.getId())), sheet);
+    } catch (IOException ex) {
+      throw new IllegalStateException(ex);
+    }
+  }
+
+  public void deleteSheet(String sheetId) {
+    try {
+      Files.delete(getSheetPath(sheetId));
+    } catch (IOException ex) {
+      //
+    }
+  }
+
+  private Path getSheetsPath() {
+    return getBasePath().resolve("sheets");
+  }
+
+  private Path getSheetPath(String sheetId) {
+    return getBasePath().resolve("sheets").resolve(sheetId + ".json");
+  }
+
+  private String getNewSheetId() {
+    try {
+      if (!Files.exists(getSheetsPath())) {
+        Files.createDirectories(getSheetsPath());
+      }
+
+    } catch (IOException ex) {
+      throw new IllegalStateException(ex);
+    }
+    Integer i = 1;
+    while (Files.exists(getSheetPath(i.toString()))) {
+      ++i;
+    }
+    try {
+      Files.createFile(getSheetPath(i.toString()));
+      return i.toString();
     } catch (IOException ex) {
       throw new IllegalStateException();
     }

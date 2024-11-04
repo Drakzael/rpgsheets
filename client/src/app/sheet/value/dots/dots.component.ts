@@ -36,6 +36,10 @@ export class DotsComponent implements OnInit {
     this.values = Array(this.editor.max).fill(0).map((_, i) => i + 1);
   }
 
+  get isEdit(): boolean {
+    return this.viewMode === ViewMode.Edit;
+  }
+
   get score(): number {
     return this.sheet.numericValues[this.value.value as string] ||
       this.editor.min ||

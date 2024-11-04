@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.devordie.rpgsheets.entities.Sheet;
 import com.devordie.rpgsheets.entities.SheetOverviewResponse;
 import com.devordie.rpgsheets.services.SheetService;
+import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.List;
 
@@ -37,22 +38,18 @@ public class SheetController {
         .toList();
   }
 
-  @PostMapping("{sheetId}")
-  public String updateSheet(@PathVariable String sheetId, @RequestBody String sheet) {
-    // TODO: process POST request
-
-    return null;
+  @PutMapping("{sheetId}")
+  public void updateSheet(@PathVariable String sheetId, @RequestBody Sheet sheet) {
+    service.saveSheet(sheet.setId(sheetId));
   }
 
-  @PutMapping("{sheetId}")
-  public String addSheet(@PathVariable String sheetId, @RequestBody String sheet) {
-    // TODO: process PUT request
-
-    return null;
+  @PostMapping("")
+  public String addSheet(@RequestBody Sheet sheet) {
+    return this.service.createSheet(sheet);
   }
 
   @DeleteMapping("{sheetId}")
   public void deleteSheet(@PathVariable String sheetId) {
-
+    service.deleteSheet(sheetId);
   }
 }

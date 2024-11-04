@@ -33,8 +33,28 @@ public class SheetService {
         .toList();
   }
 
+  public String createSheet(Sheet sheet) {
+    return sheetRepository.createSheet(sheet.setUsername(userService.getCurrentUser().getUsername()));
+  }
+
+  public void saveSheet(Sheet sheet) {
+    if (isWritable(sheet)) {
+      sheetRepository.saveSheet(sheet);
+    }
+  }
+
+  public void deleteSheet(String sheetId) {
+    if (isWritable(sheetId)) {
+      sheetRepository.deleteSheet(sheetId);
+    }
+  }
+
   public boolean isReadable(ISheet sheet) {
     return sheet.getUsername().equals(userService.getCurrentUser().getUsername());
+  }
+
+  public boolean isWritable(String sheetId) {
+    return isWritable(getSheet(sheetId));
   }
 
   public boolean isWritable(ISheet sheet) {
