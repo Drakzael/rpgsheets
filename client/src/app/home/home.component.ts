@@ -1,11 +1,16 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { map } from 'rxjs';
+import { MenuComponent } from '../menu/menu.component';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [],
+  imports: [
+    RouterOutlet,
+    MenuComponent
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })

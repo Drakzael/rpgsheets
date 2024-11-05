@@ -4,13 +4,16 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AccountService } from '../_services/account.service';
 import { first } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faUser, faKey, faSignIn } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FontAwesomeModule
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
@@ -19,6 +22,9 @@ export class LoginComponent implements OnInit {
   form!: FormGroup;
   loading = false;
   submitted = false;
+  iconUsername = faUser;
+  iconPassword = faKey;
+  iconLogin = faSignIn;
 
   constructor(
     private formBuilder: FormBuilder,

@@ -1,4 +1,16 @@
-<nav>
-<div *ngFor="let sheet of sheets" [routerLink]="['/sheet', sheet.id]">{{ sheet.name }}</div>
-<div [routerLink]="['/sheet']">Nouvelle feuille</div>
-  </nav>
+<nav *ngIf="user">
+  <div class="user">
+    <fa-icon [icon]="iconUser" />
+    {{ user.alias }}
+    <button (click)="logout()" title="Déconnexion" class="icon-button"><fa-icon [icon]="iconLogout" /></button>
+  </div>
+
+  <div class="sheets">
+    <div *ngFor="let sheet of sheets">
+      <div [routerLink]="['/sheet', sheet.id]" class="link">{{ sheet.name === "" ? "Fiche sans nom" : sheet.name }}</div>
+    </div>
+    <div>
+      <div [routerLink]="['/sheet', 'new']" class="link">Nouvelle feuille</div>
+    </div>
+  </div>
+</nav>

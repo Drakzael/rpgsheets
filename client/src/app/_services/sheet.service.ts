@@ -4,6 +4,7 @@ import { GameMetadata, GameMetadataOverview } from "../_models/gamemetadata";
 import { Sheet, SheetOverview } from "../_models/sheet";
 import { Router } from "@angular/router";
 import { BehaviorSubject, map, of } from "rxjs";
+import { AccountService } from "./account.service";
 
 @Injectable({ providedIn: 'root' })
 export class SheetService {
@@ -12,9 +13,17 @@ export class SheetService {
 
   constructor(
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private accountService: AccountService
   ) {
     this.sheetsSubject = new BehaviorSubject<SheetOverview[]>([]);
+    this.accountService.user.subscribe(user => {
+      if (user) {
+        this.refreshSheets();
+      } else {
+        this.sheetsSubject.next([]);
+      }
+    })
   }
 
   public get sheets() {
@@ -29,11 +38,11 @@ export class SheetService {
     return this.http.get<GameMetadataOverview[]>("/api/metadata");
   }
 
-  refreshSheets() {
-    return this.http.get<SheetOverview[]>("/api/sheet")
+  private refreshSheets() {
+    this.http.get<SheetOverview[]>("/api/sheet")
       .subscribe(sheets => {
+        sheets.sort((s1, s2) => s1.name.toLowerCase() < s2.name.toLowerCase() ? -1 : 1);
         this.sheetsSubject.next(sheets);
-        return sheets;
       });
   }
 

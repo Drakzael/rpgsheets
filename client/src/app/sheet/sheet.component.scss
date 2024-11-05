@@ -10,6 +10,26 @@
   row-gap: 0.8em;
 }
 
-.delete {
-  background-color: #990000;
+.actions {
+  text-align:right;
+}
+
+.actions button {
+  border: 1px solid #333333;
+  border-radius: 0.5em;
+  background-color: #dddddd;
+  display: inline-block;
+  width: 2em;
+  height: 2em;
+  margin: 0.2em;
+}
+
+.actions button.delete {
+  animation: dblink 1.2s infinite;
+}
+
+@keyframes dblink {
+  0%,50% {background-color: #cc0000;}
+  50%,75% {background-color: #dddddd;}
+  75%,100% {background-color: #cc0000;}
 }
