@@ -7,10 +7,10 @@
     [defaultType]="defaultType || column.defaultType"
     [viewMode]="viewMode"/>
 </div>
-<!-- <div *ngIf="!column.rows" class="rows">
-<app-row *ngFor="let gridRow of column.gridRows"
-  [row]="gridRow"
-  [metadata]="metadata"
-  [sheet]="sheet"
-  [viewMode]="viewMode"/>
-</div> -->
+<div *ngIf="column.freeRows" class="rows">
+  <app-free-value
+    [value]="column.freeRows"
+    [metadata]="metadata"
+    [sheet]="sheet"
+    [viewMode]="viewMode"/>
+</div>
