@@ -44,20 +44,19 @@ export class SheetComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.sheetId = this.route.snapshot.paramMap.get("sheetId");
     this.route.paramMap.subscribe(() => {
       this.sheetId = this.route.snapshot.paramMap.get("sheetId");
-      this.getSheet();
+      if (this.sheetId === null) {
+        this.prepareNewSheet();
+      } else {
+        this.getSheet();
+      }
     })
-    if (this.sheetId === null) {
-      this.prepareNewSheet();
-    } else {
-      this.getSheet();
-    }
   }
 
   getSheet() {
     if (this.sheetId) {
+      this.viewMode = ViewMode.View;
       this.sheetService.getSheet(this.sheetId!).subscribe(sheet => {
         this.sheet = sheet;
         if (!this.metadata || this.metadata.code !== sheet.game) {
@@ -94,11 +93,12 @@ export class SheetComponent implements OnInit {
   save() {
     if (this.sheetId === null) {
       this.sheetService.createSheet(this.sheet!).subscribe(id => {
-        this.sheetService.navigateToSheet(id);
+        this.sheetId = id;
+        this.getSheet();
       });
     } else {
       this.sheetService.saveSheet(this.sheetId, this.sheet!).subscribe(() => {
-        this.sheetService.navigateToSheet(this.sheetId!);
+        this.getSheet();
       });
     }
     this.viewMode = ViewMode.View;
@@ -108,7 +108,7 @@ export class SheetComponent implements OnInit {
     if (this.sheetId === null) {
       this.sheetService.navigateToNewSheet();
     } else {
-      this.sheetService.navigateToSheet(this.sheetId);
+      this.getSheet();
     }
     this.viewMode = ViewMode.View;
   }
