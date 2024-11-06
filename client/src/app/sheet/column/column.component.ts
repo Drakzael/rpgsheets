@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { ValueComponent } from '../value/value.component';
 import { ViewMode } from '../../_models/viewmode';
 import { Sheet } from '../../_models/sheet';
-import { FreeValueComponent } from '../value/free-value.component';
+import { FreeValueComponent } from '../free-value/free-value.component';
 
 @Component({
   selector: 'app-column',
