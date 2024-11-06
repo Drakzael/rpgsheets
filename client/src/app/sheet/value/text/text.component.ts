@@ -3,6 +3,8 @@ import { GameMetadataValue } from '../../../_models/gamemetadata';
 import { ViewMode } from '../../../_models/viewmode';
 import { Sheet } from '../../../_models/sheet';
 import { CommonModule } from '@angular/common';
+import * as ts from "typescript";
+import { ValueResolver } from '../../../_helpers/resolver.value';
 
 @Component({
   selector: 'app-text',
@@ -23,11 +25,16 @@ export class TextComponent implements OnInit {
   }
 
   get text(): string {
-    if (this.value.value === "$sheet.name") {
-      return this.sheet.name;
+    const value = this.value.value as string;
+    if (value.startsWith("$")) {
+      return new ValueResolver(this.sheet).resolve(value);
     } else {
-      return this.sheet.stringValues[this.value.value as string];
+      return this.sheet.stringValues[value];
     }
+  }
+
+  get hints(): string[] | undefined {
+    return this.value.hint;
   }
 
   set text(s: string) {

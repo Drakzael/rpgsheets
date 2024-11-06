@@ -6,6 +6,7 @@ import { faCircle as faCircleEmpty } from "@fortawesome/free-regular-svg-icons";
 import { Sheet } from '../../../_models/sheet';
 import { CommonModule } from '@angular/common';
 import { ViewMode } from '../../../_models/viewmode';
+import { ValueResolver } from '../../../_helpers/resolver.value';
 
 @Component({
   selector: 'app-dots',
@@ -33,7 +34,7 @@ export class DotsComponent implements OnInit {
 
   ngOnInit(): void {
     this.editor = this.metadata.editors![this.editorCode];
-    this.values = Array(this.editor.max).fill(0).map((_, i) => i + 1);
+    this.values = Array(this.max).fill(0).map((_, i) => i + 1);
   }
 
   get isEdit(): boolean {
@@ -51,7 +52,11 @@ export class DotsComponent implements OnInit {
   }
 
   get max(): number {
-    return this.editor.max!;
+    if (this.editor.maxExpr) {
+      return new ValueResolver(this.sheet).resolve(this.editor.maxExpr);
+    } else {
+      return this.editor.max!;
+    }
   }
 
   clickDot(i: number) {
