@@ -1,0 +1,14 @@
+.name {
+  text-align: center;
+}
+
+.values {
+  text-align: center;
+}
+
+.squares {
+  display: inline-grid;
+  grid-template-columns: repeat(10, max-content);
+  column-gap: 0.53em;
+  row-gap: 0;
+}

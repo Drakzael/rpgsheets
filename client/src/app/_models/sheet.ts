@@ -1,23 +1,51 @@
-export class Sheet {
-  private name: string = "";
-  public game!: string;
-  private numericValues: { [key: string]: number } = {};
-  private stringValues: { [key: string]: string } = {};
+import * as ts from "typescript";
 
-  constructor(sheet?: Sheet) {
-    if (sheet) {
-      this.name = sheet.name;
-      this.game = sheet.game;
-      this.numericValues = sheet?.numericValues;
-      this.stringValues = sheet.stringValues;
+export class SheetData {
+  name: string = "";
+  game!: string;
+  numericValues: { [key: string]: number } = {};
+  stringValues: { [key: string]: string } = {};
+}
+
+export class Sheet {
+  constructor(private data?: SheetData) {
+    if (!this.data) {
+      this.data = new SheetData();
     }
   }
+
+  public getData() {
+    return this.data;
+  }
+
+  private get name(): string {
+    return this.data!.name;
+  }
+  private set name(name: string) {
+    this.data!.name = name;
+  }
+  public get game(): string {
+    return this.data!.game;
+  }
+  public set game(game: string) {
+    this.data!.game = game;
+  }
+  private get numericValues() {
+    return this.data!.numericValues;
+  }
+  private get stringValues() {
+    return this.data!.stringValues;
+  }
+  private impactValues: string[] = [];
 
   public resolve(code: string) {
     if (code.startsWith("${") && code.endsWith("}")) {
       let expr = code.substring(2, code.length - 1);
       expr.match(/\$[a-zA-Z0-9\.]+/g)?.forEach(match => {
         const valueCode = match.substring(1);
+        if (!this.impactValues.includes(valueCode)) {
+          this.impactValues.push(valueCode);
+        }
         if (this.numericValues[valueCode] !== undefined) {
           expr = expr.replace(`${match}`, this.stringValues[valueCode].toString());
         } else if (this.stringValues[valueCode] !== undefined) {
@@ -26,8 +54,9 @@ export class Sheet {
           expr = expr.replace(`${match}`, "''");
         }
       });
-      // expr = ts.transpile(expr);
-      return eval(expr);
+      expr = ts.transpile(expr);
+      console.log(this.impactValues);
+      return window.eval(expr);
     } else if (code.startsWith("$")) {
       switch (code) {
         case "$sheet.name":

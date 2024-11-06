@@ -8,6 +8,12 @@
   [editorCode]="editor"
   [metadata]="metadata"
   [viewMode]="viewMode"/>
+<app-squares *ngIf="editorType === 'squares'"
+  [sheet]="sheet"
+  [value]="value"
+  [editorCode]="editor"
+  [metadata]="metadata"
+  [viewMode]="viewMode"/>
 <app-dots-squares *ngIf="editorType === 'dots_squares'"
   [sheet]="sheet"
   [value]="value"

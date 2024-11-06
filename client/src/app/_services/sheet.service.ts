@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { GameMetadata, GameMetadataOverview } from "../_models/gamemetadata";
-import { Sheet, SheetOverview } from "../_models/sheet";
+import { Sheet, SheetData, SheetOverview } from "../_models/sheet";
 import { Router } from "@angular/router";
 import { BehaviorSubject, map, Observable, of } from "rxjs";
 import { AccountService } from "./account.service";
@@ -47,14 +47,12 @@ export class SheetService {
   }
 
   getSheet(id: string): Observable<Sheet> {
-    return this.http.get<Sheet>(`/api/sheet/${id}`)
-      .pipe(map(sheet => {
-        return new Sheet(sheet);
-      }));
+    return this.http.get<SheetData>(`/api/sheet/${id}`)
+      .pipe(map(sheet => new Sheet(sheet)));
   }
 
   createSheet(sheet: Sheet) {
-    return this.http.post<string>("/api/sheet", sheet)
+    return this.http.post<string>("/api/sheet", sheet.getData())
       .pipe(map(sheetId => {
         this.refreshSheets();
         return sheetId;
@@ -62,7 +60,7 @@ export class SheetService {
   }
 
   saveSheet(id: string, sheet: Sheet) {
-    return this.http.put<void>(`/api/sheet/${id}`, sheet)
+    return this.http.put<void>(`/api/sheet/${id}`, sheet.getData())
       .pipe(map(() => {
         this.refreshSheets();
         return of();

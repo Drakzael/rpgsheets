@@ -7,6 +7,7 @@ import { DotsSquaresComponent } from './dots-squares/dots-squares.component';
 import { ViewMode } from '../../_models/viewmode';
 import { Sheet } from '../../_models/sheet';
 import { HealthComponent } from './health/health.component';
+import { SquaresComponent } from './squares/squares.component';
 
 @Component({
   selector: 'app-value',
@@ -15,6 +16,7 @@ import { HealthComponent } from './health/health.component';
     CommonModule,
     TextComponent,
     DotsComponent,
+    SquaresComponent,
     DotsSquaresComponent,
     HealthComponent
   ],
