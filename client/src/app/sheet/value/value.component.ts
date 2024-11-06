@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { DotsSquaresComponent } from './dots-squares/dots-squares.component';
 import { ViewMode } from '../../_models/viewmode';
 import { Sheet } from '../../_models/sheet';
+import { HealthComponent } from './health/health.component';
 
 @Component({
   selector: 'app-value',
@@ -14,7 +15,8 @@ import { Sheet } from '../../_models/sheet';
     CommonModule,
     TextComponent,
     DotsComponent,
-    DotsSquaresComponent
+    DotsSquaresComponent,
+    HealthComponent
   ],
   templateUrl: './value.component.html',
   styleUrl: './value.component.scss'

@@ -1,0 +1,21 @@
+<div class="health">
+  <div class="title">{{ value.name }}</div>
+  <div *ngIf="isEdit" class="edit">
+    <div *ngFor="let level of levels">
+      <button (click)="minus(level)" class="button">
+        <fa-icon [icon]="iconMinus"/>
+      </button>
+      <app-icon [icon]="this.editor.types!.values[level].icon"/>
+      <button (click)="plus(level)" class="button">
+        <fa-icon [icon]="iconPlus"/>
+      </button>
+    </div>
+  </div>
+  <div *ngFor="let value of values" class="level">
+    <div *ngIf="value.name" class="name">{{ value.name }}</div>
+    <div *ngIf="value.tip" class="tip">{{ value.tip }}</div>
+    <div class="value">
+      <app-icon [icon]="value.level === 0 ? editor.types!.defaultIcon : editor.types!.values[value.level - 1].icon"/>
+    </div>
+  </div>
+</div>

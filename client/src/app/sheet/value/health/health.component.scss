@@ -1,0 +1,41 @@
+.title {
+  text-align: center;
+}
+
+.health {
+
+}
+
+.level {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: max-content;
+  grid-template-columns: auto;
+}
+
+.name {
+
+}
+
+.tip {
+  padding-left: 1em;
+}
+
+.value {
+  padding-left: 0.5em;
+}
+
+.edit {
+  display: grid;
+  grid-auto-flow: column;
+}
+
+.edit div {
+  text-align: center;
+}
+
+.button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}

@@ -14,3 +14,9 @@
   [editorCode]="editor"
   [metadata]="metadata"
   [viewMode]="viewMode"/>
+<app-health *ngIf="editorType === 'health'"
+  [sheet]="sheet"
+  [value]="value"
+  [editorCode]="editor"
+  [metadata]="metadata"
+  [viewMode]="viewMode"/>
