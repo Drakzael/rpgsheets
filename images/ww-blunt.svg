@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="500mm"
+   height="500mm"
+   viewBox="0 0 500 500"
+   version="1.1"
+   id="svg282"
+   sodipodi:docname="ww-blunt.svg"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview284"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.32"
+     inkscape:cx="1542.1875"
+     inkscape:cy="1268.75"
+     inkscape:window-width="1920"
+     inkscape:window-height="1043"
+     inkscape:window-x="0"
+     inkscape:window-y="452"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer4" />
+  <defs
+     id="defs279" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#000000;stroke-width:0.264583"
+       id="rect286"
+       width="320"
+       height="450"
+       x="85"
+       y="25"
+       rx="20"
+       ry="20" />
+    <rect
+       style="fill:#ffffff;stroke-width:0.232702"
+       id="rect288"
+       width="240"
+       height="370"
+       x="125"
+       y="65"
+       rx="12.857143"
+       ry="13.536585" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="cross1">
+    <rect
+       style="fill:#000000;stroke-width:0.264583"
+       id="rect290"
+       width="50"
+       height="500"
+       x="316.08786"
+       y="-170.96086"
+       transform="rotate(32.571943)" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="cross2">
+    <rect
+       style="fill:#000000;stroke-width:0.264583"
+       id="rect290-3"
+       width="50"
+       height="500"
+       x="47.348091"
+       y="92.645615"
+       transform="rotate(-32.668955)" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer4"
+     inkscape:label="cross3">
+    <rect
+       style="fill:#000000;stroke-width:0.264583"
+       id="rect551"
+       width="50"
+       height="402.90033"
+       x="220"
+       y="50" />
+    <rect
+       style="fill:#000000;stroke-width:0.264583"
+       id="rect553"
+       width="276.38315"
+       height="50"
+       x="105.05995"
+       y="225" />
+  </g>
+</svg>
