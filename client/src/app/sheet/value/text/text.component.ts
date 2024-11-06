@@ -3,8 +3,6 @@ import { GameMetadataValue } from '../../../_models/gamemetadata';
 import { ViewMode } from '../../../_models/viewmode';
 import { Sheet } from '../../../_models/sheet';
 import { CommonModule } from '@angular/common';
-import * as ts from "typescript";
-import { ValueResolver } from '../../../_helpers/resolver.value';
 
 @Component({
   selector: 'app-text',
@@ -25,12 +23,7 @@ export class TextComponent implements OnInit {
   }
 
   get text(): string {
-    const value = this.value.value as string;
-    if (value.startsWith("$")) {
-      return new ValueResolver(this.sheet).resolve(value);
-    } else {
-      return this.sheet.stringValues[value];
-    }
+    return this.sheet.getString(this.value.value as string);
   }
 
   get hints(): string[] | undefined {
@@ -38,11 +31,7 @@ export class TextComponent implements OnInit {
   }
 
   set text(s: string) {
-    if (this.value.value === "$sheet.name") {
-      this.sheet.name = s;
-    } else {
-      this.sheet.stringValues[this.value.value as string] = s;
-    }
+    this.sheet.setString(this.value.value as string, s);
   }
 
   ngOnInit(): void {

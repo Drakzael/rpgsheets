@@ -38,22 +38,22 @@ export class DotsSquaresComponent implements OnInit {
   }
 
   get scoreDots(): number {
-    return this.sheet.numericValues[this.dotValueName()] ||
+    return this.sheet.getNumber(this.dotValueName()) ||
       this.editor.min ||
       0;
   }
 
   set scoreDots(i: number) {
-    this.sheet.numericValues[this.dotValueName()] = Math.max(this.editor.min || 0, i);
+    this.sheet.setNumber(this.dotValueName(), Math.max(this.editor.min || 0, i));
   }
 
   get scoreSquares(): number {
-    return this.sheet.numericValues[this.squareValueName()] ||
+    return this.sheet.getNumber(this.squareValueName()) ||
       this.editor.min!;
   }
 
   set scoreSquares(i: number) {
-    this.sheet.numericValues[this.squareValueName()] = Math.max(this.editor.min || 0, i);
+    this.sheet.setNumber(this.squareValueName(), Math.max(this.editor.min || 0, i));
   }
 
   get max(): number {

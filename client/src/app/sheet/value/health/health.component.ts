@@ -37,30 +37,17 @@ export class HealthComponent {
 
   get values() {
     const valueCodes = this.value.value as string[];
-    const levelCount = this.editor.values?.length || 1;
-    const values = [];
-    for (let level = levelCount; level >= 1; --level) {
-      if (values.length >= this.editor.values?.length!) {
-        break;
-      }
-      for (let i = 0; i < this.sheet.numericValues[valueCodes[level - 1]] || 0; ++i) {
-        if (values.length >= this.editor.values?.length!) {
-          break;
-        }
-        values.push({
-          level: level,
-          name: this.editor.values![values.length].name,
-          tip: this.editor.values![values.length].tip
-        });
+    const health: number[] = [];
+    for (let i = valueCodes.length; i > 0; --i) {
+      for (let j = 0; j < this.sheet.getNumber(valueCodes[i - 1]); ++j) {
+        health.push(i);
       }
     }
-    for (let i = values.length; i < this.editor.values?.length!; ++i) {
-      values.push({
-        level: 0,
-        name: this.editor.values![values.length].name,
-        tip: this.editor.values![values.length].tip
-      });
-    }
+    const values = this.editor.values!.map((value, index) => ({
+      name: value.name,
+      tip: value.tip, 
+      level: health[index] || 0
+    }));
     return values;
   }
 
@@ -72,21 +59,21 @@ export class HealthComponent {
   minus(level: number) {
     const valueCodes = this.value.value as string[];
     const valueCode = valueCodes[level];
-    if ((this.sheet.numericValues[valueCode] || 0) === 0) {
+    if ((this.sheet.getNumber(valueCode) || 0) === 0) {
       level > 0 && this.minus(level - 1);
     } else {
-      this.sheet.numericValues[valueCode] = Math.max(0, (this.sheet.numericValues[valueCode] || 0) - 1);
+      this.sheet.setNumber(valueCode, Math.max(0, (this.sheet.getNumber(valueCode) || 0) - 1));
     }
   }
 
   plus(level: number) {
     const valueCodes = this.value.value as string[];
     const valueCode = valueCodes[level];
-    this.sheet.numericValues[valueCode] = (this.sheet.numericValues[valueCode] || 0) + 1;
+    this.sheet.setNumber(valueCode, (this.sheet.getNumber(valueCode) || 0) + 1);
     let maxValue = this.editor.values!.length;
     for (let i = this.editor.types?.values.length! - 1; i >= 0; --i) {
-      this.sheet.numericValues[valueCodes[i]] = Math.min(maxValue, this.sheet.numericValues[valueCodes[i]] || 0);
-      maxValue -= this.sheet.numericValues[valueCodes[i]] || 0;
+      this.sheet.setNumber(valueCodes[i], Math.min(maxValue, this.sheet.getNumber(valueCodes[i]) || 0));
+      maxValue -= this.sheet.getNumber(valueCodes[i]) || 0;
     }
   }
 }

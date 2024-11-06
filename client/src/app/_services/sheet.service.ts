@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { GameMetadata, GameMetadataOverview } from "../_models/gamemetadata";
 import { Sheet, SheetOverview } from "../_models/sheet";
 import { Router } from "@angular/router";
-import { BehaviorSubject, map, of } from "rxjs";
+import { BehaviorSubject, map, Observable, of } from "rxjs";
 import { AccountService } from "./account.service";
 
 @Injectable({ providedIn: 'root' })
@@ -46,8 +46,11 @@ export class SheetService {
       });
   }
 
-  getSheet(id: string) {
-    return this.http.get<Sheet>(`/api/sheet/${id}`);
+  getSheet(id: string): Observable<Sheet> {
+    return this.http.get<Sheet>(`/api/sheet/${id}`)
+      .pipe(map(sheet => {
+        return new Sheet(sheet);
+      }));
   }
 
   createSheet(sheet: Sheet) {

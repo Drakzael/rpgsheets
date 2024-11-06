@@ -24,12 +24,8 @@ export class FreeValueComponent {
   }
 
   get rows() {
-    const rows = Object.keys(this.sheet.numericValues)
-      .filter(key => key.startsWith(this.prefix))
-      .map(key => ({
-        name: key.substring(this.prefix.length),
-        value: this.sheet.numericValues[key]
-      }));
+    const rows = this.sheet.getNumbersStartingWith(this.prefix)
+      .map(value => ({ name: value.key.substring(this.prefix.length), value: value.value }));
     if (rows.length < this.value.defaultCount - 1) {
       for (let i = rows.length; i < this.value.defaultCount; ++i) {
         rows.push({ name: "", value: 0 });
