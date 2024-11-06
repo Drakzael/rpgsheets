@@ -31,7 +31,7 @@ export class ValueComponent {
   @Input() viewMode!: ViewMode;
 
   get editorType() {
-    let valueType: string = this.value.type || this.defaultType || "";
+    let valueType: string = this.value.type || this.defaultType || "text";
     if (valueType === "text") {
       return "text";
     } else if (valueType === "number") {
