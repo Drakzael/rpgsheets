@@ -30,11 +30,12 @@ export class DotsComponent implements OnInit {
 
   editor!: GameMetadataEditor;
 
-  values!: number[];
+  get values(): number[] {
+    return Array(this.max).fill(0).map((_, i) => i + 1);
+  }
 
   ngOnInit(): void {
     this.editor = this.metadata.editors![this.editorCode];
-    this.values = Array(this.max).fill(0).map((_, i) => i + 1);
   }
 
   get isEdit(): boolean {

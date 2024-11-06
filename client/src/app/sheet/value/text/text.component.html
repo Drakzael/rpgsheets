@@ -2,6 +2,6 @@
   <div>{{ value.name }}</div>
   <div *ngIf="!isEdit" class="value">{{ text }}</div>
   <div *ngIf="isEdit">
-    <input #textValue class="value" type="text" (change)="updateText(textValue.value)" value="{{ text }} " />
+    <input #textValue class="value" type="text" (change)="updateText(textValue.value)" value="{{ text }}" />
   </div>
 </div>
