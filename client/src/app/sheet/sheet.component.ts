@@ -7,7 +7,7 @@ import { ViewMode } from '../_models/viewmode';
 import { SheetService } from '../_services/sheet.service';
 import { ActivatedRoute } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faPen, faSave, faCancel, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faPen, faSave, faCancel, faTrash, faMasksTheater } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-sheet',
@@ -25,7 +25,8 @@ export class SheetComponent implements OnInit {
 
   metadata?: GameMetadata;
   sheet?: Sheet;
-  viewMode!: ViewMode;
+  viewMode: ViewMode = ViewMode.View;
+  mode = ViewMode;
 
   isNewSheet = false;
   games!: GameMetadataOverview[];
@@ -34,19 +35,12 @@ export class SheetComponent implements OnInit {
   iconEdit = faPen;
   iconCancel = faCancel;
   iconDelete = faTrash;
+  iconPlay = faMasksTheater;
 
   constructor(
     private route: ActivatedRoute,
     private sheetService: SheetService
   ) {
-  }
-
-  get isEdit() {
-    return this.viewMode === ViewMode.Edit;
-  }
-
-  get isDelete() {
-    return this.viewMode === ViewMode.Delete;
   }
 
   ngOnInit(): void {
@@ -64,14 +58,14 @@ export class SheetComponent implements OnInit {
 
   getSheet() {
     if (this.sheetId) {
-    this.sheetService.getSheet(this.sheetId!).subscribe(sheet => {
-      this.sheet = sheet;
-      if (!this.metadata || this.metadata.code !== sheet.game) {
-        this.metadata = undefined;
-        this.sheetService.getMetadata(sheet.game).subscribe(game => this.metadata = game);
-      }
-    });
-  }
+      this.sheetService.getSheet(this.sheetId!).subscribe(sheet => {
+        this.sheet = sheet;
+        if (!this.metadata || this.metadata.code !== sheet.game) {
+          this.metadata = undefined;
+          this.sheetService.getMetadata(sheet.game).subscribe(game => this.metadata = game);
+        }
+      });
+    }
   }
 
   prepareNewSheet() {
@@ -120,7 +114,7 @@ export class SheetComponent implements OnInit {
   }
 
   delete() {
-    if (this.isDelete) {
+    if (this.viewMode === ViewMode.Delete) {
       this.sheetService.deleteSheet(this.sheetId!).subscribe(() => {
         this.sheetService.navigateToNewSheet();
       });
@@ -128,5 +122,13 @@ export class SheetComponent implements OnInit {
     } else {
       this.viewMode = ViewMode.Delete;
     }
+  }
+
+  play() {
+    this.viewMode = ViewMode.Play;
+  }
+
+  stop() {
+    this.viewMode = ViewMode.View;
   }
 }

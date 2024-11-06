@@ -38,6 +38,9 @@ export class Sheet {
   }
   private impactValues: string[] = [];
 
+  private _changed = false;
+  get changed() { return this._changed; }
+
   public resolve(code: string) {
     if (code.startsWith("${") && code.endsWith("}")) {
       let expr = code.substring(2, code.length - 1);
@@ -55,7 +58,6 @@ export class Sheet {
         }
       });
       expr = ts.transpile(expr);
-      console.log(this.impactValues);
       return window.eval(expr);
     } else if (code.startsWith("$")) {
       switch (code) {
@@ -82,6 +84,7 @@ export class Sheet {
 
   setNumber(code: string, value: number): void {
     this.numericValues[code] = value;
+    this._changed = true;
   }
 
   public getString(code: string): string {
@@ -98,6 +101,7 @@ export class Sheet {
     } else {
       this.stringValues[code] = value;
     }
+    this._changed = true;
   }
 
   getNumbersStartingWith(prefix: string): { key: string, value: number }[] {
