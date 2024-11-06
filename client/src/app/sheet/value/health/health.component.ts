@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { GameMetadata, GameMetadataEditor, GameMetadataValue } from '../../../_models/gamemetadata';
 import { Sheet } from '../../../_models/sheet';
 import { ViewMode } from '../../../_models/viewmode';
@@ -18,7 +18,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
   templateUrl: './health.component.html',
   styleUrl: './health.component.scss'
 })
-export class HealthComponent {
+export class HealthComponent implements OnInit {
   @Input() value!: GameMetadataValue;
   @Input() editorCode!: string;
   @Input() metadata!: GameMetadata;
@@ -27,6 +27,7 @@ export class HealthComponent {
 
   editor!: GameMetadataEditor;
   levels!: number[];
+  values!: { name: string, tip: string, level: number }[];
 
   iconPlus = faPlus;
   iconMinus = faMinus;
@@ -35,7 +36,7 @@ export class HealthComponent {
     return this.viewMode === ViewMode.Edit || this.viewMode === ViewMode.Play;
   }
 
-  get values() {
+  private computeValues() {
     const valueCodes = this.value.value as string[];
     const health: number[] = [];
     for (let i = valueCodes.length; i > 0; --i) {
@@ -45,7 +46,7 @@ export class HealthComponent {
     }
     const values = this.editor.values!.map((value, index) => ({
       name: value.name,
-      tip: value.tip, 
+      tip: value.tip,
       level: health[index] || 0
     }));
     return values;
@@ -54,6 +55,7 @@ export class HealthComponent {
   ngOnInit(): void {
     this.editor = this.metadata.editors![this.editorCode];
     this.levels = Array(this.editor.types?.values.length).fill(0).map((_, i) => i);
+    this.values = this.computeValues();
   }
 
   minus(level: number) {
@@ -64,6 +66,7 @@ export class HealthComponent {
     } else {
       this.sheet.setNumber(valueCode, Math.max(0, (this.sheet.getNumber(valueCode) || 0) - 1));
     }
+    this.values = this.computeValues();
   }
 
   plus(level: number) {
@@ -75,5 +78,6 @@ export class HealthComponent {
       this.sheet.setNumber(valueCodes[i], Math.min(maxValue, this.sheet.getNumber(valueCodes[i]) || 0));
       maxValue -= this.sheet.getNumber(valueCodes[i]) || 0;
     }
+    this.values = this.computeValues();
   }
 }

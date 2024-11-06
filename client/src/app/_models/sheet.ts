@@ -8,6 +8,10 @@ export class SheetData {
 }
 
 export class Sheet {
+
+  private _changed = false;
+  private _onChange: (() => void)[] = [];
+
   constructor(private data?: SheetData) {
     if (!this.data) {
       this.data = new SheetData();
@@ -38,8 +42,18 @@ export class Sheet {
   }
   private impactValues: string[] = [];
 
-  private _changed = false;
   get changed() { return this._changed; }
+
+  public listenChange(callback: () => void) {
+    this._onChange.push(callback);
+  }
+
+  private onChange(code: string) {
+    this._changed = true;
+    if (this.impactValues.includes(code)) {
+      this._onChange.forEach(callback => callback.call(this));
+    }
+  }
 
   public resolve(code: string) {
     if (code.startsWith("${") && code.endsWith("}")) {
@@ -72,7 +86,7 @@ export class Sheet {
     } else {
       return code;
     }
-    }
+  }
 
   getNumber(code: string): number {
     if (code.startsWith("$")) {
@@ -84,7 +98,7 @@ export class Sheet {
 
   setNumber(code: string, value: number): void {
     this.numericValues[code] = value;
-    this._changed = true;
+    this.onChange(code);
   }
 
   public getString(code: string): string {
@@ -101,7 +115,7 @@ export class Sheet {
     } else {
       this.stringValues[code] = value;
     }
-    this._changed = true;
+    this.onChange(code);
   }
 
   getNumbersStartingWith(prefix: string): { key: string, value: number }[] {

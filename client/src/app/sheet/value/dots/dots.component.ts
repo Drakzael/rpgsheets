@@ -38,6 +38,17 @@ export class DotsComponent implements OnInit {
   ngOnInit(): void {
     this.editor = this.metadata.editors![this.editorCode];
     this.valueCode = this.value.value as string;
+
+    const onChange = (() => {
+      if (this.editor.maxExpr) {
+        this.max = this.sheet.resolve(this.editor.maxExpr);
+      } else {
+        this.max = this.editor.max!;
+      }
+
+    }).bind(this);
+    this.sheet.listenChange(onChange);
+    onChange();
   }
 
   get isEdit(): boolean {
@@ -52,13 +63,7 @@ export class DotsComponent implements OnInit {
     this.sheet.setNumber(this.valueCode, Math.max(this.editor.min || 0, i));
   }
 
-  get max(): number {
-    if (this.editor.maxExpr) {
-      return this.sheet.resolve(this.editor.maxExpr);
-    } else {
-      return this.editor.max!;
-    }
-  }
+  max!: number;
 
   clickDot(i: number) {
     if (this.viewMode === ViewMode.Edit ||
