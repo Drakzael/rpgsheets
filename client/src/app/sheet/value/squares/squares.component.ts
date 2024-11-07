@@ -29,6 +29,7 @@ export class SquaresComponent {
 
   editor!: GameMetadataEditor;
   max!: number;
+  name!: string;
 
   private valueCode!: string;
 
@@ -46,7 +47,6 @@ export class SquaresComponent {
       } else {
         this.max = this.editor.max!;
       }
-
     }).bind(this);
     this.sheet.listenChange(onChange);
     onChange();

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { GameMetadata, GameMetadataValue, ValueType } from '../../_models/gamemetadata';
 import { TextComponent } from './text/text.component';
 import { DotsComponent } from './dots/dots.component';
@@ -23,16 +23,30 @@ import { SquaresComponent } from './squares/squares.component';
   templateUrl: './value.component.html',
   styleUrl: './value.component.scss'
 })
-export class ValueComponent {
+export class ValueComponent implements OnInit {
   @Input() metadata!: GameMetadata;
   @Input() sheet!: Sheet;
   @Input() value!: GameMetadataValue;
   @Input() defaultType?: ValueType;
   @Input() viewMode!: ViewMode;
 
+  name!: string;
+
+  ngOnInit(): void {
+    const onChange = (() => {
+      if (this.value.nameExpr) {
+        this.name = this.sheet.resolve(this.value.nameExpr);
+      } else {
+        this.name = this.value.name!;
+      }
+    }).bind(this);
+    this.sheet.listenChange(onChange);
+    onChange();
+  }
+
   get editorType() {
     let valueType: string = this.value.type || this.defaultType || "text";
-    if (["text", "number", "title"].includes(valueType)) {
+    if (["text", "number", "title", "spacer"].includes(valueType)) {
       return valueType;
     } else {
       return this.metadata.editors![valueType].type;

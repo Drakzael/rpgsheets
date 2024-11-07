@@ -16,10 +16,11 @@ export class GameMetadataEditor {
   }
 }
 
-export type ValueType = "title" | "text" | "number" | string;
+export type ValueType = "title" | "spacer" | "text" | "number" | string;
 
 export class GameMetadataValue {
   name!: string;
+  nameExpr!: string;
   value!: string | string[];
   hint?: string[];
   type?: ValueType;
