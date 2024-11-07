@@ -1,7 +1,8 @@
 .sheet {
-  border: 1px solid black;
-  width: 21cm;
-  padding: 0.5em;
+  width: calc(21cm + 2em);
+  padding: 3em;
+  background-image:url(/img/scroll.png);
+  background-size: 100% 100%;
 }
 
 .rows {
