@@ -32,10 +32,8 @@ export class ValueComponent {
 
   get editorType() {
     let valueType: string = this.value.type || this.defaultType || "text";
-    if (valueType === "text") {
-      return "text";
-    } else if (valueType === "number") {
-      return "number";
+    if (["text", "number", "title"].includes(valueType)) {
+      return valueType;
     } else {
       return this.metadata.editors![valueType].type;
     }

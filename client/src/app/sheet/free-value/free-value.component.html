@@ -1,4 +1,4 @@
-<div class="title">{{ value.name }}</div>
+<div class="title" *ngIf="value.name">{{ value.name }}</div>
 <div class="free-values">
   <app-text *ngIf="editorType === 'text'"
     [sheet]="sheet"

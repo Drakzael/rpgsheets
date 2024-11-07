@@ -17,6 +17,7 @@ export class TextComponent implements OnInit {
   @Input() value!: GameMetadataValue;
   @Input() sheet!: Sheet;
   @Input() viewMode!: ViewMode;
+  mode = ViewMode;
 
   get isEdit(): boolean {
     return !this.value.readonly && this.viewMode === ViewMode.Edit;

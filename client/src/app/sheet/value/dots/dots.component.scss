@@ -3,8 +3,13 @@
   grid-template-columns: auto max-content;
 }
 
+.unamed {
+  display: block;
+  text-align: center;
+}
+
 .name {
-  border-bottom: 1px solid #cccccc;
+  border-bottom: 1px solid #666666;
 }
 
 .values {
@@ -12,6 +17,11 @@
   grid-auto-columns: 1fr;
   grid-auto-flow: column;
   column-gap: 0.1em;
+}
+
+.unamed .values {
+  display: inline-grid;
+  column-gap: 0.4em;
 }
 
 .button {

@@ -26,3 +26,6 @@
   [editorCode]="editor"
   [metadata]="metadata"
   [viewMode]="viewMode"/>
+<div *ngIf="editorType === 'title'" class="title">
+  {{ value.name }}
+</div>

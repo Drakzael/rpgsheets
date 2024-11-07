@@ -1,4 +1,4 @@
-<div *ngIf="row.title !== undefined" class="title">{{ row.title || "&nbsp;" }}</div>
+<div *ngIf="row.title !== undefined" class="title">{{ row.title }}</div>
 <div class="columns">
   <app-column *ngFor="let gridColumn of row.gridColumns"
     [column]="gridColumn"

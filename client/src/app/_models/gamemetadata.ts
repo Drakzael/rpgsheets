@@ -16,7 +16,7 @@ export class GameMetadataEditor {
   }
 }
 
-export type ValueType = "text" | "number" | string;
+export type ValueType = "title" | "text" | "number" | string;
 
 export class GameMetadataValue {
   name!: string;
