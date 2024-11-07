@@ -1,0 +1,4 @@
+<div *ngFor="let row of rows">
+  <div class="value" *ngIf="viewMode !== mode.Edit">{{ row.name }}</div>
+  <input class="value edit" *ngIf="viewMode === mode.Edit" #textInput type="text" (change)="updateRow(row.index, textInput.value)" value="{{ row.name }}"/>
+</div>

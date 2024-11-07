@@ -30,7 +30,7 @@ export class GameMetadataFreeValue {
   name!: string;
   prefix!: string;
   defaultCount!: number;
-  type?: undefined | "number" | string;
+  type?: ValueType;
 }
 
 export class GameMetadataColumn {

@@ -1,14 +1,18 @@
 import { Component, Input } from '@angular/core';
-import { GameMetadata, GameMetadataFreeValue } from '../../_models/gamemetadata';
+import { GameMetadata, GameMetadataFreeValue, ValueType } from '../../_models/gamemetadata';
 import { Sheet } from '../../_models/sheet';
 import { ViewMode } from '../../_models/viewmode';
 import { CommonModule } from '@angular/common';
+import { TextComponent } from './text/text.component';
+import { DotsComponent } from './dots/dots.component';
 
 @Component({
   selector: 'app-free-value',
   standalone: true,
   imports: [
-    CommonModule
+    CommonModule,
+    TextComponent,
+    DotsComponent
   ],
   templateUrl: './free-value.component.html',
   styleUrl: './free-value.component.scss'
@@ -18,21 +22,20 @@ export class FreeValueComponent {
   @Input() sheet!: Sheet;
   @Input() value!: GameMetadataFreeValue;
   @Input() viewMode!: ViewMode;
+  @Input() defaultType?: ValueType;
 
-  get prefix() {
-    return `${this.value.prefix}.`;
+  get editorType() {
+    let valueType: string = this.value.type || this.defaultType || "text";
+    if (valueType === "text") {
+      return "text";
+    } else if (valueType === "number") {
+      return "number";
+    } else {
+      return this.metadata.editors![valueType].type;
+    }
   }
 
-  get rows() {
-    const rows = this.sheet.getNumbersStartingWith(this.prefix)
-      .map(value => ({ name: value.key.substring(this.prefix.length), value: value.value }));
-    if (rows.length < this.value.defaultCount - 1) {
-      for (let i = rows.length; i < this.value.defaultCount; ++i) {
-        rows.push({ name: "", value: 0 });
-      }
-    } else {
-      rows.push({ name: "", value: 0 });
-    }
-    return rows;
+  get editor() {
+    return this.value.type || this.defaultType || "";
   }
 }

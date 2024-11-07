@@ -1,0 +1,30 @@
+.value {
+  // border: none;
+  // border-bottom: 1px solid black;
+  // width: calc(100% - 0.2em);
+  // height: 1.25em;
+  // line-height: 1.25;
+  width: calc(100% - 0.5em);
+  border: none;
+  border-bottom: 1px solid #666666;
+}
+
+.name {
+  border-bottom: 1px solid #cccccc;
+}
+
+.values {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: max-content;
+  column-gap: 0.1em;  
+}
+
+.row {
+  display: grid;
+  grid-template-columns: auto max-content;
+}
+
+.row.edit {
+  width: 100%;
+}

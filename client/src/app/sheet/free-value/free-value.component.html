@@ -1,6 +1,13 @@
+<div class="title">{{ value.name }}</div>
 <div class="free-values">
-  <div class="title">{{ value.name }}</div>
-  <div *ngFor="let row of rows">
-    _{{ row.name }}
-  </div>
+  <app-text *ngIf="editorType === 'text'"
+    [sheet]="sheet"
+    [value]="value"
+    [viewMode]="viewMode"/>
+  <app-dots *ngIf="editorType === 'dots'"
+    [sheet]="sheet"
+    [value]="value"
+    [editorCode]="editor"
+    [metadata]="metadata"
+    [viewMode]="viewMode"/>
 </div>

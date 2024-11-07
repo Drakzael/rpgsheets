@@ -96,8 +96,12 @@ export class Sheet {
     }
   }
 
-  setNumber(code: string, value: number): void {
-    this.numericValues[code] = value;
+  setNumber(code: string, value: number | null): void {
+    if (value === null) {
+      delete this.numericValues[code];
+    } else {
+      this.numericValues[code] = value;
+    }
     this.onChange(code);
   }
 
@@ -109,11 +113,15 @@ export class Sheet {
     }
   }
 
-  setString(code: string, value: string): void {
+  setString(code: string, value: string | null): void {
     if (code === "$sheet.name") {
-      this.name = value;
+      this.name = value as string;
     } else {
-      this.stringValues[code] = value;
+      if (value === null) {
+        delete this.stringValues[code];
+      } else {
+        this.stringValues[code] = value;
+      }
     }
     this.onChange(code);
   }
@@ -124,7 +132,7 @@ export class Sheet {
       .map(key => ({ key, value: this.getNumber(key) }));
   }
 
-  getStringKeysStartingWith(prefix: string): { key: string, value: string }[] {
+  getStringsStartingWith(prefix: string): { key: string, value: string }[] {
     return Object.keys(this.stringValues)
       .filter(key => key.startsWith(prefix))
       .map(key => ({ key, value: this.getString(key) }));

@@ -3,6 +3,10 @@
   grid-template-columns: auto max-content;
 }
 
+.name {
+  border-bottom: 1px solid #cccccc;
+}
+
 .values {
   display: grid;
   grid-auto-columns: 1fr;

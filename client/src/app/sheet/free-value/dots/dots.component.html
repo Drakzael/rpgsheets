@@ -1,0 +1,7 @@
+<div *ngFor="let row of rows" class="row {{ viewMode === mode.Edit ? 'edit' : '' }}">
+  <div *ngIf="viewMode !== mode.Edit" class="name">{{ row.name }}</div>
+  <div *ngIf="viewMode === mode.Edit"><input class="value" #textInput type="text" (change)="updateRow(row.index, textInput.value)" value="{{ row.name }}"/></div>
+  <div class="values">
+  <fa-icon [icon]="i <= row.value ? iconDotFill : iconDotEmpty" *ngFor="let i of values" (click)="clickDot(row.index, i)" class="{{ viewMode === mode.Edit ? 'button' : '' }}"/>
+</div>
+</div>

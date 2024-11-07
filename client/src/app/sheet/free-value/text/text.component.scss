@@ -1,0 +1,11 @@
+.value {
+  border: none;
+  border-bottom: 1px solid #cccccc;
+  width: calc(100% - 0.2em);
+  height: 1.25em;
+  line-height: 1.25;
+}
+
+.value.edit {
+  border-bottom: 1px solid #666666;
+}
