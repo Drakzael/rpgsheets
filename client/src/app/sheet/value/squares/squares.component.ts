@@ -22,6 +22,7 @@ export class SquaresComponent {
   @Input() metadata!: GameMetadata;
   @Input() sheet!: Sheet;
   @Input() viewMode!: ViewMode;
+  mode = ViewMode;
 
   iconSquareFill = faSquareFull;
   iconSquareEmpty = faSquareEmpty;

@@ -23,6 +23,7 @@ export class DotsSquaresComponent implements OnInit {
   @Input() metadata!: GameMetadata;
   @Input() sheet!: Sheet;
   @Input() viewMode!: ViewMode;
+  mode = ViewMode;
 
   editor!: GameMetadataEditor;
   values!: number[];

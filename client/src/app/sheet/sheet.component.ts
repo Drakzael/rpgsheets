@@ -7,7 +7,7 @@ import { ViewMode } from '../_models/viewmode';
 import { SheetService } from '../_services/sheet.service';
 import { ActivatedRoute } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faPen, faSave, faCancel, faTrash, faMasksTheater } from '@fortawesome/free-solid-svg-icons';
+import { faPen, faSave, faCancel, faTrash, faMasksTheater, faDice } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-sheet',
@@ -36,6 +36,7 @@ export class SheetComponent implements OnInit {
   iconCancel = faCancel;
   iconDelete = faTrash;
   iconPlay = faMasksTheater;
+  iconDice = faDice;
 
   constructor(
     private route: ActivatedRoute,
@@ -122,6 +123,10 @@ export class SheetComponent implements OnInit {
     } else {
       this.viewMode = ViewMode.Delete;
     }
+  }
+
+  dice() {
+    this.viewMode = ViewMode.Dice;
   }
 
   play() {

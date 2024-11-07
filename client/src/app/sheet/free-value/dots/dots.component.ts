@@ -23,12 +23,12 @@ export class DotsComponent implements OnInit {
   @Input() metadata!: GameMetadata;
   @Input() sheet!: Sheet;
   @Input() viewMode!: ViewMode;
+  mode = ViewMode;
 
   iconDotFill = faCircleFull;
   iconDotEmpty = faCircleEmpty;
 
   editor!: GameMetadataEditor;
-  mode = ViewMode;
   rows!: { name: string, index: number, value: number }[];
   max!: number;
 

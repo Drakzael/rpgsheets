@@ -1,10 +1,10 @@
 <div class="dots_squares">
   <div class="name" *ngIf="value.name">{{ value.name }}</div>
   <div class="values">
-    <div class="dots">
+    <div class="dots {{ viewMode === mode.Dice ? 'dice' : '' }}">
       <fa-icon [icon]="i <= scoreDots ? iconDotFill : iconDotEmpty" *ngFor="let i of values" (click)="clickDot(i)"/>
     </div>
-    <div class="squares">
+    <div class="squares {{ viewMode === mode.Dice ? 'dice' : '' }}">
       <fa-icon [icon]="i <= scoreSquares ? iconSquareFill : iconSquareEmpty" *ngFor="let i of values" (click)="clickSquare(i)"/>
     </div>
   </div>
