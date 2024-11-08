@@ -1,7 +1,13 @@
 <div class="text">
   <div *ngIf="value.name">{{ value.name }}</div>
   <div *ngIf="viewMode !== mode.Edit" class="value">{{ text }}</div>
-  <div *ngIf="viewMode === mode.Edit">
+  <div *ngIf="viewMode === mode.Edit && value.hint">
+    <input #textValue class="value" [attr.list]="inputId" type="text" (change)="updateText(textValue.value)" value="{{ text }}" />
+    <datalist id="{{ inputId }}">
+      <option *ngFor="let hint of value.hint" [value]="hint">
+    </datalist>
+  </div>
+  <div *ngIf="viewMode === mode.Edit && !value.hint">
     <input #textValue class="value" type="text" (change)="updateText(textValue.value)" value="{{ text }}" />
   </div>
 </div>

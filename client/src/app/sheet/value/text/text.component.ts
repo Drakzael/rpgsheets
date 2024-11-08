@@ -4,6 +4,8 @@ import { ViewMode } from '../../../_models/viewmode';
 import { Sheet } from '../../../_models/sheet';
 import { CommonModule } from '@angular/common';
 
+let uniqueId = 0;
+
 @Component({
   selector: 'app-text',
   standalone: true,
@@ -18,6 +20,7 @@ export class TextComponent implements OnInit {
   @Input() sheet!: Sheet;
   @Input() viewMode!: ViewMode;
   mode = ViewMode;
+  inputId = `text-input-${uniqueId++}`;
 
   get isEdit(): boolean {
     return !this.value.readonly && this.viewMode === ViewMode.Edit;
