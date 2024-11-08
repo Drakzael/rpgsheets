@@ -1,0 +1,5 @@
+<div class="number">
+  <div *ngIf="value.name">{{ value.name }}</div>
+  <div *ngIf="viewMode !== mode.Edit" class="value">{{ numValue }}</div>
+  <input *ngIf="viewMode === mode.Edit" class="value" #numberValue type="number" (change)="updateValue(numberValue.value)" value="{{ numValue }}" />
+</div>

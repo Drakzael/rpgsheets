@@ -9,6 +9,7 @@ import { Sheet } from '../../_models/sheet';
 import { HealthComponent } from './health/health.component';
 import { SquaresComponent } from './squares/squares.component';
 import { FreeValueComponent } from '../free-value/free-value.component';
+import { NumberComponent } from './number/number.component';
 
 @Component({
   selector: 'app-value',
@@ -16,6 +17,7 @@ import { FreeValueComponent } from '../free-value/free-value.component';
   imports: [
     CommonModule,
     TextComponent,
+    NumberComponent,
     DotsComponent,
     SquaresComponent,
     DotsSquaresComponent,

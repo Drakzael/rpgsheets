@@ -3,6 +3,10 @@
     [sheet]="sheet"
     [value]="value"
     [viewMode]="viewMode"/>
+  <app-number *ngIf="editorType === 'number'"
+    [sheet]="sheet"
+    [value]="value"
+    [viewMode]="viewMode"/>
   <app-dots *ngIf="editorType === 'dots'"
     [sheet]="sheet"
     [value]="value"
