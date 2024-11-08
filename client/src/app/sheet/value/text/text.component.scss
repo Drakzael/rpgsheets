@@ -5,8 +5,18 @@
 
 .value {
   border: none;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #666666;
   width: calc(100% - 0.5em - 2em);
   margin-left: 2em;
   text-align: right;
+  line-height: 1.25;
+  height: 1.325em;
+}
+
+input.value {
+  height: 1.3em;
+  border: 1px solid #999999;
+  border-top-color: #666666;
+  border-left-color: #666666;
+  background-color: rgba(white, 25%);
 }
