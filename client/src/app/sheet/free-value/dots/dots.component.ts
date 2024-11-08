@@ -7,6 +7,8 @@ import { faCircle as faCircleFull } from '@fortawesome/free-solid-svg-icons';
 import { faCircle as faCircleEmpty } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
+let uniqueId = 0;
+
 @Component({
   selector: 'app-dots',
   standalone: true,
@@ -31,6 +33,8 @@ export class DotsComponent implements OnInit {
   editor!: GameMetadataEditor;
   rows!: { name: string, index: number, value: number }[];
   max!: number;
+  inputId = `free-dot-input-${uniqueId++}`;
+  hints?: string[];
 
   ngOnInit(): void {
     this.editor = this.metadata.editors![this.editorCode];
@@ -46,6 +50,7 @@ export class DotsComponent implements OnInit {
     }).bind(this);
     this.sheet.listenChange(onChange);
     onChange();
+    this.updateHint();
   }
 
   get prefix() {
@@ -89,6 +94,13 @@ export class DotsComponent implements OnInit {
     // remove additionnal rows
     for (let i = this.rows.length - 1; i >= this.value.defaultCount && !this.rows[i].name && !this.rows[i - 1].name; --i) {
       this.rows.pop();
+    }
+    this.updateHint();
+  }
+
+  updateHint() {
+    if (this.value.hint) {
+      this.hints = this.value.hint.filter(hint => !this.rows.find(row => row.name === hint));
     }
   }
 

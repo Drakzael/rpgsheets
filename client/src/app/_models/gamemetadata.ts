@@ -39,6 +39,7 @@ export class GameMetadataFreeValue {
   prefix!: string;
   defaultCount!: number;
   editor?: ValueType;
+  hint?: string[]; // text
 }
 
 export class GameMetadataColumn {

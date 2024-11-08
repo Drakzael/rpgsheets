@@ -4,6 +4,8 @@ import { GameMetadataFreeValue } from '../../../_models/gamemetadata';
 import { ViewMode } from '../../../_models/viewmode';
 import { CommonModule } from '@angular/common';
 
+let uniqueId = 0;
+
 @Component({
   selector: 'app-text',
   standalone: true,
@@ -20,6 +22,7 @@ export class TextComponent implements OnInit {
 
   mode = ViewMode;
   rows!: { name: string, index: number }[];
+  inputId = `free-text-input-${uniqueId++}`;
 
   ngOnInit(): void {
     this.rows = this.computeRows();

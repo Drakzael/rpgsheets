@@ -1,4 +1,8 @@
 <div *ngFor="let row of rows">
-  <div class="value" *ngIf="viewMode !== mode.Edit">{{ row.name }}</div>
-  <input class="value edit" *ngIf="viewMode === mode.Edit" #textInput type="text" (change)="updateRow(row.index, textInput.value)" value="{{ row.name }}"/>
+  <div *ngIf="viewMode !== mode.Edit" class="value">{{ row.name }}</div>
+  <input *ngIf="viewMode === mode.Edit && value.hint" #textValue class="value edit" type="text" (change)="updateRow(row.index, textValue.value)" value="{{ row.name }}" [attr.list]="inputId"/>
+  <input *ngIf="viewMode === mode.Edit && !value.hint" #textValue class="value edit" type="text" (change)="updateRow(row.index, textValue.value)" value="{{ row.name }}"/>
 </div>
+<datalist id="{{ inputId }}" *ngIf="viewMode === mode.Edit && value.hint">
+  <option *ngFor="let hint of value.hint" [value]="hint">
+</datalist>
