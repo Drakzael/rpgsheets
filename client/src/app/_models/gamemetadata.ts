@@ -16,22 +16,27 @@ export class GameMetadataEditor {
   }
 }
 
-export type ValueType = "title" | "spacer" | "text" | "number" | string;
+export type RowType = "title" | "spacer" | "value" | "freeValue";
+export type ValueType = "text" | "number" | string;
 
 export class GameMetadataValue {
   name!: string;
   nameExpr!: string;
-  value!: string | string[];
-  hint?: string[];
-  type?: ValueType;
-  readonly?: boolean;
+  type?: RowType;
+  editor?: ValueType; // value, freeValue
+  value!: string; // value
+  values!: string[]; // value.dots_squares
+  hint?: string[]; // text
+  readonly?: boolean; // text
+  prefix!: string; // freeValue
+  defaultCount!: number; // freeValue
 }
 
 export class GameMetadataFreeValue {
   name!: string;
   prefix!: string;
   defaultCount!: number;
-  type?: ValueType;
+  editor?: ValueType;
 }
 
 export class GameMetadataColumn {

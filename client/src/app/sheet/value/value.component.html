@@ -1,32 +1,43 @@
-<app-text *ngIf="editorType === 'text'"
+<ng-container *ngIf="type === 'value'">
+  <app-text *ngIf="editorType === 'text'"
+    [sheet]="sheet"
+    [value]="value"
+    [viewMode]="viewMode"/>
+  <app-dots *ngIf="editorType === 'dots'"
+    [sheet]="sheet"
+    [value]="value"
+    [editorCode]="editorCode"
+    [metadata]="metadata"
+    [viewMode]="viewMode"/>
+  <app-squares *ngIf="editorType === 'squares'"
+    [sheet]="sheet"
+    [value]="value"
+    [editorCode]="editorCode"
+    [metadata]="metadata"
+    [viewMode]="viewMode"/>
+  <app-dots-squares *ngIf="editorType === 'dots_squares'"
+    [sheet]="sheet"
+    [value]="value"
+    [editorCode]="editorCode"
+    [metadata]="metadata"
+    [viewMode]="viewMode"/>
+  <app-health *ngIf="editorType === 'health'"
+    [sheet]="sheet"
+    [value]="value"
+    [editorCode]="editorCode"
+    [metadata]="metadata"
+    [viewMode]="viewMode"/>
+</ng-container>
+
+<app-free-value *ngIf="type === 'freeValue'"
   [sheet]="sheet"
   [value]="value"
-  [viewMode]="viewMode"/>
-<app-dots *ngIf="editorType === 'dots'"
-  [sheet]="sheet"
-  [value]="value"
-  [editorCode]="editor"
   [metadata]="metadata"
+  [defaultType]="editorCode"
   [viewMode]="viewMode"/>
-<app-squares *ngIf="editorType === 'squares'"
-  [sheet]="sheet"
-  [value]="value"
-  [editorCode]="editor"
-  [metadata]="metadata"
-  [viewMode]="viewMode"/>
-<app-dots-squares *ngIf="editorType === 'dots_squares'"
-  [sheet]="sheet"
-  [value]="value"
-  [editorCode]="editor"
-  [metadata]="metadata"
-  [viewMode]="viewMode"/>
-<app-health *ngIf="editorType === 'health'"
-  [sheet]="sheet"
-  [value]="value"
-  [editorCode]="editor"
-  [metadata]="metadata"
-  [viewMode]="viewMode"/>
-<div *ngIf="editorType === 'title'" class="title">
+
+  <div *ngIf="type === 'title'" class="title">
   {{ name }}
 </div>
-<div *ngIf="editorType === 'spacer'" class="spacer"></div>
+
+<div *ngIf="type === 'spacer'" class="spacer"></div>

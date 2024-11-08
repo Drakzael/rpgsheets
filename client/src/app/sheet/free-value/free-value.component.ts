@@ -25,7 +25,7 @@ export class FreeValueComponent {
   @Input() defaultType?: ValueType;
 
   get editorType() {
-    let valueType: string = this.value.type || this.defaultType || "text";
+    let valueType: string = this.value.editor || this.defaultType || "text";
     if (valueType === "text") {
       return "text";
     } else if (valueType === "number") {
@@ -36,6 +36,6 @@ export class FreeValueComponent {
   }
 
   get editor() {
-    return this.value.type || this.defaultType || "";
+    return this.value.editor || this.defaultType || "";
   }
 }

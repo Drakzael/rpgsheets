@@ -62,11 +62,11 @@ export class DotsSquaresComponent implements OnInit {
   }
 
   dotValueName() {
-    return (this.value.value as string[])[0];
+    return this.value.values[0];
   }
 
   squareValueName() {
-    return (this.value.value as string[])[1]
+    return this.value.values[1];
   }
 
   clickDot(i: number) {

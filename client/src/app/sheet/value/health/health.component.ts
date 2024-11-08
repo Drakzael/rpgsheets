@@ -37,10 +37,9 @@ export class HealthComponent implements OnInit {
   }
 
   private computeValues() {
-    const valueCodes = this.value.value as string[];
     const health: number[] = [];
-    for (let i = valueCodes.length; i > 0; --i) {
-      for (let j = 0; j < this.sheet.getNumber(valueCodes[i - 1]); ++j) {
+    for (let i = this.value.values.length; i > 0; --i) {
+      for (let j = 0; j < this.sheet.getNumber(this.value.values[i - 1]); ++j) {
         health.push(i);
       }
     }
@@ -59,8 +58,7 @@ export class HealthComponent implements OnInit {
   }
 
   minus(level: number) {
-    const valueCodes = this.value.value as string[];
-    const valueCode = valueCodes[level];
+    const valueCode = this.value.values[level];
     if ((this.sheet.getNumber(valueCode) || 0) === 0) {
       level > 0 && this.minus(level - 1);
     } else {
@@ -70,13 +68,12 @@ export class HealthComponent implements OnInit {
   }
 
   plus(level: number) {
-    const valueCodes = this.value.value as string[];
-    const valueCode = valueCodes[level];
+    const valueCode = this.value.values[level];
     this.sheet.setNumber(valueCode, (this.sheet.getNumber(valueCode) || 0) + 1);
     let maxValue = this.editor.values!.length;
     for (let i = this.editor.types?.values.length! - 1; i >= 0; --i) {
-      this.sheet.setNumber(valueCodes[i], Math.min(maxValue, this.sheet.getNumber(valueCodes[i]) || 0));
-      maxValue -= this.sheet.getNumber(valueCodes[i]) || 0;
+      this.sheet.setNumber(this.value.values[i], Math.min(maxValue, this.sheet.getNumber(this.value.values[i]) || 0));
+      maxValue -= this.sheet.getNumber(this.value.values[i]) || 0;
     }
     this.values = this.computeValues();
   }

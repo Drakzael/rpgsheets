@@ -24,7 +24,7 @@ export class TextComponent implements OnInit {
   }
 
   get text(): string {
-    return this.sheet.getString(this.value.value as string);
+    return this.sheet.getString(this.value.value);
   }
 
   get hints(): string[] | undefined {
@@ -32,7 +32,7 @@ export class TextComponent implements OnInit {
   }
 
   set text(s: string) {
-    this.sheet.setString(this.value.value as string, s);
+    this.sheet.setString(this.value.value, s);
   }
 
   ngOnInit(): void {

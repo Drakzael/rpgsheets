@@ -31,7 +31,6 @@ export class SquaresComponent {
   max!: number;
   name!: string;
 
-  private valueCode!: string;
 
   get values(): number[] {
     return Array(this.max).fill(0).map((_, i) => i + 1);
@@ -39,7 +38,6 @@ export class SquaresComponent {
 
   ngOnInit(): void {
     this.editor = this.metadata.editors![this.editorCode];
-    this.valueCode = this.value.value as string;
 
     const onChange = (() => {
       if (this.editor.maxExpr) {
@@ -57,11 +55,11 @@ export class SquaresComponent {
   }
 
   get score(): number {
-    return this.sheet.getNumber(this.valueCode) || this.editor.min || 0;
+    return this.sheet.getNumber(this.value.value) || this.editor.min || 0;
   }
 
   set score(i: number) {
-    this.sheet.setNumber(this.valueCode, Math.max(this.editor.min || 0, i));
+    this.sheet.setNumber(this.value.value, Math.max(this.editor.min || 0, i));
   }
 
   clickBox(i: number) {

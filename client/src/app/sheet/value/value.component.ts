@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { GameMetadata, GameMetadataValue, ValueType } from '../../_models/gamemetadata';
+import { GameMetadata, GameMetadataValue, RowType, ValueType } from '../../_models/gamemetadata';
 import { TextComponent } from './text/text.component';
 import { DotsComponent } from './dots/dots.component';
 import { CommonModule } from '@angular/common';
@@ -8,6 +8,7 @@ import { ViewMode } from '../../_models/viewmode';
 import { Sheet } from '../../_models/sheet';
 import { HealthComponent } from './health/health.component';
 import { SquaresComponent } from './squares/squares.component';
+import { FreeValueComponent } from '../free-value/free-value.component';
 
 @Component({
   selector: 'app-value',
@@ -18,7 +19,8 @@ import { SquaresComponent } from './squares/squares.component';
     DotsComponent,
     SquaresComponent,
     DotsSquaresComponent,
-    HealthComponent
+    HealthComponent,
+    FreeValueComponent
   ],
   templateUrl: './value.component.html',
   styleUrl: './value.component.scss'
@@ -31,8 +33,24 @@ export class ValueComponent implements OnInit {
   @Input() viewMode!: ViewMode;
 
   name!: string;
+  type?: RowType;
+  editorType!: ValueType;
+  editorCode!: string;
 
   ngOnInit(): void {
+    this.type = this.value.type || "value";
+    this.editorCode = this.value.editor || this.defaultType || "text";
+    
+    if (["text", "number"].includes(this.editorCode)) {
+      this.editorType = this.editorCode;
+    } else {
+      if (this.metadata.editors![this.editorCode]) {
+        this.editorType = this.metadata.editors![this.editorCode].type;
+      } else {
+        console.warn(`Couldn't find editor ${this.editorCode}`);
+      }
+    }
+
     const onChange = (() => {
       if (this.value.nameExpr) {
         this.name = this.sheet.resolve(this.value.nameExpr);
@@ -42,18 +60,5 @@ export class ValueComponent implements OnInit {
     }).bind(this);
     this.sheet.listenChange(onChange);
     onChange();
-  }
-
-  get editorType() {
-    let valueType: string = this.value.type || this.defaultType || "text";
-    if (["text", "number", "title", "spacer"].includes(valueType)) {
-      return valueType;
-    } else {
-      return this.metadata.editors![valueType].type;
-    }
-  }
-
-  get editor() {
-    return this.value.type || this.defaultType || "";
   }
 }
