@@ -26,6 +26,7 @@ export class GameMetadataValue {
   editor?: ValueType; // value, freeValue
   value!: string; // value
   values!: string[]; // value.dots_squares
+  nameValue!: string; // value (code for modifying name)
   hint?: string[]; // text
   readonly?: boolean; // text
   prefix!: string; // freeValue

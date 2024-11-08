@@ -29,6 +29,8 @@ export class DotsComponent implements OnInit {
   iconDotEmpty = faCircleEmpty;
 
   editor!: GameMetadataEditor;
+  max!: number;
+  name!: string;
 
   get values(): number[] {
     return Array(this.max).fill(0).map((_, i) => i + 1);
@@ -36,6 +38,11 @@ export class DotsComponent implements OnInit {
 
   ngOnInit(): void {
     this.editor = this.metadata.editors![this.editorCode];
+    if (this.value.nameValue) {
+      this.name = this.sheet.getString(this.value.nameValue) || this.value.name;
+    } else {
+      this.name = this.value.name;
+    }
 
     const onChange = (() => {
       if (this.editor.maxExpr) {
@@ -61,8 +68,13 @@ export class DotsComponent implements OnInit {
     this.sheet.setNumber(this.value.value, Math.max(this.editor.min || 0, i));
   }
 
-  max!: number;
-
+  updateName(name: string) {
+    if (this.value.nameValue) {
+      this.name = name || this.value.name;
+      this.sheet.setString(this.value.nameValue, name || null);
+    }
+  }
+ 
   clickDot(i: number) {
     if (this.viewMode === ViewMode.Edit ||
       this.viewMode === ViewMode.Play && this.editor.freeEdit) {
