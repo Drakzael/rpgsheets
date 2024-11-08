@@ -5,6 +5,7 @@ export class GameMetadataEditor {
   min?: number;
   max?: number;
   maxExpr?: string;
+  defaultValue?: string | number;
   freeEdit?: boolean = false;
   freeEditDots?: boolean = false;
   freeEditSquares?: boolean = false;

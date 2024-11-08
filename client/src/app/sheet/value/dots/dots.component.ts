@@ -61,7 +61,12 @@ export class DotsComponent implements OnInit {
   }
 
   get score(): number {
-    return this.sheet.getNumber(this.value.value) || this.editor.min || 0;
+    let value = this.sheet.getNumber(this.value.value);
+    if (value === undefined) {
+      return this.editor.defaultValue as number || this.editor.min || 0;
+    } else {
+      return value;
+    }
   }
 
   set score(i: number) {
