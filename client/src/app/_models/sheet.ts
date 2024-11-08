@@ -1,4 +1,4 @@
-import * as ts from "typescript";
+// import { transpile } from "typescript";
 
 export class SheetData {
   name: string = "";
@@ -71,7 +71,7 @@ export class Sheet {
           expr = expr.replace(`${match}`, "''");
         }
       });
-      expr = ts.transpile(expr);
+      // expr = transpile(expr);
       return window.eval(expr);
     } else if (code.startsWith("$")) {
       switch (code) {
