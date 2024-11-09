@@ -1,7 +1,9 @@
 <ng-container *ngIf="type === 'value'">
-  <app-text *ngIf="editorType === 'text'"
+  <app-text *ngIf="editorType === 'text' || editorType === 'longText'"
     [sheet]="sheet"
     [value]="value"
+    [editorCode]="editorCode"
+    [metadata]="metadata"
     [viewMode]="viewMode"/>
   <app-number *ngIf="editorType === 'number'"
     [sheet]="sheet"

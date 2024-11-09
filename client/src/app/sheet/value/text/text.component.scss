@@ -20,3 +20,20 @@ input.value {
   border-left-color: #666666;
   background-color: rgba(white, 25%);
 }
+
+.longValue {
+  border: 1px solid #999999;
+  border-top-color: #666666;
+  border-left-color: #666666;
+  background-color: rgba(white, 5%);
+  white-space:pre-wrap;
+ }
+
+textarea.longValue {
+  border: 1px solid #999999;
+  border-top-color: #666666;
+  border-left-color: #666666;
+  background-color: rgba(white, 25%);
+  width: calc(100% - 0.5em);
+  resize: none;
+}

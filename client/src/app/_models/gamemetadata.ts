@@ -1,7 +1,7 @@
 import { Icon } from "./icon";
 
 export class GameMetadataEditor {
-  type!: "text" | "dots" | "squares" | "dots_squares" | "health";
+  type!: "number" | "text" | "dots" | "squares" | "dots_squares" | "health";
   min?: number;
   max?: number;
   maxExpr?: string;
@@ -31,7 +31,7 @@ export class GameMetadataValue {
   hint?: string[]; // text
   readonly?: boolean; // text
   prefix!: string; // freeValue
-  defaultCount!: number; // freeValue
+  defaultCount!: number; // freeValue, longText
 }
 
 export class GameMetadataFreeValue {

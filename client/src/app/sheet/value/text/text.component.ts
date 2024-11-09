@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { GameMetadataValue } from '../../../_models/gamemetadata';
+import { GameMetadata, GameMetadataEditor, GameMetadataValue } from '../../../_models/gamemetadata';
 import { ViewMode } from '../../../_models/viewmode';
 import { Sheet } from '../../../_models/sheet';
 import { CommonModule } from '@angular/common';
@@ -19,8 +19,15 @@ export class TextComponent implements OnInit {
   @Input() value!: GameMetadataValue;
   @Input() sheet!: Sheet;
   @Input() viewMode!: ViewMode;
+  @Input() editorCode!: string;
+  @Input() metadata!: GameMetadata;
+  editor!: GameMetadataEditor;
+  
+  inputId?: string;
   mode = ViewMode;
-  inputId = `text-input-${uniqueId++}`;
+  rowCount?: number;
+  multiline = false; 
+  formattedText?: string;
 
   get isEdit(): boolean {
     return !this.value.readonly && this.viewMode === ViewMode.Edit;
@@ -36,9 +43,21 @@ export class TextComponent implements OnInit {
 
   set text(s: string) {
     this.sheet.setString(this.value.value, s);
+    if (this.multiline) {
+      this.formattedText = this.sheet.format(s);
+    }
   }
 
   ngOnInit(): void {
+    this.editor = this.metadata.editors![this.editorCode];
+    if (this.value.hint) {
+      this.inputId = `text-input-${uniqueId++}`;
+    }
+    this.multiline = Boolean(this.value.defaultCount) || Boolean(this.editor?.max) || false;
+    this.rowCount = this.value.defaultCount || this.editor?.max;
+    if (this.multiline) {
+      this.formattedText = this.sheet.format(this.text);
+    }
   }
 
   updateText(s: string) {

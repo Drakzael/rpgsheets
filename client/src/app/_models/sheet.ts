@@ -88,6 +88,11 @@ export class Sheet {
     }
   }
 
+  public format(text: string) {
+    return text?.replaceAll("<", "&lt;").replaceAll(">", "&gt;")
+      .replaceAll(/-([a-zA-Z0-9]+)-/g, "<strike>$1</strike>");
+  }
+
   getNumber(code: string): number {
     if (code.startsWith("$")) {
       return this.resolve(code) as number;

@@ -43,7 +43,7 @@ export class ValueComponent implements OnInit {
     this.type = this.value.type || "value";
     this.editorCode = this.value.editor || this.defaultType || "text";
     
-    if (["text", "number"].includes(this.editorCode)) {
+    if (["text", "longText", "number"].includes(this.editorCode)) {
       this.editorType = this.editorCode;
     } else {
       if (this.metadata.editors![this.editorCode]) {
