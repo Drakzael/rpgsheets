@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.devordie.rpgsheets.entities.Sheet;
 import com.devordie.rpgsheets.entities.SheetOverviewResponse;
 import com.devordie.rpgsheets.services.SheetService;
-import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.List;
 

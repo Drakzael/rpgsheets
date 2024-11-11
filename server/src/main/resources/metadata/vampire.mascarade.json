@@ -1,0 +1,204 @@
+{
+  "name": "Vampire (Mascarade)",
+  "code": "vampire.mascarade",
+  "modes": {
+    "darkage": "Age des Tenebres",
+    "apocalypse": "Mascarade"
+  },
+  "editors": {
+    "attribute": { "type": "dots", "min": 1, "maxExpr": "${ $general.generation ? Math.max(5, 13 - $general.generation) : 5 }" },
+    "attribute.appearance": { "type": "dots", "min": 1, "maxExpr": "${ $general.clan === 'Nosferatu' ? 0 : $general.generation ? Math.max(5, 13 - $general.generation) : 5 }" },
+    "ability": { "type": "dots", "maxExpr": "${ $general.generation ? Math.max(5, 13 - $general.generation) : 5 }" },
+    "background": { "type": "dots", "max": 5 },
+    "discipline": { "type": "dots", "maxExpr": "${ $general.generation ? Math.max(5, 13 - $general.generation) : 5 }" },
+    "willpower": { "type": "dots_squares", "max": 10, "overlap": false, "freeEditSquares": true },
+    "blood": { "type": "squares", "maxExpr": "${ if ($general.generation) switch (Number($general.generation)) { case 4: 50; break; case 5: 40; break; case 6: 30; break; case 7: 20; break; default: Math.max(10, 23 - Number($general.generation)); break; } else 10 }", "freeEdit": true },
+    "path": { "type": "dots", "max": 10 },
+    "virtue": { "type": "dots", "defaultValue": 1, "max": 5 },
+    "health": {
+      "type": "health",
+      "values": [
+        { "name": "Contusion" },
+        { "name": "Blessure légère", "tip": "-1" },
+        { "name": "Blessure moyenne", "tip": "-1" },
+        { "name": "Blessure grave", "tip": "-2" },
+        { "name": "Handicap", "tip": "-2" },
+        { "name": "Infirmité", "tip": "-5" },
+        { "name": "Invalidité", "tip": "X" }
+      ],
+      "types": {
+        "defaultIcon": { "viewBox": "0 0 512 512", "path": "M 104.99979 25.000024 C 93.919804 25.000024 84.99998 33.919848 84.99998 44.999837 L 84.99998 455.00013 C 84.99998 466.08012 93.919804 474.99995 104.99979 474.99995 L 384.99976 474.99995 C 396.07974 474.99995 405.00009 466.08012 405.00009 455.00013 L 405.00009 44.999837 C 405.00009 33.919848 396.07974 25.000024 384.99976 25.000024 L 104.99979 25.000024 z M 137.85722 65.000167 L 352.14285 65.000167 C 359.2657 65.000167 364.99994 71.037548 364.99994 78.536808 L 364.99994 421.46316 C 364.99994 428.96242 359.2657 434.9998 352.14285 434.9998 L 137.85722 434.9998 C 130.73437 434.9998 125.00012 428.96242 125.00012 421.46316 L 125.00012 78.536808 C 125.00012 71.037548 130.73437 65.000167 137.85722 65.000167 z" },
+        "values": [{
+          "name": "Contondants",
+          "overlap": true,
+          "icon": { "viewBox": "0 0 512 512", "path": "M 104.99979 25.000024 C 93.919818 25.000024 84.99998 33.919859 84.99998 44.999837 L 84.99998 455.00013 C 84.99998 466.08011 93.919818 474.99995 104.99979 474.99995 L 384.99976 474.99995 C 396.07972 474.99995 405.00009 466.08011 405.00009 455.00013 L 405.00009 44.999837 C 405.00009 33.919859 396.07972 25.000024 384.99976 25.000024 L 104.99979 25.000024 z M 137.85722 65.000167 L 333.55793 65.000167 L 125.00012 391.46448 L 125.00012 78.536808 C 125.00012 71.037556 130.73438 65.000167 137.85722 65.000167 z M 364.99994 108.65693 L 364.99994 421.46316 C 364.99994 428.96242 359.26569 434.9998 352.14285 434.9998 L 156.52016 434.9998 L 364.99994 108.65693 z" }
+        }, {
+          "name": "Létaux",
+          "icon": { "viewBox": "0 0 512 512", "path": "M 104.99979 25.000024 C 93.919832 25.000024 84.99998 33.91987 84.99998 44.999837 L 84.99998 455.00013 C 84.99998 466.0801 93.919832 474.99995 104.99979 474.99995 L 384.99976 474.99995 C 396.0797 474.99995 405.00009 466.0801 405.00009 455.00013 L 405.00009 44.999837 C 405.00009 33.91987 396.0797 25.000024 384.99976 25.000024 L 104.99979 25.000024 z M 157.32218 65.000167 L 333.55793 65.000167 L 245.60413 202.67755 L 157.32218 65.000167 z M 125.00012 107.22343 L 215.96149 249.07885 L 125.00012 391.46448 L 125.00012 107.22343 z M 364.99994 108.65693 L 364.99994 388.87756 L 275.32531 249.02873 L 364.99994 108.65693 z M 245.68268 295.43003 L 335.17799 434.9998 L 156.52016 434.9998 L 245.68268 295.43003 z" }
+        }, {
+          "name": "Aggravés",
+          "icon": { "viewBox": "0 0 512 512", "path": "M 104.99979 25.000024 C 93.919846 25.000024 84.99998 33.919881 84.99998 44.999837 L 84.99998 455.00013 C 84.99998 466.08009 93.919846 474.99995 104.99979 474.99995 L 384.99976 474.99995 C 396.07968 474.99995 405.00009 466.08009 405.00009 455.00013 L 405.00009 44.999837 C 405.00009 33.919881 396.07968 25.000024 384.99976 25.000024 L 104.99979 25.000024 z M 157.32218 65.000167 L 220.00001 65.000167 L 220.00001 162.74769 L 157.32218 65.000167 z M 270.00006 65.000167 L 333.55793 65.000167 L 270.00006 164.4897 L 270.00006 65.000167 z M 125.00012 107.22343 L 197.3156 220.00001 L 125.00012 220.00001 L 125.00012 107.22343 z M 364.99994 108.65693 L 364.99994 220.00001 L 293.86992 220.00001 L 364.99994 108.65693 z M 125.00012 270.00006 L 202.59642 270.00006 L 125.00012 391.46448 L 125.00012 270.00006 z M 288.77255 270.00006 L 364.99994 270.00006 L 364.99994 388.87756 L 288.77255 270.00006 z M 270.00006 333.3533 L 335.17799 434.9998 L 270.00006 434.9998 L 270.00006 333.3533 z M 220.00001 335.63223 L 220.00001 434.9998 L 156.52016 434.9998 L 220.00001 335.63223 z" }
+        }]
+      }
+    }
+  },
+  "gridRows": [{
+    "defaultType": "text",
+    "gridColumns": [{
+      "rows": [
+        { "name": "Nom", "value": "$sheet.name" },
+        { "name": "Joueur", "readonly": true, "value": "$sheet.player" }
+      ]
+    }, {
+      "rows": [
+        { "name": "Nature", "value": "general.nature" },
+        { "name": "Attitude", "value": "general.attitude" },
+        { "name": "Concept", "value": "general.concept" }
+      ]
+    }, {
+      "rows": [
+        { "name": "Clan", "value": "general.clan", "hint": [ "Nosferatu", "Tzimisce", "Ventrue" ] },
+        { "name": "Génération", "value": "general.generation", "defaultValue": "${ 12 - $background.generation }" },
+        { "name": "Sire", "value": "general.sire" }
+      ]
+    }]
+  }, {
+    "title": "Attributs",
+    "defaultType": "attribute",
+    "gridColumns": [{
+      "title": "Physique",
+      "rows": [
+        { "name": "Force", "value": "attribute.strength" },
+        { "name": "Dextérité", "value": "attribute.dexterity" },
+        { "name": "Vigueur", "value": "attribute.stamina" }
+      ]
+    }, {
+      "title": "Social",
+      "rows": [
+        { "name": "Charisme", "value": "attribute.charisma" },
+        { "name": "Manipulation", "value": "attribute.manipulation" },
+        { "name": "Apparence", "value": "attribute.appearance", "editor": "attribute.appearance" }
+      ]
+    }, {
+      "title": "Mental",
+      "rows": [
+        { "name": "Perception", "value": "attribute.perception" },
+        { "name": "Intelligence", "value": "attribute.intelligence" },
+        { "name": "Astuce", "value": "attribute.wits" }
+      ]
+    }]
+  }, {
+    "title": "Capacités",
+    "defaultType": "ability",
+    "gridColumns": [{
+      "title": "Talents",
+      "rows": [
+        { "name": "Athlétisme", "value": "ability.athletics" },
+        { "name": "Bagarre", "value": "ability.brawl" },
+        { "name": "Commandement", "value": "ability.command" },
+        { "name": "Empathie", "value": "ability.empathy" },
+        { "name": "Exp. de la rue", "value": "ability.streetWise" },
+        { "name": "Expression", "value": "ability.expression" },
+        { "name": "Intimidation", "value": "ability.intimidation" },
+        { "name": "Intuition", "value": "ability.intuition" },
+        { "name": "Subterfuge", "value": "ability.subterfuge" },
+        { "name": "Vigilance", "value": "ability.alertness" },
+        { "type": "freeValue", "prefix": "ability.additionnal.talents" }
+      ]
+    }, {
+      "title": "Compétences",
+      "rows": [
+        { "name": "Animaux", "value": "ability.animalKen" },
+        { "name": "Armes à feu", "value": "ability.firearms" },
+        { "name": "Artisanat", "value": "ability.craftmanship" },
+        { "name": "Conduite", "value": "ability.drive" },
+        { "name": "Etiquette", "value": "ability.etiquette" },
+        { "name": "Furtivité", "value": "ability.stealth" },
+        { "name": "Larcin", "value": "ability.stealing" },
+        { "name": "Mélée", "value": "ability.melee" },
+        { "name": "Représentation", "value": "ability.performance" },
+        { "name": "Survie", "value": "ability.survival" },
+        { "type": "freeValue", "prefix": "ability.additionnal.skills" }
+      ]
+    }, {
+      "title": "Connaissances",
+      "rows": [
+        { "name": "Droit", "value": "ability.law" },
+        { "name": "Erudition", "value": "ability.erudition" },
+        { "name": "Finances", "value": "ability.financials" },
+        { "name": "Informatique", "value": "ability.computer" },
+        { "name": "Investigation", "value": "ability.investigation" },
+        { "name": "Médecine", "value": "ability.medecine" },
+        { "name": "Occultisme", "value": "ability.occult" },
+        { "name": "Politique", "value": "ability.politics" },
+        { "name": "Sciences", "value": "ability.science" },
+        { "name": "Technologies", "value": "ability.technology" },
+        { "type": "freeValue", "prefix": "ability.additionnal.knowledges" }
+      ]
+    }]
+  }, {
+    "title": "Avantages",
+    "gridColumns": [{
+      "title": "Disciplines",
+      "rows": [
+        { "type": "freeValue", "prefix": "discipline", "defaultCount": 6, "editor": "discipline", "hint": [
+          "Aliénation", "Animalisme", "Auspex", "Célérité", "Chimérie", "Domination", "Force d'âme", "Obténétration", "Occultation", "Présence", "Protéisme", "Puissance", "Quietus", "Serpentis", "Vicissitude", "Nécromancie", "Thaumaturgie"
+        ] }
+      ]
+    }, {
+      "defaultType": "background",
+      "title": "Historiques",
+      "rows": [
+        { "name": "Génération", "value": "background.generation" },
+        { "type": "freeValue", "prefix": "backgrounds", "defaultCount": 5 }
+      ]
+    }, {
+      "title": "Vertus",
+      "defaultType": "virtue",
+      "rows": [
+        { "type": "spacer" },
+        { "name": "Conscience/Conviction", "nameValue": "virtue.conscience.name", "value": "virtue.conscience.value" },
+        { "name": "Maitrise de soi/Instinct", "nameValue": "virtue.instinct.name", "value": "virtue.instinct.value" },
+        { "name": "Courage", "nameValue": "virtue.courage.name", "value": "virtue.courage.value" }
+      ]
+    }]
+  }, {
+    "title": "",
+    "gridColumns": [{
+      "rows": [
+        { "type": "title", "name": "Atouts" },
+        { "type": "freeValue", "prefix": "advantage.advantage", "defaultCount": 4 },
+        { "type": "spacer" },
+        { "type": "title", "name": "Faiblesses" },
+        { "type": "freeValue", "prefix": "advantage.weakness", "defaultCount": 4 }
+      ]
+    }, {
+      "rows": [
+        { "type": "title", "name": "Voie" },
+        { "type": "value", "editor": "text", "value": "path.path" },
+        { "type": "value", "editor": "path", "value": "path.score" },
+        { "type": "spacer" },
+        { "type": "title", "name": "Volonté" },
+        { "type": "value", "editor": "willpower", "values": ["willpower.max", "willpower.current"] },
+        { "type": "spacer" },
+        { "type": "title", "name": "Points de Sang", "nameExpr": "${ let blood = 1; switch (Number($general.generation)) { case 4: blood = 10; break; case 5: blood = 8; break; case 6: blood = 6; break; case 7: blood = 4; break; case 8: blood = 3; break; case 9: blood = 2; break; default: break; } 'Points de Sang (max ' + blood + ' / tour)'; }" },
+        { "type": "value", "editor": "blood", "value": "blood.value" }
+      ]
+    }, {
+      "rows": [
+        { "name": "Santé", "editor": "health", "values": [ "health.blunt", "health.lethal", "health.aggravated" ] },
+        { "type": "spacer" },
+        { "type": "title", "name": "Expérience" },
+        { "editor": "text", "value": "character.experience", "defaultCount": 2 }
+      ]
+    }]
+  }, {
+    "title": "Notes",
+    "pageBreak": true,
+    "gridColumns": [{
+      "rows": [
+        { "editor": "text", "defaultCount": 30, "value": "notes.1" }
+      ]
+    }]
+  }]
+}
