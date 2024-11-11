@@ -17,13 +17,14 @@ export class GameMetadataEditor {
   }
 }
 
-export type RowType = "title" | "spacer" | "value" | "freeValue";
+export type RowType = "title" | "note" | "spacer" | "value" | "freeValue";
 export type ValueType = "text" | "number" | string;
 
 export class GameMetadataValue {
   name!: string;
   nameExpr!: string;
   type?: RowType;
+  mode?: string;
   editor?: ValueType; // value, freeValue
   value!: string; // value
   values!: string[]; // value.dots_squares
@@ -54,11 +55,13 @@ export class GameMetadataRow {
   title?: string;
   gridColumns!: GameMetadataColumn[];
   defaultType?: ValueType;
+  pageBreak?: boolean;
 }
 
 export class GameMetadata {
   name!: string;
   code!: string;
+  modes?: { name: string, code: string }[];
   editors?: { [key: string] : GameMetadataEditor };
   gridRows!: GameMetadataRow[];
 }

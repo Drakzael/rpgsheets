@@ -9,8 +9,8 @@
     <button *ngIf="viewMode === mode.Edit || viewMode === mode.Delete" (click)="cancel()"><fa-icon [icon]="iconCancel" title="Annuler"/></button>
     <button *ngIf="viewMode === mode.Play || viewMode === mode.Dice" (click)="stop()"><fa-icon [icon]="iconCancel" title="Annuler"/></button>
   </div>
-  <div class="sheet rows">
-    <app-row *ngFor="let gridRow of metadata.gridRows"
+  <div class="sheet rows" *ngFor="let page of pages">
+    <app-row *ngFor="let gridRow of page"
       [row]="gridRow"
       [metadata]="metadata"
       [sheet]="sheet"

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GameMetadata, GameMetadataOverview } from '../_models/gamemetadata';
+import { GameMetadata, GameMetadataOverview, GameMetadataRow } from '../_models/gamemetadata';
 import { Sheet } from '../_models/sheet';
 import { RowComponent } from './row/row.component';
 import { CommonModule } from '@angular/common';
@@ -42,6 +42,22 @@ export class SheetComponent implements OnInit {
     private route: ActivatedRoute,
     private sheetService: SheetService
   ) {
+  }
+
+  get pages() {
+    const pages = [];
+    if (this.metadata) {
+      let page: GameMetadataRow[] = [];
+      pages.push(page);
+      for (let row of this.metadata.gridRows) {
+        if (row.pageBreak) {
+          page = [];
+          pages.push(page);
+        }
+        page.push(row);
+      }
+    }
+    return pages;
   }
 
   ngOnInit(): void {

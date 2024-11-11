@@ -3,6 +3,7 @@
 export class SheetData {
   name: string = "";
   game!: string;
+  mode?: string;
   numericValues: { [key: string]: number } = {};
   stringValues: { [key: string]: string } = {};
 }

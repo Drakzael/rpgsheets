@@ -1,5 +1,5 @@
 <ng-container *ngIf="type === 'value'">
-  <app-text *ngIf="editorType === 'text' || editorType === 'longText'"
+  <app-text *ngIf="editorType === 'text'"
     [sheet]="sheet"
     [value]="value"
     [editorCode]="editorCode"
@@ -42,8 +42,7 @@
   [defaultType]="editorCode"
   [viewMode]="viewMode"/>
 
-  <div *ngIf="type === 'title'" class="title">
-  {{ name }}
-</div>
+<div *ngIf="type === 'title'" class="title">{{ name }}</div>
+<div *ngIf="type === 'note'" class="note">{{ name }}</div>
 
 <div *ngIf="type === 'spacer'" class="spacer"></div>
