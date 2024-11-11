@@ -57,7 +57,7 @@
       ]
     }, {
       "rows": [
-        { "name": "Clan", "value": "general.clan", "hint": [ "Nosferatu", "Tzimisce", "Ventrue" ] },
+        { "name": "Clan", "value": "general.clan", "hint": [ "Assamite", "Brujah", "Disciple de Set", "Gangrel", "Giovanni", "Lasombra", "Malkavien", "Nosferatu", "Ravnos", "Toréador", "Tremere", "Tzimisce", "Ventrue" ] },
         { "name": "Génération", "value": "general.generation", "defaultValue": "${ 12 - $background.generation }" },
         { "name": "Sire", "value": "general.sire" }
       ]
@@ -150,7 +150,9 @@
       "title": "Historiques",
       "rows": [
         { "name": "Génération", "value": "background.generation" },
-        { "type": "freeValue", "prefix": "backgrounds", "defaultCount": 5 }
+        { "type": "freeValue", "prefix": "backgrounds", "defaultCount": 5, "hint": [
+          "Alliés", "Contacts", "Domaine", "Fausse identité", "Influence", "Membre de la main noire", "Mentor", "Renommée", "Ressources", "Rites", "Servants", "Statut", "Troupeau"
+        ] }
       ]
     }, {
       "title": "Vertus",
