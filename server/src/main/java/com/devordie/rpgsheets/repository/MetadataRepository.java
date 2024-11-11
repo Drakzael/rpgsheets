@@ -64,7 +64,7 @@ public class MetadataRepository extends LocalRepository {
           metadata.add(node);
         }
       } catch (IOException ex) {
-        throw new IllegalStateException("Can't list sheet files", ex);
+        throw new IllegalStateException("Can't list metadata files in " + LOCAL_METADATA_DIRECTORY, ex);
       }
       try (Stream<Path> files = Files.list(this.getBasePath().resolve(LOCAL_SOURCE_DIRECTORY))) {
         for (final Path file : files.filter(file -> file.toString().endsWith(".json")).toList()) {
@@ -80,7 +80,7 @@ public class MetadataRepository extends LocalRepository {
           }
         }
       } catch (IOException ex) {
-        throw new IllegalStateException("Can't list sheet files", ex);
+        throw new IllegalStateException("Can't list metadata files in " + LOCAL_SOURCE_DIRECTORY, ex);
       }
     }
     return metadata;
@@ -93,7 +93,7 @@ public class MetadataRepository extends LocalRepository {
   }
 
   public JsonNode getMetadata(String id) {
-    metadata = null; // FIXME restore cache
+    // metadata = null; // FIXME restore cache
     return getMetadata().stream()
         .filter(json -> json.get("code").asText().equals(id))
         .findFirst().orElse(null);
