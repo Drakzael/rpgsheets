@@ -62,6 +62,7 @@ export class DotsComponent implements OnInit {
   }
 
   computeRows() {
+    this.cleanRows();
     const rows = this.sheet.getNumbersStartingWith(this.prefix)
       .map((value, index) => ({ name: value.key.substring(this.prefix.length), index, value: value.value }));
     if (rows.length < this.value.defaultCount - 1) {
@@ -95,7 +96,15 @@ export class DotsComponent implements OnInit {
     for (let i = this.rows.length - 1; i >= this.value.defaultCount && !this.rows[i].name && !this.rows[i - 1].name; --i) {
       this.rows.pop();
     }
+    this.cleanRows();
     this.updateHint();
+  }
+
+  private cleanRows() {
+    this.sheet.getNumbersStartingWith(this.prefix)
+      .map((value, _) => value.key.substring(this.prefix.length))
+      .filter(value => !value)
+      .forEach(name => this.sheet.setString(`${this.prefix}${name}`, null));
   }
 
   updateHint() {
@@ -107,6 +116,9 @@ export class DotsComponent implements OnInit {
   clickDot(index: number, value: number) {
     if (this.viewMode === ViewMode.Edit ||
       this.viewMode === ViewMode.Play && this.editor.freeEdit) {
+      if (!this.rows[index].name) {
+        return;
+      }
       if (value === this.rows[index].value) {
         value = this.rows[index].value - 1;
       }
