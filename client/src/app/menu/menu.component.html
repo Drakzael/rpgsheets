@@ -5,7 +5,19 @@
     <button (click)="logout()" title="Déconnexion" class="icon-button"><fa-icon [icon]="iconLogout" /></button>
   </div>
 
+  <div class="campains">
+    <div class="title">Campagnes</div>
+    <div *ngFor="let campain of campains">
+      <div [routerLink]="['/campain', campain.id]" class="campain link">{{ campain.name === "" ? "Campagne sans nom": campain.name }}</div>
+      <div *ngFor="let sheet of campain.sheets">
+        <div [routerLink]="['/sheet', sheet.id]" class="campainsheet link">{{ sheet.name === "" ? "Fiche sans nom" : sheet.name }}</div>
+      </div>
+    </div>
+    <div [routerLink]="['/campain', 'new']" class="link">Nouvelle campagne</div>
+  </div>
+
   <div class="sheets">
+    <div class="title">Personnages</div>
     <div *ngFor="let sheet of sheets">
       <div [routerLink]="['/sheet', sheet.id]" class="link">{{ sheet.name === "" ? "Fiche sans nom" : sheet.name }}</div>
     </div>
@@ -13,4 +25,5 @@
       <div [routerLink]="['/sheet', 'new']" class="link">Nouvelle feuille</div>
     </div>
   </div>
+
 </nav>

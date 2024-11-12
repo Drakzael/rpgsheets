@@ -7,9 +7,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Sheet implements ISheet {
   @JsonIgnore
   private String id;
+  private String username;
 
   private String name;
-  private String username;
+  private String userAlias;
   private String game;
   private Map<String, Integer> numericValues;
   private Map<String, String> stringValues;
@@ -38,6 +39,15 @@ public class Sheet implements ISheet {
 
   public Sheet setUsername(String username) {
     this.username = username;
+    return this;
+  }
+
+  public String getUserAlias() {
+    return userAlias;
+  }
+
+  public Sheet setUserAlias(String userAlias) {
+    this.userAlias = userAlias;
     return this;
   }
 

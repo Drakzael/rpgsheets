@@ -80,6 +80,6 @@ export class SheetService {
   }
 
   navigateToNewSheet() {
-    this.router.navigate(["/sheet"]);
+    this.router.navigate(["/sheet/new"]);
   }
 }

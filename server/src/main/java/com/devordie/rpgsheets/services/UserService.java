@@ -21,12 +21,12 @@ public class UserService {
     return userRepository.findAll();
   }
 
-  public User findByUsename(String username) {
+  public User findByUsername(String username) {
     return allUsers().stream().filter(user -> user.getUsername().equals(username)).findFirst().orElseGet(null);
   }
 
-public User getCurrentUser() {
-        Authentication authenticationToken = SecurityContextHolder.getContext().getAuthentication();
-        return (User)authenticationToken.getPrincipal();
-    }
+  public User getCurrentUser() {
+    Authentication authenticationToken = SecurityContextHolder.getContext().getAuthentication();
+    return (User) authenticationToken.getPrincipal();
   }
+}

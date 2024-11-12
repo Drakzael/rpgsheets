@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.devordie.rpgsheets.entities.Sheet;
 import com.devordie.rpgsheets.entities.SheetOverview;
+import com.devordie.rpgsheets.services.UserService;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -18,6 +19,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class SheetRepository extends LocalRepository {
   private static final ObjectMapper MAPPER = new ObjectMapper()
       .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+  private final UserService userService;
+
+  public SheetRepository(UserService userService) {
+    this.userService = userService;
+  }
 
   public List<SheetOverview> listAllSheets() {
     try (Stream<Path> files = Files.list(getSheetsPath())) {
@@ -35,9 +41,9 @@ public class SheetRepository extends LocalRepository {
 
   public Sheet getSheet(String sheetId) {
     try {
-      return MAPPER
-          .readValue(Files.readAllBytes(getSheetPath(sheetId)), Sheet.class)
-          .setId(sheetId);
+      final Sheet sheet = MAPPER
+          .readValue(Files.readAllBytes(getSheetPath(sheetId)), Sheet.class);
+      return sheet.setUserAlias(this.userService.findByUsername(sheet.getUsername()).getAlias()).setId(sheetId);
     } catch (IOException ex) {
       throw new IllegalStateException();
     }

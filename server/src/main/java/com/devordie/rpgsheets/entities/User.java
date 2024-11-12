@@ -16,6 +16,10 @@ public class User implements UserDetails {
     return username;
   }
 
+  public String getLogin() {
+    return getUsername();
+  }
+
   @Override
   public String getPassword() {
     return password;

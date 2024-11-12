@@ -39,4 +39,30 @@ public abstract class LocalRepository {
     }
     return false;
   }
+
+  protected Path getRepositoryPath() {
+    throw new IllegalStateException("Not implemented");
+  }
+
+  protected String getNewId() {
+    try {
+      if (!Files.exists(getRepositoryPath())) {
+        Files.createDirectories(getRepositoryPath());
+      }
+
+    } catch (IOException ex) {
+      throw new IllegalStateException(ex);
+    }
+    Integer i = 1;
+    while (Files.exists(getRepositoryPath().resolve(i.toString() + ".json"))) {
+      ++i;
+    }
+    try {
+      Files.createFile(getRepositoryPath().resolve(i.toString() + ".json"));
+      return i.toString();
+    } catch (IOException ex) {
+      throw new IllegalStateException();
+    }
+  }
+
 }

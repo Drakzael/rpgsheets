@@ -6,6 +6,7 @@ import { AccountService } from '../_services/account.service';
 import { User } from '../_models/user';
 import { faUser, faSignOut } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { CampainService } from '../_services/campain.service';
 
 @Component({
   selector: 'app-menu',
@@ -28,9 +29,14 @@ export class MenuComponent implements OnInit {
     return this.sheetService.sheets;
   }
 
+  get campains() {
+    return this.campainService.campains;
+  }
+
   constructor(
     private accountService: AccountService,
-    private sheetService: SheetService
+    private sheetService: SheetService,
+    private campainService: CampainService
   ) {
     this.accountService.user.subscribe(user => this.user = user);
   }

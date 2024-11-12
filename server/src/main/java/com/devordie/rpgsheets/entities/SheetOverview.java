@@ -2,6 +2,7 @@ package com.devordie.rpgsheets.entities;
 
 public class SheetOverview implements ISheet {
   private String name;
+  private String userAlias;
   private String username;
   private String id;
 
@@ -13,8 +14,8 @@ public class SheetOverview implements ISheet {
     return name;
   }
 
-  public String getUsername() {
-    return username;
+  public String getUserAlias() {
+    return userAlias;
   }
 
   public SheetOverview setId(String id) {
@@ -25,6 +26,15 @@ public class SheetOverview implements ISheet {
   public SheetOverview setName(String name) {
     this.name = name;
     return this;
+  }
+
+  public SheetOverview setUserAlias(String userAlias) {
+    this.userAlias = userAlias;
+    return this;
+  }
+
+  public String getUsername() {
+    return username;
   }
 
   public SheetOverview setUsername(String username) {

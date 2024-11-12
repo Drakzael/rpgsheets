@@ -1,0 +1,21 @@
+<div class="actions">
+  <button *ngIf="viewMode === mode.Edit" (click)="save()"><fa-icon [icon]="iconSave" title="Sauvegarder"/></button>
+  <button *ngIf="viewMode === mode.View" (click)="edit()" title="Editer"><fa-icon [icon]="iconEdit"/></button>
+  <button *ngIf="viewMode === mode.View" (click)="delete()"><fa-icon [icon]="iconDelete" title="Supprimer"/></button>
+  <button *ngIf="viewMode === mode.Delete" (click)="delete()" class="delete"><fa-icon [icon]="iconDelete" title="Supprimer"/></button>
+  <button *ngIf="viewMode === mode.Edit || viewMode === mode.Delete" (click)="cancel()"><fa-icon [icon]="iconCancel" title="Annuler"/></button>
+</div>
+<div *ngIf="viewMode !== mode.Edit" class="campain">
+  <div class="name">{{ campain?.name }}</div>
+  <div class="description">{{ campain?.description }}</div>
+  <div class="characters">
+    <div *ngFor="let sheet of campain?.sheets">{{ sheet.name }}</div>
+  </div>
+</div>
+<div *ngIf="viewMode === mode.Edit" class="campain">
+  <div>Nom de la campagne : <input #inputName type="text" class="name" value="{{ campain?.name }}" (change)="updateName(inputName.value)"></div>
+  <div>
+    <div>Description :</div>
+    <textarea #inputDescription class="description" (change)="updateDescription(inputDescription.value)" rows="20">{{ campain?.description }}</textarea>
+  </div>
+</div>

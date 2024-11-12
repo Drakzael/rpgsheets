@@ -34,10 +34,12 @@ public class SheetService {
   }
 
   public String createSheet(Sheet sheet) {
-    return sheetRepository.createSheet(sheet.setUsername(userService.getCurrentUser().getUsername()));
+    return sheetRepository.createSheet(sheet.setUserAlias(userService.getCurrentUser().getAlias()));
   }
 
   public void saveSheet(Sheet sheet) {
+    final Sheet refSheet = getSheet(sheet.getId());
+    sheet.setUsername(refSheet.getUsername());
     if (isWritable(sheet)) {
       sheetRepository.saveSheet(sheet);
     }
@@ -49,8 +51,12 @@ public class SheetService {
     }
   }
 
+  public boolean isReadable(String sheetId) {
+    return isReadable(getSheet(sheetId));
+  }
+
   public boolean isReadable(ISheet sheet) {
-    return sheet.getUsername().equals(userService.getCurrentUser().getUsername());
+    return sheet != null && sheet.getUsername().equals(userService.getCurrentUser().getUsername());
   }
 
   public boolean isWritable(String sheetId) {
@@ -58,6 +64,6 @@ public class SheetService {
   }
 
   public boolean isWritable(ISheet sheet) {
-    return sheet.getUsername().equals(userService.getCurrentUser().getUsername());
+    return sheet != null && sheet.getUsername().equals(userService.getCurrentUser().getUsername());
   }
 }

@@ -1,0 +1,41 @@
+.campain {
+  width: 21cm;
+  min-height: 15cm;
+  padding: 2em;
+  background-image:url(/img/scroll-1.png);
+  background-size: 100% 100%;
+}
+
+.actions {
+  text-align:right;
+}
+
+.actions button {
+  border: 1px solid #333333;
+  border-radius: 0.5em;
+  background-color: #dddddd;
+  display: inline-block;
+  width: 2em;
+  height: 2em;
+  margin: 0.2em;
+}
+
+.actions button.delete {
+  animation: dblink 1.2s infinite;
+}
+
+@keyframes dblink {
+  0%,50% {background-color: #cc0000;}
+  50%,75% {background-color: #dddddd;}
+  75%,100% {background-color: #cc0000;}
+}
+
+div.name {
+  font-size: 2em;
+  text-align: center;
+  text-decoration: underline;
+}
+
+div.description {
+  white-space:pre-wrap;
+}

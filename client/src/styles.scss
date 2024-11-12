@@ -4,3 +4,20 @@ html {
   background-color: #333;
   font-size: 0.9em;
 }
+
+textarea, input[type=text] {
+  border: 1px solid #999999;
+  border-top-color: #666666;
+  border-left-color: #666666;
+  background-color: rgba(white, 25%);
+}
+
+textarea {
+  width: calc(100% - 0.5em);
+  resize: none;
+}
+
+input[type=text] {
+  height: 1.3em;
+  width: calc(100% - 0.5em);
+}
