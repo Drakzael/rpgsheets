@@ -34,7 +34,7 @@ public class SheetService {
   }
 
   public String createSheet(Sheet sheet) {
-    return sheetRepository.createSheet(sheet.setUserAlias(userService.getCurrentUser().getAlias()));
+    return sheetRepository.createSheet(sheet.setUsername(userService.getCurrentUser().getUsername()));
   }
 
   public void saveSheet(Sheet sheet) {
