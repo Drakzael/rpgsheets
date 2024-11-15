@@ -84,7 +84,7 @@ public class CampainService {
         campain.getUsername().equals(userService.getCurrentUser().getUsername()) ||
         campain.getSheetIds().stream()
             .map(id -> sheetService.getSheet(id))
-            .anyMatch(sheet -> sheet.getUsername().equals(userService.getCurrentUser().getUsername()));
+            .anyMatch(sheet -> sheet != null && sheet.getUsername().equals(userService.getCurrentUser().getUsername()));
   }
 
   public boolean isWritable(String campainId) {

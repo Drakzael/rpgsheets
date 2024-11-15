@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { User } from './_models/user';
 import { AccountService } from './_services/account.service';
 import { CommonModule } from '@angular/common';
 import { MenuComponent } from './menu/menu.component';
+import { UserToken } from './_models/user';
 
 @Component({
   selector: 'app-root',
@@ -18,7 +18,7 @@ import { MenuComponent } from './menu/menu.component';
 })
 export class AppComponent {
   title = 'rpgsheets';
-  user?: User | null;
+  user?: UserToken | null;
 
   constructor(private accountService: AccountService) {
     this.accountService.user.subscribe(user => this.user = user);

@@ -3,6 +3,15 @@ nav {
 }
 
 .user {
+  text-align: right;
+}
+
+.user div {
+  display: inline-block;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-left: 0.3em;
+  margin-right: 0.5em;
 }
 
 .campains, .sheets {

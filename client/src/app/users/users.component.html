@@ -1,0 +1,13 @@
+<div class="page">
+  <div class="users">
+    <div>
+      <div class="login">Login</div>
+      <div class="alias">Alias</div>
+    </div>
+    <div class="row" *ngFor="let user of users" [routerLink]="['/user', user.username]">
+      <div>{{ user.username }}</div>
+      <div>{{ user.alias }}</div>
+    </div>
+  </div>
+  <button [routerLink]="['/user', 'new']">Nouvel utilisateur</button>
+</div>

@@ -1,0 +1,36 @@
+.page {
+  width: 21cm;
+  background-color: #bbb;
+  padding: 2em;
+}
+
+.users {
+  display: table;
+  border-top: 1px solid #666;
+  border-left: 1px solid #666;
+}
+
+.users > div {
+  display: table-row;
+}
+
+.users .row:hover {
+  cursor: pointer;
+  background-color: orange;
+}
+
+.users > div > div {
+  display: table-cell;
+  border-bottom: 1px solid #666;
+  border-right: 1px solid #666;
+}
+
+.login {
+  width: 8em;
+  font-weight: bold;
+}
+
+.alias {
+  width: 20em;
+  font-weight: bold;
+}

@@ -3,10 +3,10 @@ import { SheetService } from '../_services/sheet.service';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AccountService } from '../_services/account.service';
-import { User } from '../_models/user';
-import { faUser, faSignOut } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faSignOut, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CampainService } from '../_services/campain.service';
+import { Role, User } from '../_models/user';
 
 @Component({
   selector: 'app-menu',
@@ -21,9 +21,11 @@ import { CampainService } from '../_services/campain.service';
 })
 export class MenuComponent implements OnInit {
 
-  user?: User | null;
+  me?: User | null;
   iconUser = faUser;
+  iconUsers = faUsers;
   iconLogout = faSignOut;
+  Role = Role;
 
   get sheets() {
     return this.sheetService.sheets;
@@ -38,10 +40,11 @@ export class MenuComponent implements OnInit {
     private sheetService: SheetService,
     private campainService: CampainService
   ) {
-    this.accountService.user.subscribe(user => this.user = user);
+    this.accountService.me.subscribe(me => this.me = me);
   }
 
   ngOnInit(): void {
+    this.accountService.refreshMe();
   }
 
   logout() {

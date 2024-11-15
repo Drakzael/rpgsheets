@@ -1,20 +1,32 @@
 package com.devordie.rpgsheets.services;
 
 import java.util.List;
+import java.util.Random;
+import java.util.Set;
+import java.util.stream.Collectors;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.devordie.rpgsheets.entities.Role;
 import com.devordie.rpgsheets.entities.User;
 import com.devordie.rpgsheets.repository.UserRepository;
 
-@Service
-public class UserService {
-  private final UserRepository userRepository;
+import jakarta.annotation.PostConstruct;
 
-  public UserService(UserRepository userRepository) {
+@Service
+public final class UserService {
+  private static final Log LOGGER = LogFactory.getLog(UserService.class);
+  private final UserRepository userRepository;
+  private final PasswordEncoder passwordEncoder;
+
+  public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
     this.userRepository = userRepository;
+    this.passwordEncoder = passwordEncoder;
   }
 
   public List<User> allUsers() {
@@ -22,11 +34,85 @@ public class UserService {
   }
 
   public User findByUsername(String username) {
-    return allUsers().stream().filter(user -> user.getUsername().equals(username)).findFirst().orElseGet(null);
+    return userRepository.findAll().stream().filter(user -> user.getUsername().equals(username)).findFirst()
+        .orElseGet(null);
   }
 
   public User getCurrentUser() {
-    Authentication authenticationToken = SecurityContextHolder.getContext().getAuthentication();
+    final Authentication authenticationToken = SecurityContextHolder.getContext().getAuthentication();
     return (User) authenticationToken.getPrincipal();
+  }
+
+  @PostConstruct
+  public void checkUsers() {
+    if (userRepository.findAll().stream().anyMatch(user -> user.hasRole(Role.Admin))) {
+      return;
+    }
+    LOGGER.warn("No admin user found. Creating one.");
+    String username = "admin";
+    int suffix = 0;
+    final Set<String> usernames = userRepository.findAll().stream().map(user -> user.getUsername())
+        .collect(Collectors.toSet());
+
+    while (usernames.contains(username)) {
+      username = "admin" + suffix;
+      ++suffix;
+    }
+    final int leftLimit = Math.max('0', Math.max('a', 'A'));
+    final int rightLimit = Math.max('9', Math.max('z', 'Z'));
+    final int targetStringLength = 10;
+    final Random random = new Random();
+
+    final String password = random.ints(leftLimit, rightLimit + 1)
+        .filter(i -> (i >= '0' && i <= '9') || (i >= 'A' && i <= 'Z') || (i >= 'a' && i <= 'z'))
+        .limit(targetStringLength)
+        .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+        .toString();
+
+    userRepository.createUser(new User()
+        .setUsername(username)
+        .setPassword(passwordEncoder.encode(password))
+        .setRoles(Set.of(Role.Admin)));
+
+    LOGGER.warn("Creating user '" + username + "' with password '" + password + "'");
+    LOGGER.warn("It is suggested you either change this password or create another admin account and remove this one.");
+  }
+
+  public String createUser(User user) {
+    if (getCurrentUser().hasRole(Role.Admin)) {
+      return userRepository.createUser(user);
+    } else {
+      return null;
+    }
+  }
+
+  public void updateUser(User user) {
+    if (getCurrentUser().getUsername().equals(user.getUsername()) ||
+        getCurrentUser().hasRole(Role.Admin)) {
+      final User originalUser = findByUsername(user.getUsername());
+      user.setPassword(originalUser.getPassword());
+      if (getCurrentUser().getUsername().equals(user.getUsername())) {
+        user.setRoles(originalUser.getRoles());
+      }
+      userRepository.updateUser(user);
+    }
+  }
+
+  public void updatePassword(String username, String oldPassword, String newPassword) {
+    final User user = findByUsername(username);
+    if (getCurrentUser().getUsername().equals(user.getUsername()) ||
+        getCurrentUser().hasRole(Role.Admin)) {
+      if (!getCurrentUser().getUsername().equals(user.getUsername()) ||
+          user.getPassword().equals(passwordEncoder.encode(oldPassword))) {
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.updateUser(user);
+      }
+    }
+  }
+
+  public void deleteUser(String username) {
+    if (getCurrentUser().hasRole(Role.Admin)) {
+      userRepository.deleteUser(username);
+    }
   }
 }

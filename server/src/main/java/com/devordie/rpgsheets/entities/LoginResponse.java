@@ -2,17 +2,8 @@ package com.devordie.rpgsheets.entities;
 
 public class LoginResponse {
 
-  private String alias;
   private String token;
   private long expiresIn;
-
-  public LoginResponse() {
-
-  }
-
-  public String getAlias() {
-    return alias;
-  }
 
   public String getToken() {
     return token;
@@ -20,11 +11,6 @@ public class LoginResponse {
 
   public long getExpiresIn() {
     return expiresIn;
-  }
-
-  public LoginResponse setAlias(String alias) {
-    this.alias = alias;
-    return this;
   }
 
   public LoginResponse setToken(String token) {

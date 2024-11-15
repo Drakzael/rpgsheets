@@ -1,8 +1,15 @@
-<nav *ngIf="user">
+<nav *ngIf="me">
   <div class="user">
     <fa-icon [icon]="iconUser" />
-    {{ user.alias }}
+    <div [routerLink]="['/user', me.username]">{{ me.alias || me.username }}</div>
     <button (click)="logout()" title="Déconnexion" class="icon-button"><fa-icon [icon]="iconLogout" /></button>
+  </div>
+
+  <div class="users" *ngIf="me.roles?.includes(Role.Admin)">
+    <div class="link" [routerLink]="['/users']">
+      <fa-icon [icon]="iconUsers" />
+      Utilisateurs
+    </div>
   </div>
 
   <div class="campains">
