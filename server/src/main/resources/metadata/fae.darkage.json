@@ -1,0 +1,203 @@
+{
+  "name": "Fée (Age des ténèbres)",
+  "code": "fae.darkage",
+  "editors": {
+    "attribute": { "type": "dots", "min": 1, "max": 6 },
+    "ability": { "type": "dots", "min": 0, "max": 5 },
+    "dominion": { "type": "dots", "max": 5 },
+    "background": { "type": "dots", "max": 5 },
+    "willpower": { "type": "dots_squares", "max": 10, "overlap": false, "freeEditSquares": true },
+    "health": {
+      "type": "health",
+      "values": [
+        { "name": "Contusion" },
+        { "name": "Blessure légère", "tip": "-1" },
+        { "name": "Blessure moyenne", "tip": "-1" },
+        { "name": "Blessure grave", "tip": "-2" },
+        { "name": "Handicap", "tip": "-2" },
+        { "name": "Infirmité", "tip": "-5" },
+        { "name": "Invalidité", "tip": "X" }
+      ],
+      "types": {
+        "defaultIcon": { "viewBox": "0 0 512 512", "path": "M 104.99979 25.000024 C 93.919804 25.000024 84.99998 33.919848 84.99998 44.999837 L 84.99998 455.00013 C 84.99998 466.08012 93.919804 474.99995 104.99979 474.99995 L 384.99976 474.99995 C 396.07974 474.99995 405.00009 466.08012 405.00009 455.00013 L 405.00009 44.999837 C 405.00009 33.919848 396.07974 25.000024 384.99976 25.000024 L 104.99979 25.000024 z M 137.85722 65.000167 L 352.14285 65.000167 C 359.2657 65.000167 364.99994 71.037548 364.99994 78.536808 L 364.99994 421.46316 C 364.99994 428.96242 359.2657 434.9998 352.14285 434.9998 L 137.85722 434.9998 C 130.73437 434.9998 125.00012 428.96242 125.00012 421.46316 L 125.00012 78.536808 C 125.00012 71.037548 130.73437 65.000167 137.85722 65.000167 z" },
+        "values": [{
+          "name": "Contondants",
+          "overlap": true,
+          "icon": { "viewBox": "0 0 512 512", "path": "M 104.99979 25.000024 C 93.919818 25.000024 84.99998 33.919859 84.99998 44.999837 L 84.99998 455.00013 C 84.99998 466.08011 93.919818 474.99995 104.99979 474.99995 L 384.99976 474.99995 C 396.07972 474.99995 405.00009 466.08011 405.00009 455.00013 L 405.00009 44.999837 C 405.00009 33.919859 396.07972 25.000024 384.99976 25.000024 L 104.99979 25.000024 z M 137.85722 65.000167 L 333.55793 65.000167 L 125.00012 391.46448 L 125.00012 78.536808 C 125.00012 71.037556 130.73438 65.000167 137.85722 65.000167 z M 364.99994 108.65693 L 364.99994 421.46316 C 364.99994 428.96242 359.26569 434.9998 352.14285 434.9998 L 156.52016 434.9998 L 364.99994 108.65693 z" }
+        }, {
+          "name": "Létaux",
+          "icon": { "viewBox": "0 0 512 512", "path": "M 104.99979 25.000024 C 93.919832 25.000024 84.99998 33.91987 84.99998 44.999837 L 84.99998 455.00013 C 84.99998 466.0801 93.919832 474.99995 104.99979 474.99995 L 384.99976 474.99995 C 396.0797 474.99995 405.00009 466.0801 405.00009 455.00013 L 405.00009 44.999837 C 405.00009 33.91987 396.0797 25.000024 384.99976 25.000024 L 104.99979 25.000024 z M 157.32218 65.000167 L 333.55793 65.000167 L 245.60413 202.67755 L 157.32218 65.000167 z M 125.00012 107.22343 L 215.96149 249.07885 L 125.00012 391.46448 L 125.00012 107.22343 z M 364.99994 108.65693 L 364.99994 388.87756 L 275.32531 249.02873 L 364.99994 108.65693 z M 245.68268 295.43003 L 335.17799 434.9998 L 156.52016 434.9998 L 245.68268 295.43003 z" }
+        }, {
+          "name": "Aggravés",
+          "icon": { "viewBox": "0 0 512 512", "path": "M 104.99979 25.000024 C 93.919846 25.000024 84.99998 33.919881 84.99998 44.999837 L 84.99998 455.00013 C 84.99998 466.08009 93.919846 474.99995 104.99979 474.99995 L 384.99976 474.99995 C 396.07968 474.99995 405.00009 466.08009 405.00009 455.00013 L 405.00009 44.999837 C 405.00009 33.919881 396.07968 25.000024 384.99976 25.000024 L 104.99979 25.000024 z M 157.32218 65.000167 L 220.00001 65.000167 L 220.00001 162.74769 L 157.32218 65.000167 z M 270.00006 65.000167 L 333.55793 65.000167 L 270.00006 164.4897 L 270.00006 65.000167 z M 125.00012 107.22343 L 197.3156 220.00001 L 125.00012 220.00001 L 125.00012 107.22343 z M 364.99994 108.65693 L 364.99994 220.00001 L 293.86992 220.00001 L 364.99994 108.65693 z M 125.00012 270.00006 L 202.59642 270.00006 L 125.00012 391.46448 L 125.00012 270.00006 z M 288.77255 270.00006 L 364.99994 270.00006 L 364.99994 388.87756 L 288.77255 270.00006 z M 270.00006 333.3533 L 335.17799 434.9998 L 270.00006 434.9998 L 270.00006 333.3533 z M 220.00001 335.63223 L 220.00001 434.9998 L 156.52016 434.9998 L 220.00001 335.63223 z" }
+        }]
+      }
+    }
+  },
+  "gridRows": [{
+    "defaultType": "text",
+    "gridColumns": [{
+      "rows": [
+        { "name": "Nom", "value": "$sheet.name" },
+        { "name": "Joueur", "readonly": true, "value": "$sheet.player" }
+      ]
+    }, {
+      "rows": [
+        { "name": "Nature", "value": "general.nature" },
+        { "name": "Attitude", "value": "general.attitude" },
+        { "name": "Concept", "value": "general.concept" }
+      ]
+    }, {
+      "rows": [
+        { "name": "Court", "value": "general.court", "hint": [ "Printemps", "Eté", "Automne", "Hivers", "Solstice" ] },
+        { "name": "Naissance", "value": "general.origin", "defaultValue": [ "Vraie Fée", "Changelin", "Elementaire" ] },
+        { "name": "Agenda", "value": "general.agenda" }
+      ]
+    }]
+  }, {
+    "title": "Attributs",
+    "defaultType": "attribute",
+    "gridColumns": [{
+      "title": "Physique",
+      "rows": [
+        { "name": "Force", "value": "attribute.strength" },
+        { "name": "Dextérité", "value": "attribute.dexterity" },
+        { "name": "Vigueur", "value": "attribute.stamina" }
+      ]
+    }, {
+      "title": "Social",
+      "rows": [
+        { "name": "Charisme", "value": "attribute.charisma" },
+        { "name": "Manipulation", "value": "attribute.manipulation" },
+        { "name": "Apparence", "value": "attribute.appearance" }
+      ]
+    }, {
+      "title": "Mental",
+      "rows": [
+        { "name": "Perception", "value": "attribute.perception" },
+        { "name": "Intelligence", "value": "attribute.intelligence" },
+        { "name": "Astuce", "value": "attribute.wits" }
+      ]
+    }]
+  }, {
+    "title": "Capacités",
+    "defaultType": "ability",
+    "gridColumns": [{
+      "title": "Talents",
+      "rows": [
+        { "name": "Athlétisme", "value": "ability.athletics" },
+        { "name": "Bagarre", "value": "ability.brawl" },
+        { "name": "Commandement", "value": "ability.command" },
+        { "name": "/Kenning/", "value": "ability.kenning" },
+        { "name": "Prestigitation", "value": "ability.legerdemain" },
+        { "name": "Expression", "value": "ability.expression" },
+        { "name": "Intimidation", "value": "ability.intimidation" },
+        { "name": "Esquive", "value": "ability.dodge" },
+        { "name": "Subterfuge", "value": "ability.subterfuge" },
+        { "name": "Vigilance", "value": "ability.alertness" },
+        { "type": "freeValue", "prefix": "ability.additionnal.talents" }
+      ]
+    }, {
+      "title": "Compétences",
+      "rows": [
+        { "name": "Animaux", "value": "ability.animalKen" },
+        { "name": "Archerie", "value": "ability.archery" },
+        { "name": "Commerce", "value": "ability.commerce" },
+        { "name": "Artisanat", "value": "ability.craftmanship" },
+        { "name": "Equitation", "value": "ability.riding" },
+        { "name": "Etiquette", "value": "ability.etiquette" },
+        { "name": "Furtivité", "value": "ability.stealth" },
+        { "name": "Mélée", "value": "ability.melee" },
+        { "name": "Représentation", "value": "ability.performance" },
+        { "name": "Survie", "value": "ability.survival" },
+        { "type": "freeValue", "prefix": "ability.additionnal.skills" }
+      ]
+    }, {
+      "title": "Connaissances",
+      "rows": [
+        { "name": "Enigmes", "value": "ability.enigmas" },
+        { "name": "Arcanes", "value": "ability.grammarye" },
+        { "name": "Sag. populaire", "value": "ability.hearthWisdom" },
+        { "name": "Investigation", "value": "ability.investigation" },
+        { "name": "Droit", "value": "ability.law" },
+        { "name": "Langues", "value": "ability.linguistics" },
+        { "name": "Médecine", "value": "ability.medecine" },
+        { "name": "Occultisme", "value": "ability.occult" },
+        { "name": "Politique", "value": "ability.politics" },
+        { "name": "Sénéchal", "value": "ability.seneschal" },
+        { "type": "freeValue", "prefix": "ability.additionnal.knowledges" }
+      ]
+    }]
+  }, {
+    "title": "Avantages",
+    "gridColumns": [{
+      "title": "Dominions",
+      "defaultType": "dominion",
+      "rows": [
+        { "name": "Aube", "value": "dominion.dawn" },
+        { "name": "Jour", "value": "dominion.day" },
+        { "name": "Crépuscule", "value": "dominion.dusk" },
+        { "name": "Nuit", "value": "dominion.night" }
+      ]
+    }, {
+      "defaultType": "background",
+      "title": "Historiques",
+      "rows": [
+        { "type": "freeValue", "prefix": "backgrounds", "defaultCount": 5 }
+      ]
+    }, {
+      "title": "Enchantements",
+      "rows": [
+        { "type": "freeValue", "prefix": "advantage.cantrips", "defaultCount": 5 }
+      ]
+    }]
+  }, {
+    "title": "",
+    "gridColumns": [{
+      "title": "Traits Féériques",
+      "rows": [
+        { "type": "freeValue", "prefix": "advantage.traits", "defaultCount": 5 }
+      ]
+    }, {
+      "title": "Pactes",
+      "rows": [
+        { "type": "freeValue", "prefix": "advantage.pacts", "defaultCount": 5 }
+      ]
+    }, {
+      "title": "Echos",
+      "rows": [
+        { "type": "freeValue", "prefix": "advantage.echos", "defaultCount": 5 }
+      ]
+    }]
+  }, {
+    "title": "",
+    "gridColumns": [{
+      "rows": [
+        { "type": "title", "name": "Atouts" },
+        { "type": "freeValue", "prefix": "advantage.advantage", "defaultCount": 4 },
+        { "type": "spacer" },
+        { "type": "title", "name": "Faiblesses" },
+        { "type": "freeValue", "prefix": "advantage.weakness", "defaultCount": 4 }
+      ]
+    }, {
+      "defaultType": "willpower",
+      "rows": [
+        { "type": "title", "name": "Volonté" },
+        { "type": "value", "values": ["willpower.max", "willpower.current"] },
+        { "type": "spacer" },
+        { "type": "title", "name": "/Mist/" },
+        { "type": "value", "values": ["mist.max", "mist.current"] },
+        { "type": "spacer" },
+        { "type": "title", "name": "/Weaving/" },
+        { "type": "value", "values": ["weaving.max", "weaving.current"] }
+      ]
+    }, {
+      "rows": [
+        { "name": "Santé", "editor": "health", "values": [ "health.blunt", "health.lethal", "health.aggravated" ] },
+        { "type": "spacer" },
+        { "type": "title", "name": "Expérience" },
+        { "editor": "text", "value": "character.experience", "defaultCount": 2 }
+      ]
+    }]
+  }]
+}

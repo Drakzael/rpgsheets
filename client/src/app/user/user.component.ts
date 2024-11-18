@@ -142,9 +142,7 @@ export class UserComponent implements OnInit {
       }
     } else {
       this.userService.updateUser(this.user!).subscribe(() => {
-        this.userService.updatePassword(this.username!, this.password.oldPassword, this.password.newPassword1).subscribe(() => {
-          this.getUser();
-        })
+        this.getUser();
       })
     }
     this.viewMode = ViewMode.View;
