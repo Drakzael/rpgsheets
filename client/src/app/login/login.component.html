@@ -1,20 +1,14 @@
-<div class="login-container">
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <div>
-      <fa-icon [icon]="iconUsername"/>
-            <input type="text" class="login" formControlName="username" [ngClass]="{'is-invalid': submitted}"
-        placeholder="User name">
-    </div>
-    <div>
-      <fa-icon [icon]="iconPassword"/>
-      <input type="password" class="login" formControlName="password" [ngClass]="{'is-invalid': submitted}"
-        placeholder="Password">
-    </div>
-    <div>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="login-container">
+    <div><fa-icon [icon]="iconUsername" /></div>
+    <div><input type="text" class="login" formControlName="username" [ngClass]="{'is-invalid': submitted}" placeholder="Utilisateur"></div>
+    <div><fa-icon [icon]="iconPassword" /></div>
+    <div><input type="password" class="login" formControlName="password" [ngClass]="{'is-invalid': submitted}" placeholder="Mot de passe"></div>
+    <div class="button">
       <button class="login" [disabled]="loading">
-        <fa-icon [icon]="iconLogin"/>
+        <fa-icon [icon]="iconLogin" />
         Connexion
       </button>
     </div>
-  </form>
-</div>
+  </div>
+</form>
