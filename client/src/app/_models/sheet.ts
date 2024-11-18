@@ -6,6 +6,8 @@ export class SheetData {
   mode?: string;
   numericValues: { [key: string]: number } = {};
   stringValues: { [key: string]: string } = {};
+  writable!: boolean;
+  deletable!: boolean;
 }
 
 export class Sheet {
@@ -16,6 +18,8 @@ export class Sheet {
   constructor(private data?: SheetData) {
     if (!this.data) {
       this.data = new SheetData();
+      this.data.writable = true;
+      this.data.deletable = true;
     }
   }
 
@@ -26,21 +30,35 @@ export class Sheet {
   private get name(): string {
     return this.data!.name;
   }
+
   private set name(name: string) {
     this.data!.name = name;
   }
+
+  get writable() {
+    return this.data!.writable;
+  }
+
+  get deletable() {
+    return this.data!.deletable;
+  }
+
   public get game(): string {
     return this.data!.game;
   }
+
   public set game(game: string) {
     this.data!.game = game;
   }
+
   private get numericValues() {
     return this.data!.numericValues;
   }
+
   private get stringValues() {
     return this.data!.stringValues;
   }
+
   private impactValues: string[] = [];
 
   get changed() { return this._changed; }

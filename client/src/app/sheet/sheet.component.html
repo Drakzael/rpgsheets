@@ -1,11 +1,11 @@
 <div *ngIf="metadata && sheet">
   <div class="actions">
-    <button *ngIf="viewMode === mode.Edit || sheet.changed" (click)="save()" class="{{ viewMode === mode.View ? 'save' : '' }}"><fa-icon [icon]="iconSave" title="Sauvegarder"/></button>
+    <button *ngIf="sheet.writable && (viewMode === mode.Edit || sheet.changed)" (click)="save()" class="{{ viewMode === mode.View ? 'save' : '' }}"><fa-icon [icon]="iconSave" title="Sauvegarder"/></button>
     <!-- <button *ngIf="viewMode === mode.Play" (click)="dice()"><fa-icon [icon]="iconDice" title="Mode Dés"/></button> -->
     <button *ngIf="viewMode === mode.View || viewMode === mode.Dice" (click)="play()"><fa-icon [icon]="iconPlay" title="Mode Jeu"/></button>
-    <button *ngIf="viewMode === mode.View" (click)="edit()" title="Editer"><fa-icon [icon]="iconEdit"/></button>
-    <button *ngIf="viewMode === mode.View" (click)="delete()"><fa-icon [icon]="iconDelete" title="Supprimer"/></button>
-    <button *ngIf="viewMode === mode.Delete" (click)="delete()" class="delete"><fa-icon [icon]="iconDelete" title="Supprimer"/></button>
+    <button *ngIf="sheet.writable && viewMode === mode.View" (click)="edit()" title="Editer"><fa-icon [icon]="iconEdit"/></button>
+    <button *ngIf="sheet.deletable && viewMode === mode.View" (click)="delete()"><fa-icon [icon]="iconDelete" title="Supprimer"/></button>
+    <button *ngIf="sheet.deletable && viewMode === mode.Delete" (click)="delete()" class="delete"><fa-icon [icon]="iconDelete" title="Supprimer"/></button>
     <button *ngIf="viewMode === mode.Edit || viewMode === mode.Delete" (click)="cancel()"><fa-icon [icon]="iconCancel" title="Annuler"/></button>
     <button *ngIf="viewMode === mode.Play || viewMode === mode.Dice" (click)="stop()"><fa-icon [icon]="iconCancel" title="Annuler"/></button>
   </div>

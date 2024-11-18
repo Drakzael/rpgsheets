@@ -7,8 +7,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Sheet implements ISheet {
   @JsonIgnore
   private String id;
-  private String username;
 
+  @JsonIgnore
+  private boolean writable;
+
+  @JsonIgnore
+  private boolean deletable;
+
+  private String username;
   private String name;
   private String userAlias;
   private String game;
@@ -21,6 +27,24 @@ public class Sheet implements ISheet {
 
   public Sheet setId(String id) {
     this.id = id;
+    return this;
+  }
+
+  public boolean isWritable() {
+    return writable;
+  }
+
+  public Sheet setWritable(boolean writable) {
+    this.writable = writable;
+    return this;
+  }
+
+  public boolean isDeletable() {
+    return deletable;
+  }
+
+  public Sheet setDeletable(boolean deletable) {
+    this.deletable = deletable;
     return this;
   }
 
@@ -77,5 +101,4 @@ public class Sheet implements ISheet {
     this.stringValues = stringValues;
     return this;
   }
-
 }

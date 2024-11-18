@@ -7,22 +7,27 @@ import org.springframework.stereotype.Service;
 import com.devordie.rpgsheets.entities.ISheet;
 import com.devordie.rpgsheets.entities.Sheet;
 import com.devordie.rpgsheets.entities.SheetOverview;
+import com.devordie.rpgsheets.repository.CampainRepository;
 import com.devordie.rpgsheets.repository.SheetRepository;
 
 @Service
 public class SheetService {
   private final SheetRepository sheetRepository;
+  private final CampainRepository campainRepository;
   private final UserService userService;
 
-  public SheetService(SheetRepository sheetRepository, UserService userService) {
+  public SheetService(SheetRepository sheetRepository, CampainRepository campainRepository, UserService userService) {
     this.sheetRepository = sheetRepository;
+    this.campainRepository = campainRepository;
     this.userService = userService;
   }
 
   public Sheet getSheet(String id) {
     final Sheet sheet = sheetRepository.getSheet(id);
     if (sheet != null && isReadable(sheet)) {
-      return sheet;
+      return sheet
+          .setWritable(this.isWritable(sheet))
+          .setDeletable(this.isWritable(sheet));
     }
     return null;
   }
@@ -56,7 +61,15 @@ public class SheetService {
   }
 
   public boolean isReadable(ISheet sheet) {
-    return sheet != null && sheet.getUsername().equals(userService.getCurrentUser().getUsername());
+    if (sheet == null) {
+      return false;
+    }
+    if (sheet.getUsername().equals(userService.getCurrentUser().getUsername())) {
+      return true;
+    }
+    return campainRepository.listAllCampains().stream()
+        .filter(campain -> campain.getUsername().equals(userService.getCurrentUser().getUsername()))
+        .anyMatch(campain -> campain.getSheetIds().contains(sheet.getId()));
   }
 
   public boolean isWritable(String sheetId) {
@@ -65,5 +78,13 @@ public class SheetService {
 
   public boolean isWritable(ISheet sheet) {
     return sheet != null && sheet.getUsername().equals(userService.getCurrentUser().getUsername());
+  }
+
+  public boolean isDeletable(String sheetId) {
+    return isDeletable(getSheet(sheetId));
+  }
+
+  public boolean isDeletable(ISheet sheet) {
+    return isWritable(sheet);
   }
 }

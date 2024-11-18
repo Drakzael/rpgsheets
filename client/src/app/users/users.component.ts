@@ -27,7 +27,7 @@ export class UsersComponent implements OnInit {
   ngOnInit(): void {
     this.userService.listUsers()
     .subscribe(users => {
-      this.users = users;
+      this.users = users.sort((u1, u2) => (u1.alias || u1.username).toLowerCase() < (u2.alias || u2.username).toLowerCase() ? -1 : 1);;
     })
   }
 }

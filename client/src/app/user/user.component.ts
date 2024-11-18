@@ -48,7 +48,7 @@ export class UserComponent implements OnInit {
     username: "",
     password: ""
   }
-  errors!: {username: string, password: string};
+  errors!: { username: string, password: string };
 
   constructor(
     private route: ActivatedRoute,
@@ -64,7 +64,7 @@ export class UserComponent implements OnInit {
       this.username = this.route.snapshot.paramMap.get("username");
       this.getUser();
     });
-    if (this.isCreation()) {
+    if (this.isCreation) {
       this.viewMode = ViewMode.Edit;
     }
   }
@@ -89,7 +89,7 @@ export class UserComponent implements OnInit {
     }
   }
 
-  isCreation(): boolean {
+  get isCreation(): boolean {
     return !this.username;
   }
 
@@ -123,7 +123,7 @@ export class UserComponent implements OnInit {
   }
 
   save() {
-    if (this.isCreation()) {
+    if (this.isCreation) {
       if (this.password.newPassword1 && this.password.newPassword1 === this.password.newPassword2) {
         if (!this.user.username) {
           this.errors.username = "Le champ ne doit pas etre vide.";
@@ -137,29 +137,32 @@ export class UserComponent implements OnInit {
           this.userService.updatePassword(username, null, this.password.newPassword1).subscribe(() => {
             this.username = username;
             this.getUser();
+            this.viewMode = ViewMode.View;
           })
         });
       }
     } else {
       this.userService.updateUser(this.user!).subscribe(() => {
         this.getUser();
+        this.viewMode = ViewMode.View;
       })
     }
-    this.viewMode = ViewMode.View;
   }
 
   cancel() {
-    if (this.username !== null) {
+    if (this.isCreation) {
+      this.userService.navigateToUserList();
+    } else {
       this.getUser();
+      this.viewMode = ViewMode.View;
     }
-    this.viewMode = ViewMode.View;
   }
 
   delete() {
     if (this.viewMode === ViewMode.Delete) {
       this.viewMode = ViewMode.View;
       this.userService.deleteUser(this.username!).subscribe(() => {
-
+        this.userService.navigateToUserList();
       })
     } else {
       this.viewMode = ViewMode.Delete;

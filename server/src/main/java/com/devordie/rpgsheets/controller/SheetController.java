@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.devordie.rpgsheets.entities.Sheet;
 import com.devordie.rpgsheets.entities.SheetOverviewResponse;
+import com.devordie.rpgsheets.entities.SheetResponse;
 import com.devordie.rpgsheets.services.SheetService;
 
 import java.util.List;
@@ -26,8 +27,8 @@ public class SheetController {
   }
 
   @GetMapping("{id}")
-  public Sheet getSheet(@PathVariable String id) {
-    return service.getSheet(id);
+  public SheetResponse getSheet(@PathVariable String id) {
+    return new SheetResponse(service.getSheet(id));
   }
 
   @GetMapping("")

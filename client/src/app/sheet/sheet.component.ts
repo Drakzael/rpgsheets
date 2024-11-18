@@ -104,19 +104,23 @@ export class SheetComponent implements OnInit {
   }
 
   edit() {
-    this.viewMode = ViewMode.Edit;
+    if (this.sheet?.writable) {
+      this.viewMode = ViewMode.Edit;
+    }
   }
 
   save() {
-    if (this.sheetId === null) {
-      this.sheetService.createSheet(this.sheet!).subscribe(id => {
-        this.sheetId = id;
-        this.getSheet();
-      });
-    } else {
-      this.sheetService.saveSheet(this.sheetId, this.sheet!).subscribe(() => {
-        this.getSheet();
-      });
+    if (this.sheet?.writable) {
+      if (this.sheetId === null) {
+        this.sheetService.createSheet(this.sheet!).subscribe(id => {
+          this.sheetId = id;
+          this.getSheet();
+        });
+      } else {
+        this.sheetService.saveSheet(this.sheetId, this.sheet!).subscribe(() => {
+          this.getSheet();
+        });
+      }
     }
     this.viewMode = ViewMode.View;
   }
@@ -131,13 +135,15 @@ export class SheetComponent implements OnInit {
   }
 
   delete() {
-    if (this.viewMode === ViewMode.Delete) {
-      this.sheetService.deleteSheet(this.sheetId!).subscribe(() => {
-        this.sheetService.navigateToNewSheet();
-      });
-      this.viewMode = ViewMode.View;
-    } else {
-      this.viewMode = ViewMode.Delete;
+    if (this.sheet?.deletable) {
+      if (this.viewMode === ViewMode.Delete) {
+        this.sheetService.deleteSheet(this.sheetId!).subscribe(() => {
+          this.sheetService.navigateToNewSheet();
+        });
+        this.viewMode = ViewMode.View;
+      } else {
+        this.viewMode = ViewMode.Delete;
+      }
     }
   }
 

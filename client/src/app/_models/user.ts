@@ -1,7 +1,7 @@
 export class User {
   username!: string;
   alias!: string;
-  roles!: Role[];
+  roles: Role[] = [];
 }
 
 export enum Role {

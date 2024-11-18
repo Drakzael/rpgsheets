@@ -81,10 +81,7 @@ public class CampainService {
 
   public boolean isReadable(Campain campain) {
     return campain != null &&
-        campain.getUsername().equals(userService.getCurrentUser().getUsername()) ||
-        campain.getSheetIds().stream()
-            .map(id -> sheetService.getSheet(id))
-            .anyMatch(sheet -> sheet != null && sheet.getUsername().equals(userService.getCurrentUser().getUsername()));
+        campain.getUsername().equals(userService.getCurrentUser().getUsername());
   }
 
   public boolean isWritable(String campainId) {

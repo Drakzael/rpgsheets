@@ -37,4 +37,8 @@ export class UserService {
   deleteUser(username: string): Observable<void> {
     return this.http.delete<void>(`/api/users/${username}`);
   }
+
+  navigateToUserList() {
+    this.router.navigate(["/users"]);
+  }
 }

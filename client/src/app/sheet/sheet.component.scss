@@ -1,6 +1,8 @@
 .sheet {
-  width: calc(21cm);
+  width: 21cm;
   padding: 2em;
+  box-sizing: border-box;
+  font-size: 0.95em;
   background-image:url(/img/scroll-1.png);
   background-size: 100% 100%;
 }
