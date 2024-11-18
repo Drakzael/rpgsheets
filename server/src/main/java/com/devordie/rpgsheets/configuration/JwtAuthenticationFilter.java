@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 
-import com.devordie.rpgsheets.entities.User;
 import com.devordie.rpgsheets.services.JwtService;
 
 import jakarta.servlet.FilterChain;
