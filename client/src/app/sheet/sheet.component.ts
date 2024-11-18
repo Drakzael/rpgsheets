@@ -85,6 +85,7 @@ export class SheetComponent implements OnInit {
   }
 
   getSheet() {
+    this.sheet = undefined;
     if (this.sheetId) {
       this.viewMode = ViewMode.View;
       this.isConfig = false;
