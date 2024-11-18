@@ -1,5 +1,6 @@
 nav {
   background-color: #ffffff;
+  padding: 0.5em;
 }
 
 .user {
@@ -21,6 +22,10 @@ nav {
 .link {
   cursor: pointer;
   display: inline-block;
+}
+
+.new {
+  font-style: italic;
 }
 
 .icon-button {
