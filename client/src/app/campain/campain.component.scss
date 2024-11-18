@@ -1,7 +1,8 @@
 .campain {
   width: 21cm;
-  min-height: 15cm;
+  min-height: 29.7cm;
   padding: 2em;
+  box-sizing: border-box;
   background-image:url(/img/scroll-1.png);
   background-size: 100% 100%;
 }
@@ -38,4 +39,15 @@ div.name {
 
 div.description {
   white-space:pre-wrap;
+}
+
+.characters {
+  margin-top: 1.5em;
+}
+
+.character {
+  cursor: pointer;
+  text-decoration: underline;
+  display: inline;
+  margin-left: 1em;
 }

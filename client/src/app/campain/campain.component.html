@@ -9,7 +9,8 @@
   <div class="name">{{ campain?.name }}</div>
   <div class="description">{{ campain?.description }}</div>
   <div class="characters">
-    <div *ngFor="let sheet of campain?.sheets">{{ sheet.name }}</div>
+    <div>Personnages :</div>
+    <div class="character" [routerLink]="['/sheet', sheet.id]" *ngFor="let sheet of campain?.sheets">{{ sheet.name }}</div>
   </div>
 </div>
 <div *ngIf="viewMode === mode.Edit" class="campain">
