@@ -7,7 +7,8 @@ import { ViewMode } from '../_models/viewmode';
 import { SheetService } from '../_services/sheet.service';
 import { ActivatedRoute } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faPen, faSave, faCancel, faTrash, faMasksTheater, faDice } from '@fortawesome/free-solid-svg-icons';
+import { faPen, faSave, faCancel, faTrash, faMasksTheater, faDice, faGear, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { ConfigurationComponent } from './configuration/configuration.component';
 
 @Component({
   selector: 'app-sheet',
@@ -15,7 +16,8 @@ import { faPen, faSave, faCancel, faTrash, faMasksTheater, faDice } from '@forta
   imports: [
     CommonModule,
     RowComponent,
-    FontAwesomeModule
+    FontAwesomeModule,
+    ConfigurationComponent
   ],
   templateUrl: './sheet.component.html',
   styleUrl: './sheet.component.scss'
@@ -31,12 +33,16 @@ export class SheetComponent implements OnInit {
   isNewSheet = false;
   games!: GameMetadataOverview[];
 
+  isConfig = false;
+
   iconSave = faSave;
   iconEdit = faPen;
   iconCancel = faCancel;
   iconDelete = faTrash;
   iconPlay = faMasksTheater;
   iconDice = faDice;
+  iconConfig = faGear;
+  iconAdd = faPlus;
 
   constructor(
     private route: ActivatedRoute,
@@ -44,20 +50,23 @@ export class SheetComponent implements OnInit {
   ) {
   }
 
-  get pages() {
-    const pages = [];
+  pages!: { rows: GameMetadataRow[], pageNum: number }[];
+  
+  private getPages() {
+    this.pages = [];
     if (this.metadata) {
       let page: GameMetadataRow[] = [];
-      pages.push(page);
+      let i = 0;
+      this.pages.push({ rows: page, pageNum: i });
       for (let row of this.metadata.gridRows) {
         if (row.pageBreak) {
           page = [];
-          pages.push(page);
+          this.pages.push({ rows: page, pageNum: ++i });
         }
         page.push(row);
       }
     }
-    return pages;
+    return this.pages;
   }
 
   ngOnInit(): void {
@@ -71,14 +80,22 @@ export class SheetComponent implements OnInit {
     })
   }
 
+  get isCreation() {
+    return this.sheetId === null;
+  }
+
   getSheet() {
     if (this.sheetId) {
       this.viewMode = ViewMode.View;
+      this.isConfig = false;
       this.sheetService.getSheet(this.sheetId!).subscribe(sheet => {
         this.sheet = sheet;
         if (!this.metadata || this.metadata.code !== sheet.game) {
           this.metadata = undefined;
-          this.sheetService.getMetadata(sheet.game).subscribe(game => this.metadata = game);
+          this.sheetService.getMetadata(sheet.game).subscribe(game => {
+            this.metadata = game;
+            this.getPages();
+          });
         }
       });
     }
@@ -87,9 +104,11 @@ export class SheetComponent implements OnInit {
   prepareNewSheet() {
     this.metadata = undefined;
     this.sheet = undefined;
+    this.isConfig = false;
     this.sheetService.listMetadata().subscribe(games => {
       this.games = games;
       this.isNewSheet = true;
+      this.getPages();
     });
   }
 
@@ -157,5 +176,9 @@ export class SheetComponent implements OnInit {
 
   stop() {
     this.viewMode = ViewMode.View;
+  }
+
+  config() {
+    this.isConfig = !this.isConfig;
   }
 }

@@ -8,9 +8,13 @@
     <button *ngIf="sheet.deletable && viewMode === mode.Delete" (click)="delete()" class="delete"><fa-icon [icon]="iconDelete" title="Supprimer"/></button>
     <button *ngIf="viewMode === mode.Edit || viewMode === mode.Delete" (click)="cancel()"><fa-icon [icon]="iconCancel" title="Annuler"/></button>
     <button *ngIf="viewMode === mode.Play || viewMode === mode.Dice" (click)="stop()"><fa-icon [icon]="iconCancel" title="Annuler"/></button>
+    <button *ngIf="sheet.writable && viewMode === mode.View" (click)="config()" title="Configuration" class="{{isConfig ? 'config' : ''}}"><fa-icon [icon]="iconConfig"></fa-icon></button>
   </div>
   <div class="sheet rows" *ngFor="let page of pages">
-    <app-row *ngFor="let gridRow of page"
+    <app-configuration *ngIf="page.pageNum === 0 && isConfig && !isCreation && viewMode === mode.View && sheet.writable"
+      [sheetId]="sheetId!"
+      [sheet]="sheet" />
+    <app-row *ngFor="let gridRow of page.rows"
       [row]="gridRow"
       [metadata]="metadata"
       [sheet]="sheet"

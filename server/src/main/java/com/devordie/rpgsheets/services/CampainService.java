@@ -48,6 +48,11 @@ public class CampainService {
         .toList();
   }
 
+  public List<Campain> listAllCampains() {
+    return campainRepository.listAllCampains().stream()
+        .toList();
+  }
+
   public String createCampain(Campain campain) {
     return campainRepository.createCampain(campain.setUsername(userService.getCurrentUser().getUsername()));
   }
@@ -69,13 +74,13 @@ public class CampainService {
 
   public void addToCampain(String campainId, String sheetId) {
     if (sheetService.isWritable(sheetId)) {
-      saveCampain(getCampainUnifiltered(campainId).addSheetId(sheetId));
+      campainRepository.saveCampain(getCampainUnifiltered(campainId).addSheetId(sheetId));
     }
   }
 
   public void removeFromCampain(String campainId, String sheetId) {
     if (isWritable(campainId) || sheetService.isWritable(sheetId)) {
-      saveCampain(getCampainUnifiltered(campainId).removeSheetId(sheetId));
+      campainRepository.saveCampain(getCampainUnifiltered(campainId).removeSheetId(sheetId));
     }
   }
 

@@ -37,6 +37,10 @@ export class CampainService {
       })
   }
 
+  allCampains(): Observable<{name: string, id: string}[]> {
+    return this.http.get<{name: string, id: string}[]>("/api/campain/all");
+  }
+
   getCampain(id: string): Observable<Campain> {
     return this.http.get<Campain>(`/api/campain/${id}`);
   }

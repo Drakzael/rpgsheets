@@ -8,6 +8,7 @@ export class SheetData {
   stringValues: { [key: string]: string } = {};
   writable!: boolean;
   deletable!: boolean;
+  campains!: { id: string, name: string}[];
 }
 
 export class Sheet {
@@ -57,6 +58,10 @@ export class Sheet {
 
   private get stringValues() {
     return this.data!.stringValues;
+  }
+
+  get campains() {
+    return this.data!.campains;
   }
 
   private impactValues: string[] = [];

@@ -1,5 +1,7 @@
 package com.devordie.rpgsheets.entities;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class SheetResponse {
@@ -12,6 +14,7 @@ public class SheetResponse {
   private String game;
   private Map<String, Integer> numericValues;
   private Map<String, String> stringValues;
+  private List<IdName> campains;
 
   public SheetResponse() {
   }
@@ -27,79 +30,96 @@ public class SheetResponse {
     this.stringValues = sheet.getStringValues();
     this.writable = sheet.isWritable();
     this.deletable = sheet.isDeletable();
+    this.campains = new ArrayList<>();
   }
 
   public String getId() {
     return id;
   }
 
-  public void setId(String id) {
+  public SheetResponse setId(String id) {
     this.id = id;
+    return this;
   }
 
   public boolean isWritable() {
     return writable;
   }
 
-  public void setWritable(boolean writable) {
+  public SheetResponse setWritable(boolean writable) {
     this.writable = writable;
+    return this;
   }
 
   public boolean isDeletable() {
     return deletable;
   }
 
-  public void setDeletable(boolean deletable) {
+  public SheetResponse setDeletable(boolean deletable) {
     this.deletable = deletable;
+    return this;
   }
 
   public String getUsername() {
     return username;
   }
 
-  public void setUsername(String username) {
+  public SheetResponse setUsername(String username) {
     this.username = username;
+    return this;
   }
 
   public String getName() {
     return name;
   }
 
-  public void setName(String name) {
+  public SheetResponse setName(String name) {
     this.name = name;
+    return this;
   }
 
   public String getUserAlias() {
     return userAlias;
   }
 
-  public void setUserAlias(String userAlias) {
+  public SheetResponse setUserAlias(String userAlias) {
     this.userAlias = userAlias;
+    return this;
   }
 
   public String getGame() {
     return game;
   }
 
-  public void setGame(String game) {
+  public SheetResponse setGame(String game) {
     this.game = game;
+    return this;
   }
 
   public Map<String, Integer> getNumericValues() {
     return numericValues;
   }
 
-  public void setNumericValues(Map<String, Integer> numericValues) {
+  public SheetResponse setNumericValues(Map<String, Integer> numericValues) {
     this.numericValues = numericValues;
+    return this;
   }
 
   public Map<String, String> getStringValues() {
     return stringValues;
   }
 
-  public void setStringValues(Map<String, String> stringValues) {
+  public SheetResponse setStringValues(Map<String, String> stringValues) {
     this.stringValues = stringValues;
+    return this;
   }
 
-  
+  public List<IdName> getCampains() {
+    return campains;
+  }
+
+  public SheetResponse setCampains(List<IdName> campains) {
+    this.campains = campains;
+    return this;
+  }
 }

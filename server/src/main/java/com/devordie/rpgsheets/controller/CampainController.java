@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.devordie.rpgsheets.entities.Campain;
 import com.devordie.rpgsheets.entities.CampainResponse;
+import com.devordie.rpgsheets.entities.IdName;
 import com.devordie.rpgsheets.entities.SheetOverviewResponse;
 import com.devordie.rpgsheets.services.CampainService;
 import com.devordie.rpgsheets.services.SheetService;
@@ -30,8 +31,8 @@ public class CampainController {
   }
 
   @GetMapping("{id}")
-  public CampainResponse getCampain(@PathVariable String id) {
-    final Campain campain = campainService.getCampain(id);
+  public CampainResponse getCampain(@PathVariable Integer id) {
+    final Campain campain = campainService.getCampain(id.toString());
     return new CampainResponse()
         .setId(campain.getId())
         .setName(campain.getName())
@@ -57,6 +58,13 @@ public class CampainController {
         .toList();
   }
 
+  @GetMapping("all")
+  public List<IdName> listAllCampains() {
+    return campainService.listAllCampains().stream()
+        .map(campain -> new IdName(campain.getId(), campain.getName()))
+        .toList();
+  }
+
   @PutMapping("{id}")
   public void updateCampain(@PathVariable String id, @RequestBody Campain campain) {
     campainService.saveCampain(campain);
@@ -72,13 +80,13 @@ public class CampainController {
     campainService.deleteCampain(id);
   }
 
-  @PostMapping("{campainId}/{sheeId}")
-  public void addSheetToCampain(@PathVariable String campainId, @PathVariable String sheetid) {
-    campainService.addToCampain(campainId, sheetid);
+  @PostMapping("{campainId}/{sheetId}")
+  public void addSheetToCampain(@PathVariable String campainId, @PathVariable String sheetId) {
+    campainService.addToCampain(campainId, sheetId);
   }
 
-  @DeleteMapping("{campainId}/{sheeId}")
-  public void removeSheetFromCampain(@PathVariable String campainId, @PathVariable String sheetid) {
-    campainService.removeFromCampain(campainId, sheetid);
+  @DeleteMapping("{campainId}/{sheetId}")
+  public void removeSheetFromCampain(@PathVariable String campainId, @PathVariable String sheetId) {
+    campainService.removeFromCampain(campainId, sheetId);
   }
 }

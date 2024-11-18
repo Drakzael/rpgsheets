@@ -1,0 +1,17 @@
+<div class="title">Configuration</div>
+<div class="config">
+  <div *ngIf="campains">
+    Campagnes :
+    <div *ngFor="let campain of sheet.campains">
+      {{ campain.name }} <button (click)="removeFromCampain(campain.id)"><fa-icon [icon]="iconDelete" title="Supprimer"/></button>
+    </div>
+    <div *ngIf="otherCampains.length">
+      <select #newCampain>
+        <option *ngFor="let campain of otherCampains" value="{{ campain.id }}">{{ campain.name }}</option>
+      </select>
+      <button (click)="addToCampain(newCampain.value)"><fa-icon [icon]="iconAdd"/> Ajouter à la campagne</button>
+    </div>
+  </div>
+</div>
+
+<div class="title"></div>
