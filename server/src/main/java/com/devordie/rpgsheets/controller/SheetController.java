@@ -41,7 +41,7 @@ public class SheetController {
 
   @GetMapping("")
   public List<SheetOverviewResponse> listSheets() {
-    return sheetService.listSheets().stream()
+    return sheetService.listMySheets().stream()
         .map(sheet -> new SheetOverviewResponse(sheet.getName(), sheet.getId()))
         .toList();
   }

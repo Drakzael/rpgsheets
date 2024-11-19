@@ -1,7 +1,10 @@
 // import { transpile } from "typescript";
 
+import { AccountService } from "../_services/account.service";
+
 export class SheetData {
   name: string = "";
+  userAlias!: string;
   game!: string;
   mode?: string;
   numericValues: { [key: string]: number } = {};
@@ -16,7 +19,10 @@ export class Sheet {
   private _changed = false;
   private _onChange: (() => void)[] = [];
 
-  constructor(private data?: SheetData) {
+  constructor(
+    private data?: SheetData,
+    private accountService: AccountService | null = null
+  ) {
     if (!this.data) {
       this.data = new SheetData();
       this.data.writable = true;
@@ -34,6 +40,14 @@ export class Sheet {
 
   private set name(name: string) {
     this.data!.name = name;
+  }
+
+  get playerName() {
+    return this.data!.userAlias;
+  }
+
+  set playerName(name: string) {
+    this.data!.userAlias = name;
   }
 
   get writable() {
@@ -102,7 +116,7 @@ export class Sheet {
         case "$sheet.name":
           return this.name;
         case "$sheet.player":
-          return "Player name";
+          return this.playerName;
         default:
           const valueCode = code.substring(1);
           return this.numericValues[valueCode]?.toString() || this.stringValues[valueCode] || "";

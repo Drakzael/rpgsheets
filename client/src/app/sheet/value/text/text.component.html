@@ -1,19 +1,19 @@
 <div class="{{ value.name ? 'text' : 'singleText' }}">
   <div *ngIf="value.name">{{ value.name }}</div>
   <ng-container *ngIf="!multiline">
-    <div *ngIf="viewMode !== mode.Edit" class="value">{{ text }}</div>
-    <div *ngIf="viewMode === mode.Edit && value.hint">
+    <div *ngIf="!isEdit" class="value">{{ text }}</div>
+    <div *ngIf="isEdit && value.hint">
       <input #textValue class="value" [attr.list]="inputId" type="text" (change)="updateText(textValue.value)" value="{{ text }}" />
       <datalist id="{{ inputId }}">
         <option *ngFor="let hint of value.hint" [value]="hint">
       </datalist>
     </div>
-    <div *ngIf="viewMode === mode.Edit && !value.hint">
+    <div *ngIf="isEdit && !value.hint">
       <input #textValue class="value" type="text" (change)="updateText(textValue.value)" value="{{ text }}" />
     </div>
   </ng-container>
   <ng-container *ngIf="multiline">
-    <div *ngIf="viewMode !== mode.Edit" class="longValue" [attr.style]="'min-height: ' + (rowCount || 3) * 1.6 + 'em;'" [innerHtml]="formattedText"></div>
+    <div *ngIf="!isEdit" class="longValue" [attr.style]="'min-height: ' + (rowCount || 3) * 1.6 + 'em;'" [innerHtml]="formattedText"></div>
     <textarea #longTextValue class="longValue" *ngIf="viewMode === mode.Edit" (change)="updateText(longTextValue.value)" rows="{{ (rowCount || 3) + 1 }}">{{ text }}</textarea>
   </ng-container>
 </div>

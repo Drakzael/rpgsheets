@@ -38,6 +38,12 @@ public class SheetService {
         .toList();
   }
 
+  public List<SheetOverview> listMySheets() {
+    return sheetRepository.listAllSheets().stream()
+        .filter(sheet -> sheet.getUsername().equals(userService.getCurrentUser().getUsername()))
+        .toList();
+  }
+
   public String createSheet(Sheet sheet) {
     return sheetRepository.createSheet(sheet.setUsername(userService.getCurrentUser().getUsername()));
   }

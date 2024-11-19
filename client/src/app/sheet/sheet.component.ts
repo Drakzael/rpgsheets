@@ -9,6 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faPen, faSave, faCancel, faTrash, faMasksTheater, faDice, faGear, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { ConfigurationComponent } from './configuration/configuration.component';
+import { AccountService } from '../_services/account.service';
 
 @Component({
   selector: 'app-sheet',
@@ -46,7 +47,8 @@ export class SheetComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private sheetService: SheetService
+    private sheetService: SheetService,
+    private accountService: AccountService
   ) {
   }
 
@@ -119,6 +121,7 @@ export class SheetComponent implements OnInit {
       this.metadata = metadata;
       this.sheet = new Sheet();
       this.sheet.game = game;
+      this.sheet.playerName = this.accountService.userValue?.alias || this.accountService.userValue?.username || "";
       this.isNewSheet = false;
       this.getPages();
       this.viewMode = ViewMode.Edit;
