@@ -46,42 +46,42 @@ export class CampainService {
   }
 
   createCampain(campain: Campain): Observable<string> {
-    return this.http.post<string>("/api/campain", campain)
+    return this.http.post("/api/campain", campain, { responseType: 'text' })
       .pipe(map(campainId => {
         this.refreshCampains();
         return campainId;
       }));
   }
 
-  saveCampain(id: string, campain: Campain): Observable<any> {
+  saveCampain(id: string, campain: Campain): Observable<void> {
     return this.http.put<void>(`/api/campain/${id}`, campain)
       .pipe(map(() => {
         this.refreshCampains();
-        return of();
+        return ;
       }));
   }
 
-  deleteCampain(id: string): Observable<any> {
+  deleteCampain(id: string): Observable<void> {
     return this.http.delete<void>(`/api/campain/${id}`)
       .pipe(map(() => {
         this.refreshCampains();
-        return of();
+        return ;
       }));
   }
 
-  addSheetToCampain(campainId: string, sheetId: string): Observable<any> {
+  addSheetToCampain(campainId: string, sheetId: string): Observable<void> {
     return this.http.post<void>(`/api/campain/${campainId}/${sheetId}`, {})
       .pipe(map(() => {
         this.refreshCampains();
-        return of();
+        return ;
       }));
   }
 
-  removeSheetFromCampain(campainId: string, sheetId: string): Observable<any> {
+  removeSheetFromCampain(campainId: string, sheetId: string): Observable<void> {
     return this.http.delete<void>(`/api/campain/${campainId}/${sheetId}`)
       .pipe(map(() => {
         this.refreshCampains();
-        return of();
+        return ;
       }));
   }
 

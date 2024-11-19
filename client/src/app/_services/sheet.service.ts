@@ -51,27 +51,27 @@ export class SheetService {
       .pipe(map(sheet => new Sheet(sheet)));
   }
 
-  createSheet(sheet: Sheet) {
-    return this.http.post<string>("/api/sheet", sheet.getData())
+  createSheet(sheet: Sheet): Observable<string> {
+    return this.http.post("/api/sheet", sheet.getData(), { responseType: 'text' })
       .pipe(map(sheetId => {
         this.refreshSheets();
         return sheetId;
       }));
   }
 
-  saveSheet(id: string, sheet: Sheet) {
+  saveSheet(id: string, sheet: Sheet): Observable<void> {
     return this.http.put<void>(`/api/sheet/${id}`, sheet.getData())
       .pipe(map(() => {
         this.refreshSheets();
-        return of();
+        return ;
       }));
   }
 
-  deleteSheet(id: string) {
+  deleteSheet(id: string): Observable<void> {
     return this.http.delete<void>(`/api/sheet/${id}`)
       .pipe(map(() => {
         this.refreshSheets();
-        return of();
+        return ;
       }));
   }
 

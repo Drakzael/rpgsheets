@@ -27,7 +27,7 @@ export class UserService {
   }
 
   addUser(user: User): Observable<string> {
-    return this.http.post<string>("/api/users", user);
+    return this.http.post("/api/users", user, { responseType: 'text' });
   }
 
   updatePassword(username: string, oldPassword: string | null, newPassword: string): Observable<void> {

@@ -21,8 +21,8 @@
       [viewMode]="viewMode"/>
   </div>
 </div>
-<div *ngIf="!sheet || !metadata" class="emptyPage"></div>
-<div *ngIf="isNewSheet">
+<div *ngIf="!isNewSheet && (!sheet || !metadata)" class="emptyPage"></div>
+<div *ngIf="isNewSheet" class="sheet">
   <select #sheetGame>
     <option *ngFor="let game of games" value="{{ game.code }}">{{ game.name }}</option>
   </select>

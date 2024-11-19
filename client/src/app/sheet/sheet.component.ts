@@ -115,10 +115,12 @@ export class SheetComponent implements OnInit {
 
   newSheet(game: string) {
     this.sheetService.getMetadata(game).subscribe(metadata => {
+      console.log("new sheet");
       this.metadata = metadata;
       this.sheet = new Sheet();
       this.sheet.game = game;
       this.isNewSheet = false;
+      this.getPages();
       this.viewMode = ViewMode.Edit;
     })
   }
@@ -133,8 +135,7 @@ export class SheetComponent implements OnInit {
     if (this.sheet?.writable) {
       if (this.sheetId === null) {
         this.sheetService.createSheet(this.sheet!).subscribe(id => {
-          this.sheetId = id;
-          this.getSheet();
+          this.sheetService.navigateToSheet(id);
         });
       } else {
         this.sheetService.saveSheet(this.sheetId, this.sheet!).subscribe(() => {

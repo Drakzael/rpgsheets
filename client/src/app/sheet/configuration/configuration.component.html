@@ -9,7 +9,7 @@
       <select #newCampain>
         <option *ngFor="let campain of otherCampains" value="{{ campain.id }}">{{ campain.name }}</option>
       </select>
-      <button (click)="addToCampain(newCampain.value)"><fa-icon [icon]="iconAdd"/> Ajouter à la campagne</button>
+      <button (click)="addToCampain(newCampain.value)"><fa-icon [icon]="iconAdd"/></button>
     </div>
   </div>
 </div>

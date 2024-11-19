@@ -6,7 +6,7 @@
   <button *ngIf="!isMe && viewMode === mode.Delete" (click)="delete()" class="delete"><fa-icon [icon]="iconDelete" title="Supprimer"/></button>
   <button *ngIf="viewMode === mode.Edit || viewMode === mode.Delete" (click)="cancel()"><fa-icon [icon]="iconCancel" title="Annuler"/></button>
 </div>
-<div *ngIf="username" class="user">
+<div *ngIf="!isCreation" class="user">
   <div>Username</div>
   <div>
     <input *ngIf="viewMode !== mode.Edit && username" readonly="" #inputUsername type="text" value="{{ user.username }}">
@@ -51,11 +51,11 @@
     </div>
   </div>
 </div>
-<div *ngIf="!username" class="user">
+<div *ngIf="isCreation" class="user">
   <div>Username</div>
-  <div><input #inputUsername type="text" value="{{ user.username }}" (change)="user.username = inputUsername.value"></div>
+  <div><input #inputUsername type="text" value="" (change)="user.username = inputUsername.value"></div>
   <div>Alias</div>
-  <div><input #inputAlias type="text" value="{{ user.alias }}" (change)="user.alias = inputAlias.value"></div>
+  <div><input #inputAlias type="text" value="" (change)="user.alias = inputAlias.value"></div>
   <div>Mot de passe</div>
   <div><input #newPassword1 type="password" value="" (change)="changePassword('new1', newPassword1.value)"></div>
   <div>Repetez</div>
