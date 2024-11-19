@@ -7,7 +7,7 @@
 	<groupId>com.devordie.rpgsheets</groupId>
 	<packaging>pom</packaging>
 	<artifactId>rpgsheets</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>rpgsheets</name>
 	<description>RPG sheets</description>
 
