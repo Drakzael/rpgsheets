@@ -1,5 +1,5 @@
 package com.devordie.rpgsheets.entities;
 
-public record SheetOverviewResponse(String name, String id) {
+public record SheetOverviewResponse(String name, String id, boolean mine) {
 
 }

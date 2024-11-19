@@ -17,7 +17,9 @@
     <div *ngFor="let campain of campains">
       <div [routerLink]="['/campain', campain.id]" class="campain link">{{ campain.name === "" ? "Campagne sans nom": campain.name }}</div>
       <div *ngFor="let sheet of campain.sheets">
-        <div [routerLink]="['/sheet', sheet.id]" class="campainsheet link">{{ sheet.name === "" ? "Fiche sans nom" : sheet.name }}</div>
+        <div [routerLink]="['/sheet', sheet.id]" class="campainsheet link">
+          <fa-icon [icon]="iconCharacter" *ngIf="!sheet.mine" />
+          {{ sheet.name === "" ? "Fiche sans nom" : sheet.name }}</div>
       </div>
     </div>
     <div [routerLink]="['/campain', 'new']" class="link new"><fa-icon [icon]="iconAdd"/> Nouvelle campagne</div>

@@ -9,6 +9,7 @@ import com.devordie.rpgsheets.entities.IdName;
 import com.devordie.rpgsheets.entities.SheetOverviewResponse;
 import com.devordie.rpgsheets.services.CampainService;
 import com.devordie.rpgsheets.services.SheetService;
+import com.devordie.rpgsheets.services.UserService;
 
 import java.util.List;
 
@@ -24,10 +25,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class CampainController {
   private final CampainService campainService;
   private final SheetService sheetService;
+  private final UserService userService;
 
-  public CampainController(CampainService campainService, SheetService sheetService) {
+  public CampainController(CampainService campainService, SheetService sheetService, UserService userService) {
     this.campainService = campainService;
     this.sheetService = sheetService;
+    this.userService = userService;
   }
 
   @GetMapping("{id}")
@@ -40,7 +43,7 @@ public class CampainController {
         .setSheets(campain.getSheetIds().stream()
             .map(sheetId -> this.sheetService.getSheet(sheetId))
             .filter(sheet -> sheet != null)
-            .map(sheet -> new SheetOverviewResponse(sheet.getName(), sheet.getId()))
+            .map(sheet -> new SheetOverviewResponse(sheet.getName(), sheet.getId(), sheet.getUsername().equals(userService.getCurrentUser().getUsername())))
             .toList());
   }
 
@@ -53,7 +56,7 @@ public class CampainController {
             .setSheets(campain.getSheetIds().stream()
                 .map(sheetId -> this.sheetService.getSheet(sheetId))
                 .filter(sheet -> sheet != null)
-                .map(sheet -> new SheetOverviewResponse(sheet.getName(), sheet.getId()))
+                .map(sheet -> new SheetOverviewResponse(sheet.getName(), sheet.getId(), sheet.getUsername().equals(userService.getCurrentUser().getUsername())))
                 .toList()))
         .toList();
   }

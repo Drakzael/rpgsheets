@@ -9,6 +9,7 @@ import com.devordie.rpgsheets.entities.SheetOverviewResponse;
 import com.devordie.rpgsheets.entities.SheetResponse;
 import com.devordie.rpgsheets.services.CampainService;
 import com.devordie.rpgsheets.services.SheetService;
+import com.devordie.rpgsheets.services.UserService;
 
 import java.util.List;
 
@@ -24,10 +25,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 public class SheetController {
   private final SheetService sheetService;
   private final CampainService campainService;
+  private final UserService userService;
 
-  public SheetController(SheetService sheetService, CampainService campainService) {
+  public SheetController(SheetService sheetService, CampainService campainService, UserService userService) {
     this.sheetService = sheetService;
     this.campainService = campainService;
+    this.userService = userService;
   }
 
   @GetMapping("{id}")
@@ -42,7 +45,7 @@ public class SheetController {
   @GetMapping("")
   public List<SheetOverviewResponse> listSheets() {
     return sheetService.listMySheets().stream()
-        .map(sheet -> new SheetOverviewResponse(sheet.getName(), sheet.getId()))
+        .map(sheet -> new SheetOverviewResponse(sheet.getName(), sheet.getId(), sheet.getUsername().equals(userService.getCurrentUser().getUsername())))
         .toList();
   }
 
