@@ -10,7 +10,6 @@ import java.util.stream.Stream;
 import org.springframework.stereotype.Repository;
 
 import com.devordie.rpgsheets.entities.Sheet;
-import com.devordie.rpgsheets.entities.SheetOverview;
 import com.devordie.rpgsheets.services.UserService;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,13 +24,13 @@ public class SheetRepository extends LocalRepository {
     this.userService = userService;
   }
 
-  public List<SheetOverview> listAllSheets() {
+  public List<Sheet> listAllSheets() {
     try (Stream<Path> files = Files.list(getSheetsPath())) {
-      List<SheetOverview> sheets = new ArrayList<>();
+      List<Sheet> sheets = new ArrayList<>();
       for (final Path file : files.filter(file -> file.toString().endsWith(".json")).toList()) {
         final String filename = file.getFileName().toString();
         final String id = filename.substring(0, filename.length() - ".json".length());
-        sheets.add(MAPPER.readValue(Files.readAllBytes(file), SheetOverview.class).setId(id));
+        sheets.add(MAPPER.readValue(Files.readAllBytes(file), Sheet.class).setId(id));
       }
       return sheets;
     } catch (IOException ex) {

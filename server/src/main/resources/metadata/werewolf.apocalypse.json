@@ -1,6 +1,7 @@
 {
   "name": "Loup-Garou (Apocalypse)",
   "code": "werewolf.apocalypse",
+  "deprecated": true,
   "editors": {
     "attribute": { "type": "dots", "min": 1, "max": 5 },
     "ability": { "type": "dots", "min": 0, "max": 5 },

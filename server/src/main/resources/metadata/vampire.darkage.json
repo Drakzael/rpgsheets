@@ -1,6 +1,7 @@
 {
   "name": "Vampire (Age des ténèbres)",
   "code": "vampire.darkage",
+  "deprecated": true,
   "editors": {
     "attribute": { "type": "dots", "min": 1, "maxExpr": "${ $general.generation ? Math.max(5, 13 - $general.generation) : 5 }" },
     "attribute.appearance": { "type": "dots", "min": 1, "maxExpr": "${ $general.clan === 'Nosferatu' ? 0 : $general.generation ? Math.max(5, 13 - $general.generation) : 5 }" },

@@ -1,21 +1,12 @@
 {
-  "name": "Vampire (Mascarade)",
-  "code": "vampire.mascarade",
-  "deprecated": true,
-  "modes": {
-    "darkage": "Age des Tenebres",
-    "apocalypse": "Mascarade"
-  },
+  "name": "Fée",
+  "code": "whitewolf.fae",
   "editors": {
-    "attribute": { "type": "dots", "min": 1, "maxExpr": "${ $general.generation ? Math.max(5, 13 - $general.generation) : 5 }" },
-    "attribute.appearance": { "type": "dots", "min": 1, "maxExpr": "${ $general.clan === 'Nosferatu' ? 0 : $general.generation ? Math.max(5, 13 - $general.generation) : 5 }" },
-    "ability": { "type": "dots", "maxExpr": "${ $general.generation ? Math.max(5, 13 - $general.generation) : 5 }" },
+    "attribute": { "type": "dots", "min": 1, "max": 6 },
+    "ability": { "type": "dots", "min": 0, "max": 5 },
+    "dominion": { "type": "dots", "max": 5 },
     "background": { "type": "dots", "max": 5 },
-    "discipline": { "type": "dots", "maxExpr": "${ $general.generation ? Math.max(5, 13 - $general.generation) : 5 }" },
     "willpower": { "type": "dots_squares", "max": 10, "overlap": false, "freeEditSquares": true },
-    "blood": { "type": "squares", "maxExpr": "${ if ($general.generation) switch (Number($general.generation)) { case 4: 50; break; case 5: 40; break; case 6: 30; break; case 7: 20; break; default: Math.max(10, 23 - Number($general.generation)); break; } else 10 }", "freeEdit": true },
-    "path": { "type": "dots", "max": 10 },
-    "virtue": { "type": "dots", "defaultValue": 1, "max": 5 },
     "health": {
       "type": "health",
       "values": [
@@ -58,9 +49,9 @@
       ]
     }, {
       "rows": [
-        { "name": "Clan", "value": "general.clan", "hint": [ "Assamite", "Brujah", "Disciple de Set", "Gangrel", "Giovanni", "Lasombra", "Malkavien", "Nosferatu", "Ravnos", "Toréador", "Tremere", "Tzimisce", "Ventrue" ] },
-        { "name": "Génération", "value": "general.generation", "defaultValue": "${ 12 - $background.generation }" },
-        { "name": "Sire", "value": "general.sire" }
+        { "name": "Court", "value": "general.court", "hint": [ "Printemps", "Eté", "Automne", "Hivers", "Solstice" ] },
+        { "name": "Naissance", "value": "general.origin", "defaultValue": [ "Vraie Fée", "Changelin", "Elementaire" ] },
+        { "name": "Agenda", "value": "general.agenda" }
       ]
     }]
   }, {
@@ -78,7 +69,7 @@
       "rows": [
         { "name": "Charisme", "value": "attribute.charisma" },
         { "name": "Manipulation", "value": "attribute.manipulation" },
-        { "name": "Apparence", "value": "attribute.appearance", "editor": "attribute.appearance" }
+        { "name": "Apparence", "value": "attribute.appearance" }
       ]
     }, {
       "title": "Mental",
@@ -97,11 +88,11 @@
         { "name": "Athlétisme", "value": "ability.athletics" },
         { "name": "Bagarre", "value": "ability.brawl" },
         { "name": "Commandement", "value": "ability.command" },
-        { "name": "Empathie", "value": "ability.empathy" },
-        { "name": "Exp. de la rue", "value": "ability.streetWise" },
+        { "name": "/Kenning/", "value": "ability.kenning" },
+        { "name": "Prestigitation", "value": "ability.legerdemain" },
         { "name": "Expression", "value": "ability.expression" },
         { "name": "Intimidation", "value": "ability.intimidation" },
-        { "name": "Intuition", "value": "ability.intuition" },
+        { "name": "Esquive", "value": "ability.dodge" },
         { "name": "Subterfuge", "value": "ability.subterfuge" },
         { "name": "Vigilance", "value": "ability.alertness" },
         { "type": "freeValue", "prefix": "ability.additionnal.talents" }
@@ -110,12 +101,12 @@
       "title": "Compétences",
       "rows": [
         { "name": "Animaux", "value": "ability.animalKen" },
-        { "name": "Armes à feu", "value": "ability.firearms" },
+        { "name": "Archerie", "value": "ability.archery" },
+        { "name": "Commerce", "value": "ability.commerce" },
         { "name": "Artisanat", "value": "ability.craftmanship" },
-        { "name": "Conduite", "value": "ability.drive" },
+        { "name": "Equitation", "value": "ability.riding" },
         { "name": "Etiquette", "value": "ability.etiquette" },
         { "name": "Furtivité", "value": "ability.stealth" },
-        { "name": "Larcin", "value": "ability.stealing" },
         { "name": "Mélée", "value": "ability.melee" },
         { "name": "Représentation", "value": "ability.performance" },
         { "name": "Survie", "value": "ability.survival" },
@@ -124,45 +115,58 @@
     }, {
       "title": "Connaissances",
       "rows": [
-        { "name": "Droit", "value": "ability.law" },
-        { "name": "Erudition", "value": "ability.erudition" },
-        { "name": "Finances", "value": "ability.financials" },
-        { "name": "Informatique", "value": "ability.computer" },
+        { "name": "Enigmes", "value": "ability.enigmas" },
+        { "name": "Arcanes", "value": "ability.grammarye" },
+        { "name": "Sag. populaire", "value": "ability.hearthWisdom" },
         { "name": "Investigation", "value": "ability.investigation" },
+        { "name": "Droit", "value": "ability.law" },
+        { "name": "Langues", "value": "ability.linguistics" },
         { "name": "Médecine", "value": "ability.medecine" },
         { "name": "Occultisme", "value": "ability.occult" },
         { "name": "Politique", "value": "ability.politics" },
-        { "name": "Sciences", "value": "ability.science" },
-        { "name": "Technologies", "value": "ability.technology" },
+        { "name": "Sénéchal", "value": "ability.seneschal" },
         { "type": "freeValue", "prefix": "ability.additionnal.knowledges" }
       ]
     }]
   }, {
     "title": "Avantages",
     "gridColumns": [{
-      "title": "Disciplines",
+      "title": "Dominions",
+      "defaultType": "dominion",
       "rows": [
-        { "type": "freeValue", "prefix": "discipline", "defaultCount": 6, "editor": "discipline", "hint": [
-          "Aliénation", "Animalisme", "Auspex", "Célérité", "Chimérie", "Domination", "Force d'âme", "Obténétration", "Occultation", "Présence", "Protéisme", "Puissance", "Quietus", "Serpentis", "Vicissitude", "Nécromancie", "Thaumaturgie"
-        ] }
+        { "name": "Aube", "value": "dominion.dawn" },
+        { "name": "Jour", "value": "dominion.day" },
+        { "name": "Crépuscule", "value": "dominion.dusk" },
+        { "name": "Nuit", "value": "dominion.night" }
       ]
     }, {
       "defaultType": "background",
       "title": "Historiques",
       "rows": [
-        { "name": "Génération", "value": "background.generation" },
-        { "type": "freeValue", "prefix": "backgrounds", "defaultCount": 5, "hint": [
-          "Alliés", "Contacts", "Domaine", "Fausse identité", "Influence", "Membre de la main noire", "Mentor", "Renommée", "Ressources", "Rites", "Servants", "Statut", "Troupeau"
-        ] }
+        { "type": "freeValue", "prefix": "backgrounds", "defaultCount": 5 }
       ]
     }, {
-      "title": "Vertus",
-      "defaultType": "virtue",
+      "title": "Enchantements",
       "rows": [
-        { "type": "spacer" },
-        { "name": "Conscience/Conviction", "nameValue": "virtue.conscience.name", "value": "virtue.conscience.value" },
-        { "name": "Maitrise de soi/Instinct", "nameValue": "virtue.instinct.name", "value": "virtue.instinct.value" },
-        { "name": "Courage", "nameValue": "virtue.courage.name", "value": "virtue.courage.value" }
+        { "type": "freeValue", "prefix": "advantage.cantrips", "defaultCount": 5 }
+      ]
+    }]
+  }, {
+    "title": "",
+    "gridColumns": [{
+      "title": "Traits Féériques",
+      "rows": [
+        { "type": "freeValue", "prefix": "advantage.traits", "defaultCount": 5 }
+      ]
+    }, {
+      "title": "Pactes",
+      "rows": [
+        { "type": "freeValue", "prefix": "advantage.pacts", "defaultCount": 5 }
+      ]
+    }, {
+      "title": "Echos",
+      "rows": [
+        { "type": "freeValue", "prefix": "advantage.echos", "defaultCount": 5 }
       ]
     }]
   }, {
@@ -176,16 +180,16 @@
         { "type": "freeValue", "prefix": "advantage.weakness", "defaultCount": 4 }
       ]
     }, {
+      "defaultType": "willpower",
       "rows": [
-        { "type": "title", "name": "Voie" },
-        { "type": "value", "editor": "text", "value": "path.path" },
-        { "type": "value", "editor": "path", "value": "path.score" },
-        { "type": "spacer" },
         { "type": "title", "name": "Volonté" },
-        { "type": "value", "editor": "willpower", "values": ["willpower.max", "willpower.current"] },
+        { "type": "value", "values": ["willpower.max", "willpower.current"] },
         { "type": "spacer" },
-        { "type": "title", "name": "Points de Sang", "nameExpr": "${ let blood = 1; switch (Number($general.generation)) { case 4: blood = 10; break; case 5: blood = 8; break; case 6: blood = 6; break; case 7: blood = 4; break; case 8: blood = 3; break; case 9: blood = 2; break; default: break; } 'Points de Sang (max ' + blood + ' / tour)'; }" },
-        { "type": "value", "editor": "blood", "value": "blood.value" }
+        { "type": "title", "name": "/Mist/" },
+        { "type": "value", "values": ["mist.max", "mist.current"] },
+        { "type": "spacer" },
+        { "type": "title", "name": "/Weaving/" },
+        { "type": "value", "values": ["weaving.max", "weaving.current"] }
       ]
     }, {
       "rows": [
@@ -193,14 +197,6 @@
         { "type": "spacer" },
         { "type": "title", "name": "Expérience" },
         { "editor": "text", "value": "character.experience", "defaultCount": 2 }
-      ]
-    }]
-  }, {
-    "title": "Notes",
-    "pageBreak": true,
-    "gridColumns": [{
-      "rows": [
-        { "editor": "text", "defaultCount": 30, "value": "notes.1" }
       ]
     }]
   }]

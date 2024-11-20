@@ -28,7 +28,10 @@
   <div class="sheets">
     <div class="title"><fa-icon [icon]="iconCharacter"/> Personnages</div>
     <div *ngFor="let sheet of sheets">
-      <div [routerLink]="['/sheet', sheet.id]" class="link">{{ sheet.name === "" ? "Fiche sans nom" : sheet.name }}</div>
+      <div [routerLink]="['/sheet', sheet.id]" class="link">
+        <fa-icon [icon]="iconDeprecated" *ngIf="sheet.deprecated" />
+        {{ sheet.name === "" ? "Fiche sans nom" : sheet.name }}
+      </div>
     </div>
     <div>
       <div [routerLink]="['/sheet', 'new']" class="link new"><fa-icon [icon]="iconAdd"/> Nouvelle feuille</div>

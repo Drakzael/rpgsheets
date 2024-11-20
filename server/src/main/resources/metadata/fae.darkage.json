@@ -1,6 +1,7 @@
 {
   "name": "Fée (Age des ténèbres)",
   "code": "fae.darkage",
+  "deprecated": true,
   "editors": {
     "attribute": { "type": "dots", "min": 1, "max": 6 },
     "ability": { "type": "dots", "min": 0, "max": 5 },

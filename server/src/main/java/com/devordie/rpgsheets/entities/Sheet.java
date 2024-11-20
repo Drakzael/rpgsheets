@@ -18,6 +18,7 @@ public class Sheet implements ISheet {
   private String name;
   private String userAlias;
   private String game;
+  private String mode;
   private Map<String, Integer> numericValues;
   private Map<String, String> stringValues;
 
@@ -84,6 +85,7 @@ public class Sheet implements ISheet {
     return this;
   }
 
+  
   public Map<String, Integer> getNumericValues() {
     return numericValues;
   }
@@ -99,6 +101,15 @@ public class Sheet implements ISheet {
 
   public Sheet setStringValues(Map<String, String> stringValues) {
     this.stringValues = stringValues;
+    return this;
+  }
+
+  public String getMode() {
+    return mode;
+  }
+
+  public Sheet setMode(String mode) {
+    this.mode = mode;
     return this;
   }
 }

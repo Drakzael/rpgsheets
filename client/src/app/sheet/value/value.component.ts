@@ -10,6 +10,7 @@ import { HealthComponent } from './health/health.component';
 import { SquaresComponent } from './squares/squares.component';
 import { FreeValueComponent } from '../free-value/free-value.component';
 import { NumberComponent } from './number/number.component';
+import { faUnderline } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-value',
@@ -38,11 +39,12 @@ export class ValueComponent implements OnInit {
   type?: RowType;
   editorType!: ValueType;
   editorCode!: string;
+  mode: boolean = true;
 
   ngOnInit(): void {
     this.type = this.value.type || "value";
     this.editorCode = this.value.editor || this.defaultType || "text";
-    
+
     if (["text", "longText", "number"].includes(this.editorCode)) {
       this.editorType = this.editorCode;
     } else {
@@ -50,6 +52,19 @@ export class ValueComponent implements OnInit {
         this.editorType = this.metadata.editors![this.editorCode].type;
       } else {
         console.warn(`Couldn't find editor ${this.editorCode}`);
+      }
+    }
+    if (this.type === "value") {
+      if (!this.sheet.mode || !this.value.mode || this.value.mode.includes(this.sheet.mode)) {
+        this.mode = true;
+      } else {
+        if (["number", "dots", "squares"].includes(this.editorType)) {
+          this.mode = this.sheet.getNumber(this.value.value) != undefined;
+        } else if (["dots_squares"].includes(this.editorType)) {
+          this.mode = this.value.values.map(value => this.sheet.getNumber(value)).filter(value => value !== undefined).length > 0;
+        } else if (["text"].includes(this.editorType)) {
+          this.mode = this.sheet.getString(this.value.value) != undefined;
+        }
       }
     }
 

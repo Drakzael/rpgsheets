@@ -20,8 +20,7 @@ export class Sheet {
   private _onChange: (() => void)[] = [];
 
   constructor(
-    private data?: SheetData,
-    private accountService: AccountService | null = null
+    private data?: SheetData
   ) {
     if (!this.data) {
       this.data = new SheetData();
@@ -64,6 +63,14 @@ export class Sheet {
 
   public set game(game: string) {
     this.data!.game = game;
+  }
+
+  public get mode(): string | undefined {
+    return this.data!.mode;
+  }
+
+  public set mode(mode: string) {
+    this.data!.mode = mode;
   }
 
   private get numericValues() {
@@ -185,5 +192,6 @@ export class Sheet {
 export class SheetOverview {
   id!: string;
   name!: string;
-  mine!: boolean;
+  mine?: boolean;
+  deprecated?: boolean;
 }

@@ -27,7 +27,11 @@ public class CampainController {
   private final SheetService sheetService;
   private final UserService userService;
 
-  public CampainController(CampainService campainService, SheetService sheetService, UserService userService) {
+  public CampainController(
+      CampainService campainService,
+      SheetService sheetService,
+      UserService userService
+      ) {
     this.campainService = campainService;
     this.sheetService = sheetService;
     this.userService = userService;
@@ -43,7 +47,10 @@ public class CampainController {
         .setSheets(campain.getSheetIds().stream()
             .map(sheetId -> this.sheetService.getSheet(sheetId))
             .filter(sheet -> sheet != null)
-            .map(sheet -> new SheetOverviewResponse(sheet.getName(), sheet.getId(), sheet.getUsername().equals(userService.getCurrentUser().getUsername())))
+            .map(sheet -> new SheetOverviewResponse()
+                .setName(sheet.getName())
+                .setId(sheet.getId())
+                .setMine(sheet.getUsername().equals(userService.getCurrentUser().getUsername())))
             .toList());
   }
 
@@ -56,7 +63,10 @@ public class CampainController {
             .setSheets(campain.getSheetIds().stream()
                 .map(sheetId -> this.sheetService.getSheet(sheetId))
                 .filter(sheet -> sheet != null)
-                .map(sheet -> new SheetOverviewResponse(sheet.getName(), sheet.getId(), sheet.getUsername().equals(userService.getCurrentUser().getUsername())))
+                .map(sheet -> new SheetOverviewResponse()
+                    .setName(sheet.getName())
+                    .setId(sheet.getId())
+                    .setMine(sheet.getUsername().equals(userService.getCurrentUser().getUsername())))
                 .toList()))
         .toList();
   }

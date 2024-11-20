@@ -27,13 +27,15 @@ public class MetadataRepository extends LocalRepository {
   private static final String LOCAL_METADATA_DIRECTORY = "metadata";
   private static final String LOCAL_SOURCE_DIRECTORY = "metadata.source";
 
-  private List<JsonNode> metadata = null;
+  private List<JsonNode> metadata = new ArrayList<>();
 
   private void copyResources() {
     try {
       LOGGER.info("Copy metadata resources to " + this.getBasePath().resolve(LOCAL_SOURCE_DIRECTORY));
       Files.createDirectories(getBasePath().resolve(LOCAL_SOURCE_DIRECTORY));
       Files.createDirectories(getBasePath().resolve(LOCAL_METADATA_DIRECTORY));
+      clearDirectory(getBasePath().resolve(LOCAL_SOURCE_DIRECTORY));
+
       try (Stream<Path> files = Files
           .list(Path.of(MetadataRepository.class.getResource(RESOURCE_METADATA_DIRECTORY).toURI()))) {
         files.forEach(file -> {
@@ -52,35 +54,53 @@ public class MetadataRepository extends LocalRepository {
     }
   }
 
+  private void clearDirectory(Path directory) {
+    LOGGER.info("Clearing directory " + directory.toAbsolutePath().toString());
+    try (Stream<Path> files = Files.list(directory)) {
+      files.forEach(file -> {
+        try {
+          Files.delete(file);
+        } catch (IOException ex) {
+          LOGGER.warn("Error deleting file " + file.getFileName().toString() + " from "
+              + directory.toAbsolutePath().toString());
+        }
+      });
+    } catch (IOException ex) {
+      LOGGER.warn("Error clearing directory " + directory.toAbsolutePath().toString());
+    }
+  }
+
   private List<JsonNode> getMetadata() {
-    if (metadata == null) {
-      copyResources();
-      metadata = new ArrayList<>();
-      try (Stream<Path> files = Files.list(this.getBasePath().resolve(LOCAL_METADATA_DIRECTORY))) {
-        for (final Path file : files.filter(file -> file.toString().endsWith(".json")).toList()) {
-          JsonNode node = MAPPER.readTree(Files.readAllBytes(file));
-          LOGGER.info("Adding " + node.get("name").asText() + " metadata from "
-              + this.getBasePath().resolve("metadata").toAbsolutePath().toString());
-          metadata.add(node);
-        }
-      } catch (IOException ex) {
-        throw new IllegalStateException("Can't list metadata files in " + LOCAL_METADATA_DIRECTORY, ex);
-      }
-      try (Stream<Path> files = Files.list(this.getBasePath().resolve(LOCAL_SOURCE_DIRECTORY))) {
-        for (final Path file : files.filter(file -> file.toString().endsWith(".json")).toList()) {
-          JsonNode node = MAPPER.readTree(Files.readAllBytes(file));
-          if (metadata.stream().filter(meta -> node.get("code").asText().equals(meta.get("code").asText()))
-              .count() == 0) {
-            LOGGER.info("Adding " + node.get("name").asText() + " metadata from "
-                + this.getBasePath().resolve("metadata.source").toAbsolutePath().toString());
+    synchronized (metadata) {
+      if (metadata.isEmpty()) {
+        copyResources();
+        metadata = new ArrayList<>();
+        try (Stream<Path> files = Files.list(this.getBasePath().resolve(LOCAL_METADATA_DIRECTORY))) {
+          for (final Path file : files.filter(file -> file.toString().endsWith(".json")).toList()) {
+            JsonNode node = MAPPER.readTree(Files.readAllBytes(file));
+            LOGGER.info("Adding custom " + node.get("name").asText() + " metadata from "
+                + this.getBasePath().resolve("metadata").toAbsolutePath().toString());
             metadata.add(node);
-          } else {
-            LOGGER.debug("Skipping " + node.get("name").asText() + " metadata from "
-                + this.getBasePath().resolve("metadata.source").toAbsolutePath().toString() + " : already added");
           }
+        } catch (IOException ex) {
+          throw new IllegalStateException("Can't list metadata files in " + LOCAL_METADATA_DIRECTORY, ex);
         }
-      } catch (IOException ex) {
-        throw new IllegalStateException("Can't list metadata files in " + LOCAL_SOURCE_DIRECTORY, ex);
+        try (Stream<Path> files = Files.list(this.getBasePath().resolve(LOCAL_SOURCE_DIRECTORY))) {
+          for (final Path file : files.filter(file -> file.toString().endsWith(".json")).toList()) {
+            JsonNode node = MAPPER.readTree(Files.readAllBytes(file));
+            if (metadata.stream().filter(meta -> node.get("code").asText().equals(meta.get("code").asText()))
+                .count() == 0) {
+              LOGGER.info("Adding native " + node.get("name").asText() + " metadata from "
+                  + this.getBasePath().resolve("metadata.source").toAbsolutePath().toString());
+              metadata.add(node);
+            } else {
+              LOGGER.debug("Skipping native " + node.get("name").asText() + " metadata from "
+                  + this.getBasePath().resolve("metadata.source").toAbsolutePath().toString() + " : already added");
+            }
+          }
+        } catch (IOException ex) {
+          throw new IllegalStateException("Can't list metadata files in " + LOCAL_SOURCE_DIRECTORY, ex);
+        }
       }
     }
     return metadata;

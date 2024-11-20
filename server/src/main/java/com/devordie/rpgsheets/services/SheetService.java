@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import com.devordie.rpgsheets.entities.ISheet;
 import com.devordie.rpgsheets.entities.Sheet;
-import com.devordie.rpgsheets.entities.SheetOverview;
 import com.devordie.rpgsheets.repository.CampainRepository;
 import com.devordie.rpgsheets.repository.SheetRepository;
 
@@ -32,13 +31,13 @@ public class SheetService {
     return null;
   }
 
-  public List<SheetOverview> listSheets() {
+  public List<Sheet> listSheets() {
     return sheetRepository.listAllSheets().stream()
         .filter(this::isReadable)
         .toList();
   }
 
-  public List<SheetOverview> listMySheets() {
+  public List<Sheet> listMySheets() {
     return sheetRepository.listAllSheets().stream()
         .filter(sheet -> sheet.getUsername().equals(userService.getCurrentUser().getUsername()))
         .toList();

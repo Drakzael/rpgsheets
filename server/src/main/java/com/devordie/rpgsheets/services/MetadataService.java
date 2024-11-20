@@ -20,6 +20,13 @@ public class MetadataService {
     return repository.listAllMetadata();
   }
 
+  public MetadataOverview getMetadataOverview(String id) {
+    return repository.listAllMetadata().stream()
+        .filter(metadata -> metadata.code().equals(id))
+        .findFirst()
+        .orElse(null);
+  }
+
   public JsonNode getMetadata(String id) {
     return repository.getMetadata(id);
   }

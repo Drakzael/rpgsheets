@@ -1,21 +1,14 @@
 {
-  "name": "Vampire (Mascarade)",
-  "code": "vampire.mascarade",
-  "deprecated": true,
-  "modes": {
-    "darkage": "Age des Tenebres",
-    "apocalypse": "Mascarade"
-  },
+  "name": "Loup-Garou",
+  "code": "whitewolf.werewolf",
+  "modes": [
+    { "code": "darkage", "name": "Age des Ténèbres" }
+  ],
   "editors": {
-    "attribute": { "type": "dots", "min": 1, "maxExpr": "${ $general.generation ? Math.max(5, 13 - $general.generation) : 5 }" },
-    "attribute.appearance": { "type": "dots", "min": 1, "maxExpr": "${ $general.clan === 'Nosferatu' ? 0 : $general.generation ? Math.max(5, 13 - $general.generation) : 5 }" },
-    "ability": { "type": "dots", "maxExpr": "${ $general.generation ? Math.max(5, 13 - $general.generation) : 5 }" },
-    "background": { "type": "dots", "max": 5 },
-    "discipline": { "type": "dots", "maxExpr": "${ $general.generation ? Math.max(5, 13 - $general.generation) : 5 }" },
-    "willpower": { "type": "dots_squares", "max": 10, "overlap": false, "freeEditSquares": true },
-    "blood": { "type": "squares", "maxExpr": "${ if ($general.generation) switch (Number($general.generation)) { case 4: 50; break; case 5: 40; break; case 6: 30; break; case 7: 20; break; default: Math.max(10, 23 - Number($general.generation)); break; } else 10 }", "freeEdit": true },
-    "path": { "type": "dots", "max": 10 },
-    "virtue": { "type": "dots", "defaultValue": 1, "max": 5 },
+    "attribute": { "type": "dots", "min": 1, "max": 5 },
+    "ability": { "type": "dots", "min": 0, "max": 5 },
+    "renown": { "type": "dots_squares", "min": 0, "max": 10, "overlap": true },
+    "willpower": { "type": "dots_squares", "min": 0, "max": 10, "overlap": false, "freeEditSquares": true },
     "health": {
       "type": "health",
       "values": [
@@ -52,15 +45,15 @@
       ]
     }, {
       "rows": [
-        { "name": "Nature", "value": "general.nature" },
-        { "name": "Attitude", "value": "general.attitude" },
-        { "name": "Concept", "value": "general.concept" }
+        { "name": "Lignée", "value": "general.breed", "hints": [ "Homidé", "Lupus", "Métis" ] },
+        { "name": "Auspice", "value": "general.auspice" },
+        { "name": "Tribe", "value": "general.tribe" }
       ]
     }, {
       "rows": [
-        { "name": "Clan", "value": "general.clan", "hint": [ "Assamite", "Brujah", "Disciple de Set", "Gangrel", "Giovanni", "Lasombra", "Malkavien", "Nosferatu", "Ravnos", "Toréador", "Tremere", "Tzimisce", "Ventrue" ] },
-        { "name": "Génération", "value": "general.generation", "defaultValue": "${ 12 - $background.generation }" },
-        { "name": "Sire", "value": "general.sire" }
+        { "name": "Meute", "value": "general.pack_name" },
+        { "name": "Totem", "value": "general.pack_totem" },
+        { "name": "Concept", "value": "general.concept" }
       ]
     }]
   }, {
@@ -78,7 +71,7 @@
       "rows": [
         { "name": "Charisme", "value": "attribute.charisma" },
         { "name": "Manipulation", "value": "attribute.manipulation" },
-        { "name": "Apparence", "value": "attribute.appearance", "editor": "attribute.appearance" }
+        { "name": "Apparence", "value": "attribute.appearance" }
       ]
     }, {
       "title": "Mental",
@@ -94,75 +87,146 @@
     "gridColumns": [{
       "title": "Talents",
       "rows": [
+        { "name": "Vigilance", "value": "ability.alertness" },
         { "name": "Athlétisme", "value": "ability.athletics" },
         { "name": "Bagarre", "value": "ability.brawl" },
-        { "name": "Commandement", "value": "ability.command" },
+        { "name": "Esquive", "value": "ability.dodge" },
         { "name": "Empathie", "value": "ability.empathy" },
-        { "name": "Exp. de la rue", "value": "ability.streetWise" },
         { "name": "Expression", "value": "ability.expression" },
         { "name": "Intimidation", "value": "ability.intimidation" },
-        { "name": "Intuition", "value": "ability.intuition" },
+        { "name": "Appel primal", "value": "ability.primalUrge" },
+        { "name": "Conn. de la rue", "value": "ability.streetwise" },
         { "name": "Subterfuge", "value": "ability.subterfuge" },
-        { "name": "Vigilance", "value": "ability.alertness" },
         { "type": "freeValue", "prefix": "ability.additionnal.talents" }
       ]
     }, {
       "title": "Compétences",
       "rows": [
         { "name": "Animaux", "value": "ability.animalKen" },
-        { "name": "Armes à feu", "value": "ability.firearms" },
-        { "name": "Artisanat", "value": "ability.craftmanship" },
         { "name": "Conduite", "value": "ability.drive" },
         { "name": "Etiquette", "value": "ability.etiquette" },
-        { "name": "Furtivité", "value": "ability.stealth" },
-        { "name": "Larcin", "value": "ability.stealing" },
+        { "name": "Armes à feu", "value": "ability.firearms" },
         { "name": "Mélée", "value": "ability.melee" },
+        { "name": "Commandement", "value": "ability.leadership" },
         { "name": "Représentation", "value": "ability.performance" },
+        { "name": "Artisanat", "value": "ability.repair" },
+        { "name": "Furtivité", "value": "ability.stealth" },
         { "name": "Survie", "value": "ability.survival" },
         { "type": "freeValue", "prefix": "ability.additionnal.skills" }
       ]
     }, {
       "title": "Connaissances",
       "rows": [
-        { "name": "Droit", "value": "ability.law" },
-        { "name": "Erudition", "value": "ability.erudition" },
-        { "name": "Finances", "value": "ability.financials" },
         { "name": "Informatique", "value": "ability.computer" },
+        { "name": "Enigmes", "value": "ability.enigmas" },
         { "name": "Investigation", "value": "ability.investigation" },
+        { "name": "Droit", "value": "ability.law" },
+        { "name": "Langues", "value": "ability.linguistics" },
         { "name": "Médecine", "value": "ability.medecine" },
         { "name": "Occultisme", "value": "ability.occult" },
         { "name": "Politique", "value": "ability.politics" },
+        { "name": "Rituels", "value": "ability.rituals" },
         { "name": "Sciences", "value": "ability.science" },
-        { "name": "Technologies", "value": "ability.technology" },
         { "type": "freeValue", "prefix": "ability.additionnal.knowledges" }
       ]
     }]
   }, {
     "title": "Avantages",
     "gridColumns": [{
-      "title": "Disciplines",
       "rows": [
-        { "type": "freeValue", "prefix": "discipline", "defaultCount": 6, "editor": "discipline", "hint": [
-          "Aliénation", "Animalisme", "Auspex", "Célérité", "Chimérie", "Domination", "Force d'âme", "Obténétration", "Occultation", "Présence", "Protéisme", "Puissance", "Quietus", "Serpentis", "Vicissitude", "Nécromancie", "Thaumaturgie"
-        ] }
+        { "type": "freeValue", "name": "Historiques", "prefix": "backgrounds", "defaultCount": 5, "editor": "ability" }
       ]
     }, {
-      "defaultType": "background",
-      "title": "Historiques",
       "rows": [
-        { "name": "Génération", "value": "background.generation" },
-        { "type": "freeValue", "prefix": "backgrounds", "defaultCount": 5, "hint": [
-          "Alliés", "Contacts", "Domaine", "Fausse identité", "Influence", "Membre de la main noire", "Mentor", "Renommée", "Ressources", "Rites", "Servants", "Statut", "Troupeau"
-        ] }
+        { "type": "freeValue", "name": "Dons", "prefix": "gifts.1", "defaultCount":5 }
       ]
     }, {
-      "title": "Vertus",
-      "defaultType": "virtue",
       "rows": [
+        { "type": "freeValue", "name": "Dons", "prefix": "gifts.2", "defaultCount":5 }
+      ]
+    }]
+  }, {
+    "title": "",
+    "gridColumns": [{
+      "title": "Renom",
+      "defaultType": "renown",
+      "rows": [
+        { "name": "Gloire", "values": ["renown.glory_perma", "renown.glory_tmp"] },
+        { "name": "Honneur", "values": ["renown.honor_perma", "renown.honor_tmp"] },
+        { "name": "Sagesse", "values": ["renown.wisdom_perma", "renown.wisdom_tmp"] },
         { "type": "spacer" },
-        { "name": "Conscience/Conviction", "nameValue": "virtue.conscience.name", "value": "virtue.conscience.value" },
-        { "name": "Maitrise de soi/Instinct", "nameValue": "virtue.instinct.name", "value": "virtue.instinct.value" },
-        { "name": "Courage", "nameValue": "virtue.courage.name", "value": "virtue.courage.value" }
+        { "name": "Rang", "editor": "number", "value": "renown.rank" }
+      ]
+    }, {
+      "defaultType": "willpower",
+      "rows": [
+        { "type": "title", "name": "Rage" },
+        { "values": ["rage.max", "rage.current"]},
+        { "type": "spacer" },
+        { "type": "title", "name": "Gnose" },
+        { "values": ["gnosis.max", "gnosis.current"]},
+        { "type": "spacer" },
+        { "type": "title", "name": "Volonté" },
+        { "values": ["willpower.max", "willpower.current"]}
+      ]
+    }, {
+      "rows": [
+        { "name": "Santé", "editor": "health", "values": [ "health.blunt", "health.lethal", "health.aggravated" ] },
+        { "type": "spacer" },
+        { "type": "title", "name": "Expérience" },
+        { "editor": "text", "value": "character.experience", "defaultCount": 2 }
+      ]
+    }]
+  }, {
+    "title": "",
+    "pageBreak": true,
+    "gridColumns": [{
+      "title": "Humain",
+      "rows": [
+        { "type": "note", "name": "Difficulté: 6" }
+      ]
+    }, {
+      "title": "Glabro",
+      "rows": [
+        { "type": "note", "name": "Force (+2)" },
+        { "type": "note", "name": "Vigueur: (+2)" },
+        { "type": "note", "name": "Apparence: (-1)" },
+        { "type": "note", "name": "Manipulation: (-1)" },
+        { "type": "spacer" },
+        { "type": "note", "name": "Difficulté: 7" }
+      ]
+    }, {
+      "title": "Crinos",
+      "rows": [
+        { "type": "note", "name": "Force (+4)" },
+        { "type": "note", "name": "Dextérité (+1)" },
+        { "type": "note", "name": "Vigueur: (+3)" },
+        { "type": "note", "name": "Apparence: (0)" },
+        { "type": "note", "name": "Manipulation: (-3)" },
+        { "type": "spacer" },
+        { "type": "note", "name": "Difficulté: 6" }
+      ]
+    }, {
+      "title": "Hispo",
+      "rows": [
+        { "type": "note", "name": "Force (+3)" },
+        { "type": "note", "name": "Dextérité (+2)" },
+        { "type": "note", "name": "Vigueur: (+3)" },
+        { "type": "note", "name": "Manipulation: (-3)" },
+        { "type": "note", "name": "+1 dgt de morsure" },
+        { "type": "spacer" },
+        { "type": "note", "name": "Difficulté: 7" }
+      ]
+    }, {
+      "title": "Lupus",
+      "rows": [
+        { "type": "note", "name": "Force (+1)" },
+        { "type": "note", "name": "Dextérité (+2)" },
+        { "type": "note", "name": "Vigueur: (+2)" },
+        { "type": "note", "name": "Manipulation: (-3)" },
+        { "type": "note", "name": "-2 diff. Perception" },
+        { "type": "spacer" },
+        { "type": "note", "name": "Difficulté: 6" }
       ]
     }]
   }, {
@@ -175,33 +239,6 @@
         { "type": "title", "name": "Faiblesses" },
         { "type": "freeValue", "prefix": "advantage.weakness", "defaultCount": 4 }
       ]
-    }, {
-      "rows": [
-        { "type": "title", "name": "Voie" },
-        { "type": "value", "editor": "text", "value": "path.path" },
-        { "type": "value", "editor": "path", "value": "path.score" },
-        { "type": "spacer" },
-        { "type": "title", "name": "Volonté" },
-        { "type": "value", "editor": "willpower", "values": ["willpower.max", "willpower.current"] },
-        { "type": "spacer" },
-        { "type": "title", "name": "Points de Sang", "nameExpr": "${ let blood = 1; switch (Number($general.generation)) { case 4: blood = 10; break; case 5: blood = 8; break; case 6: blood = 6; break; case 7: blood = 4; break; case 8: blood = 3; break; case 9: blood = 2; break; default: break; } 'Points de Sang (max ' + blood + ' / tour)'; }" },
-        { "type": "value", "editor": "blood", "value": "blood.value" }
-      ]
-    }, {
-      "rows": [
-        { "name": "Santé", "editor": "health", "values": [ "health.blunt", "health.lethal", "health.aggravated" ] },
-        { "type": "spacer" },
-        { "type": "title", "name": "Expérience" },
-        { "editor": "text", "value": "character.experience", "defaultCount": 2 }
-      ]
-    }]
-  }, {
-    "title": "Notes",
-    "pageBreak": true,
-    "gridColumns": [{
-      "rows": [
-        { "editor": "text", "defaultCount": 30, "value": "notes.1" }
-      ]
-    }]
+    }, {}, {}]
   }]
 }

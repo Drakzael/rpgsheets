@@ -3,7 +3,7 @@ import { SheetService } from '../_services/sheet.service';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AccountService } from '../_services/account.service';
-import { faUser, faSignOut, faUsers, faImage, faImagePortrait, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faSignOut, faUsers, faImage, faImagePortrait, faPlus, faWarning } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CampainService } from '../_services/campain.service';
 import { Role, User } from '../_models/user';
@@ -28,6 +28,7 @@ export class MenuComponent implements OnInit {
   iconCampain = faImage;
   iconCharacter = faImagePortrait;
   iconAdd = faPlus;
+  iconDeprecated = faWarning;
   Role = Role;
 
   get sheets() {

@@ -1,11 +1,10 @@
 {
-  "name": "Vampire (Mascarade)",
-  "code": "vampire.mascarade",
-  "deprecated": true,
-  "modes": {
-    "darkage": "Age des Tenebres",
-    "apocalypse": "Mascarade"
-  },
+  "name": "Vampire",
+  "code": "vampire",
+  "modes": [
+    { "name": "Age des Ténèbres", "code": "darkage" },
+    { "name": "La Mascarade", "code": "mascarade" }
+  ],
   "editors": {
     "attribute": { "type": "dots", "min": 1, "maxExpr": "${ $general.generation ? Math.max(5, 13 - $general.generation) : 5 }" },
     "attribute.appearance": { "type": "dots", "min": 1, "maxExpr": "${ $general.clan === 'Nosferatu' ? 0 : $general.generation ? Math.max(5, 13 - $general.generation) : 5 }" },
@@ -58,7 +57,7 @@
       ]
     }, {
       "rows": [
-        { "name": "Clan", "value": "general.clan", "hint": [ "Assamite", "Brujah", "Disciple de Set", "Gangrel", "Giovanni", "Lasombra", "Malkavien", "Nosferatu", "Ravnos", "Toréador", "Tremere", "Tzimisce", "Ventrue" ] },
+        { "name": "Clan", "value": "general.clan", "hint": [ "Assamite", "Brujah", "Disciple de Set", "Gangrel", "Cappadocien", "Lasombra", "Malkavien", "Nosferatu", "Ravnos", "Toréador", "Tremere", "Tzimisce", "Ventrue" ] },
         { "name": "Génération", "value": "general.generation", "defaultValue": "${ 12 - $background.generation }" },
         { "name": "Sire", "value": "general.sire" }
       ]
@@ -98,10 +97,12 @@
         { "name": "Bagarre", "value": "ability.brawl" },
         { "name": "Commandement", "value": "ability.command" },
         { "name": "Empathie", "value": "ability.empathy" },
-        { "name": "Exp. de la rue", "value": "ability.streetWise" },
+        { "name": "Esquive", "value": "ability.dodge", "mode": ["darkage"] },
+        { "name": "Larcin", "value": "ability.larceny", "mode": ["darkage"] },
+        { "name": "Exp. de la rue", "value": "ability.streetWise", "mode": ["mascarade"] },
         { "name": "Expression", "value": "ability.expression" },
         { "name": "Intimidation", "value": "ability.intimidation" },
-        { "name": "Intuition", "value": "ability.intuition" },
+        { "name": "Intuition", "value": "ability.intuition", "mode": ["mascarade"] },
         { "name": "Subterfuge", "value": "ability.subterfuge" },
         { "name": "Vigilance", "value": "ability.alertness" },
         { "type": "freeValue", "prefix": "ability.additionnal.talents" }
@@ -110,12 +111,14 @@
       "title": "Compétences",
       "rows": [
         { "name": "Animaux", "value": "ability.animalKen" },
-        { "name": "Armes à feu", "value": "ability.firearms" },
+        { "name": "Archerie", "value": "ability.archery", "mode": ["darkage"] },
+        { "name": "Armes à Feu", "value": "ability.firearms", "mode": ["mascarade"] },
         { "name": "Artisanat", "value": "ability.craftmanship" },
-        { "name": "Conduite", "value": "ability.drive" },
+        { "name": "Commerce", "value": "ability.trading" },
+        { "name": "Conduite", "value": "ability.driving", "mode": ["mascarade"] },
+        { "name": "Equitation", "value": "ability.riding", "mode": ["darkage"] },
         { "name": "Etiquette", "value": "ability.etiquette" },
         { "name": "Furtivité", "value": "ability.stealth" },
-        { "name": "Larcin", "value": "ability.stealing" },
         { "name": "Mélée", "value": "ability.melee" },
         { "name": "Représentation", "value": "ability.performance" },
         { "name": "Survie", "value": "ability.survival" },
@@ -126,14 +129,17 @@
       "rows": [
         { "name": "Droit", "value": "ability.law" },
         { "name": "Erudition", "value": "ability.erudition" },
-        { "name": "Finances", "value": "ability.financials" },
-        { "name": "Informatique", "value": "ability.computer" },
+        { "name": "Sagesse populaire", "value": "ability.popWisdom", "mode": ["darkage"] },
+        { "name": "Finances", "value": "ability.financials", "mode": ["mascarade"] },
+        { "name": "Informatique", "value": "ability.computer", "mode": ["mascarade"] },
+        { "name": "Linguistique", "value": "ability.languages", "mode": ["darkage"] },
         { "name": "Investigation", "value": "ability.investigation" },
         { "name": "Médecine", "value": "ability.medecine" },
         { "name": "Occultisme", "value": "ability.occult" },
         { "name": "Politique", "value": "ability.politics" },
-        { "name": "Sciences", "value": "ability.science" },
-        { "name": "Technologies", "value": "ability.technology" },
+        { "name": "Sciences", "value": "ability.science", "mode": ["mascarade"] },
+        { "name": "Sénéchal", "value": "ability.ledgerdemain", "mode": ["darkage"] },
+        { "name": "Théologie", "value": "ability.theology" },
         { "type": "freeValue", "prefix": "ability.additionnal.knowledges" }
       ]
     }]
@@ -193,14 +199,6 @@
         { "type": "spacer" },
         { "type": "title", "name": "Expérience" },
         { "editor": "text", "value": "character.experience", "defaultCount": 2 }
-      ]
-    }]
-  }, {
-    "title": "Notes",
-    "pageBreak": true,
-    "gridColumns": [{
-      "rows": [
-        { "editor": "text", "defaultCount": 30, "value": "notes.1" }
       ]
     }]
   }]

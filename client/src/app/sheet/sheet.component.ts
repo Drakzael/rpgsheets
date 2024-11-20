@@ -7,7 +7,7 @@ import { ViewMode } from '../_models/viewmode';
 import { SheetService } from '../_services/sheet.service';
 import { ActivatedRoute } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faPen, faSave, faCancel, faTrash, faMasksTheater, faDice, faGear, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPen, faSave, faCancel, faTrash, faMasksTheater, faDice, faGear, faPlus, faWarning } from '@fortawesome/free-solid-svg-icons';
 import { ConfigurationComponent } from './configuration/configuration.component';
 import { AccountService } from '../_services/account.service';
 
@@ -44,6 +44,7 @@ export class SheetComponent implements OnInit {
   iconDice = faDice;
   iconConfig = faGear;
   iconAdd = faPlus;
+  iconDeprecated = faWarning;
 
   constructor(
     private route: ActivatedRoute,
@@ -53,7 +54,7 @@ export class SheetComponent implements OnInit {
   }
 
   pages!: { rows: GameMetadataRow[], pageNum: number }[];
-  
+
   private getPages() {
     this.pages = [];
     if (this.metadata) {
@@ -80,6 +81,9 @@ export class SheetComponent implements OnInit {
         this.getSheet();
       }
     })
+    this.sheetService.listMetadata().subscribe(games => {
+      this.games = games;
+    });
   }
 
   get isCreation() {
@@ -108,11 +112,8 @@ export class SheetComponent implements OnInit {
     this.metadata = undefined;
     this.sheet = undefined;
     this.isConfig = false;
-    this.sheetService.listMetadata().subscribe(games => {
-      this.games = games;
-      this.isNewSheet = true;
-      this.getPages();
-    });
+    this.isNewSheet = true;
+    this.getPages();
   }
 
   newSheet(game: string) {
@@ -185,5 +186,23 @@ export class SheetComponent implements OnInit {
 
   config() {
     this.isConfig = !this.isConfig;
+  }
+
+  changeTemplate(game: string) {
+    this.sheet!.game = game;
+    this.sheetService.getMetadata(game).subscribe(metadata => {
+      this.metadata = metadata;
+      if (!this.metadata.modes || !this.metadata.modes.length) {
+        this.sheet!.mode = "";
+      } else if (!this.metadata.modes.map(mode => mode.code).includes(this.sheet!.mode!)) {
+        this.sheet!.mode = this.metadata.modes[0].code;
+      }
+      this.getPages();
+    })
+  }
+
+  changeMode(mode: string) {
+    this.sheet!.mode = mode;
+    this.getPages();
   }
 }

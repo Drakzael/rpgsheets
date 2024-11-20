@@ -12,6 +12,7 @@ public class SheetResponse {
   private String name;
   private String userAlias;
   private String game;
+  private String mode;
   private Map<String, Integer> numericValues;
   private Map<String, String> stringValues;
   private List<IdName> campains;
@@ -26,6 +27,7 @@ public class SheetResponse {
     this.username = sheet.getUsername();
     this.userAlias = sheet.getUserAlias();
     this.game = sheet.getGame();
+    this.mode = sheet.getMode();
     this.numericValues = sheet.getNumericValues();
     this.stringValues = sheet.getStringValues();
     this.writable = sheet.isWritable();
@@ -93,6 +95,15 @@ public class SheetResponse {
 
   public SheetResponse setGame(String game) {
     this.game = game;
+    return this;
+  }
+
+  public String getMode() {
+    return mode;
+  }
+
+  public SheetResponse setMode(String mode) {
+    this.mode = mode;
     return this;
   }
 

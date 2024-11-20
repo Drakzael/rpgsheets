@@ -24,7 +24,7 @@ export class GameMetadataValue {
   name!: string;
   nameExpr!: string;
   type?: RowType;
-  mode?: string;
+  mode?: string[]; // value limited to modes
   editor?: ValueType; // value, freeValue
   value!: string; // value
   values!: string[]; // value.dots_squares
@@ -69,4 +69,5 @@ export class GameMetadata {
 export class GameMetadataOverview {
   code!: string;
   name!: string;
+  deprecated?: boolean;
 }

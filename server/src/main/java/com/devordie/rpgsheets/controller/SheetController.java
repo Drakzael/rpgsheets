@@ -8,8 +8,8 @@ import com.devordie.rpgsheets.entities.Sheet;
 import com.devordie.rpgsheets.entities.SheetOverviewResponse;
 import com.devordie.rpgsheets.entities.SheetResponse;
 import com.devordie.rpgsheets.services.CampainService;
+import com.devordie.rpgsheets.services.MetadataService;
 import com.devordie.rpgsheets.services.SheetService;
-import com.devordie.rpgsheets.services.UserService;
 
 import java.util.List;
 
@@ -25,12 +25,15 @@ import org.springframework.web.bind.annotation.PutMapping;
 public class SheetController {
   private final SheetService sheetService;
   private final CampainService campainService;
-  private final UserService userService;
+  private final MetadataService metadataService;
 
-  public SheetController(SheetService sheetService, CampainService campainService, UserService userService) {
+  public SheetController(
+      SheetService sheetService,
+      CampainService campainService,
+      MetadataService metadataService) {
     this.sheetService = sheetService;
     this.campainService = campainService;
-    this.userService = userService;
+    this.metadataService = metadataService;
   }
 
   @GetMapping("{id}")
@@ -43,9 +46,17 @@ public class SheetController {
   }
 
   @GetMapping("")
-  public List<SheetOverviewResponse> listSheets() {
+  public List<SheetOverviewResponse> listMySheets() {
     return sheetService.listMySheets().stream()
-        .map(sheet -> new SheetOverviewResponse(sheet.getName(), sheet.getId(), sheet.getUsername().equals(userService.getCurrentUser().getUsername())))
+        .map(sheet -> {
+          SheetOverviewResponse res = new SheetOverviewResponse()
+              .setName(sheet.getName())
+              .setId(sheet.getId());
+          if (metadataService.getMetadataOverview(sheet.getGame()).deprecated()) {
+            res.setDeprecated(true);
+          }
+          return res;
+        })
         .toList();
   }
 
