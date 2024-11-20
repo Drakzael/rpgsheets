@@ -44,7 +44,6 @@ export class SheetComponent implements OnInit {
   iconDice = faDice;
   iconConfig = faGear;
   iconAdd = faPlus;
-  iconDeprecated = faWarning;
 
   constructor(
     private route: ActivatedRoute,
