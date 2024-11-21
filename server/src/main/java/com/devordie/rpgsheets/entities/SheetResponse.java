@@ -25,7 +25,6 @@ public class SheetResponse {
     this.id = sheet.getId();
     this.name = sheet.getName();
     this.username = sheet.getUsername();
-    this.userAlias = sheet.getUserAlias();
     this.game = sheet.getGame();
     this.mode = sheet.getMode();
     this.numericValues = sheet.getNumericValues();

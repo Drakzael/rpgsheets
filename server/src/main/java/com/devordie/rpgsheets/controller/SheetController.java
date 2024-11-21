@@ -2,6 +2,7 @@ package com.devordie.rpgsheets.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.devordie.rpgsheets.entities.IdName;
 import com.devordie.rpgsheets.entities.Sheet;
@@ -10,9 +11,11 @@ import com.devordie.rpgsheets.entities.SheetResponse;
 import com.devordie.rpgsheets.services.CampainService;
 import com.devordie.rpgsheets.services.MetadataService;
 import com.devordie.rpgsheets.services.SheetService;
+import com.devordie.rpgsheets.services.UserService;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,19 +29,28 @@ public class SheetController {
   private final SheetService sheetService;
   private final CampainService campainService;
   private final MetadataService metadataService;
+  private final UserService userService;
 
   public SheetController(
       SheetService sheetService,
       CampainService campainService,
-      MetadataService metadataService) {
+      MetadataService metadataService,
+      UserService userService
+      ) {
     this.sheetService = sheetService;
     this.campainService = campainService;
     this.metadataService = metadataService;
+    this.userService = userService;
   }
 
   @GetMapping("{id}")
   public SheetResponse getSheet(@PathVariable String id) {
-    return new SheetResponse(sheetService.getSheet(id))
+    final Sheet sheet = sheetService.getSheet(id);
+    if (sheet == null) {
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+    }
+    return new SheetResponse(sheet)
+        .setUserAlias(userService.findByUsername(sheet.getUsername()).getAlias())
         .setCampains(campainService.listAllCampains().stream()
             .filter(campain -> campain.getSheetIds().contains(id))
             .map(campain -> new IdName(campain.getId(), campain.getName()))

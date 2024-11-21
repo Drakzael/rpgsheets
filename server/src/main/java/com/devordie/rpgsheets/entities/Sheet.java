@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-public class Sheet implements ISheet {
+public class Sheet {
   @JsonIgnore
   private String id;
 
@@ -16,7 +16,6 @@ public class Sheet implements ISheet {
 
   private String username;
   private String name;
-  private String userAlias;
   private String game;
   private String mode;
   private Map<String, Integer> numericValues;
@@ -64,15 +63,6 @@ public class Sheet implements ISheet {
 
   public Sheet setUsername(String username) {
     this.username = username;
-    return this;
-  }
-
-  public String getUserAlias() {
-    return userAlias;
-  }
-
-  public Sheet setUserAlias(String userAlias) {
-    this.userAlias = userAlias;
     return this;
   }
 

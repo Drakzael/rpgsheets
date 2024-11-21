@@ -1,6 +1,6 @@
 package com.devordie.rpgsheets.entities;
 
-public class SheetOverview implements ISheet {
+public class SheetOverview {
   private String name;
   private String userAlias;
   private String username;

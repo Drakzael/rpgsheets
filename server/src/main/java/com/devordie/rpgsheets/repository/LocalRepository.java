@@ -6,14 +6,16 @@ import java.nio.file.Path;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.stereotype.Repository;
 
-public abstract class LocalRepository {
+@Repository
+public final class LocalRepository {
   private static final Log LOGGER = LogFactory.getLog(LocalRepository.class);
   private static final Path LOCAL_REPOSITORY = Path.of("data");
   private static final Path HOME_REPOSITORY = Path.of(".rpgsheets");
   private Path path = null;
 
-  protected Path getBasePath() {
+  public synchronized Path getBasePath() {
     if (path == null) {
       if (!tryLocalDirectory(LOCAL_REPOSITORY.toAbsolutePath())
           && !tryLocalDirectory(Path.of(System.getProperty("user.home")).resolve(HOME_REPOSITORY).toAbsolutePath())) {
@@ -40,29 +42,24 @@ public abstract class LocalRepository {
     return false;
   }
 
-  protected Path getRepositoryPath() {
-    throw new IllegalStateException("Not implemented");
-  }
-
-  protected String getNewId() {
+  String getNewId(Path parentPath) {
     try {
-      if (!Files.exists(getRepositoryPath())) {
-        Files.createDirectories(getRepositoryPath());
+      if (!Files.exists(parentPath)) {
+        Files.createDirectories(parentPath);
       }
 
     } catch (IOException ex) {
       throw new IllegalStateException(ex);
     }
     Integer i = 1;
-    while (Files.exists(getRepositoryPath().resolve(i.toString() + ".json"))) {
+    while (Files.exists(parentPath.resolve(i.toString() + ".json"))) {
       ++i;
     }
     try {
-      Files.createFile(getRepositoryPath().resolve(i.toString() + ".json"));
+      Files.createFile(parentPath.resolve(i.toString() + ".json"));
       return i.toString();
     } catch (IOException ex) {
       throw new IllegalStateException();
     }
   }
-
 }

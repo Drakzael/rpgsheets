@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.devordie.rpgsheets.entities.ISheet;
 import com.devordie.rpgsheets.entities.Sheet;
 import com.devordie.rpgsheets.repository.CampainRepository;
 import com.devordie.rpgsheets.repository.SheetRepository;
@@ -56,7 +55,7 @@ public class SheetService {
   }
 
   public void deleteSheet(String sheetId) {
-    if (isWritable(sheetId)) {
+    if (isDeletable(sheetId)) {
       sheetRepository.deleteSheet(sheetId);
     }
   }
@@ -65,7 +64,7 @@ public class SheetService {
     return isReadable(getSheet(sheetId));
   }
 
-  public boolean isReadable(ISheet sheet) {
+  public boolean isReadable(Sheet sheet) {
     if (sheet == null) {
       return false;
     }
@@ -81,7 +80,7 @@ public class SheetService {
     return isWritable(getSheet(sheetId));
   }
 
-  public boolean isWritable(ISheet sheet) {
+  public boolean isWritable(Sheet sheet) {
     return sheet != null && sheet.getUsername().equals(userService.getCurrentUser().getUsername());
   }
 
@@ -89,7 +88,7 @@ public class SheetService {
     return isDeletable(getSheet(sheetId));
   }
 
-  public boolean isDeletable(ISheet sheet) {
+  public boolean isDeletable(Sheet sheet) {
     return isWritable(sheet);
   }
 }
