@@ -5,7 +5,7 @@
 
 	<groupId>com.devordie.rpgsheets</groupId>
 	<artifactId>rpgsheets-client</artifactId>
-	<version>1.0.0</version>
+	<version>1.1.0</version>
 	<name>rpgsheets client</name>
 	<description>RPG sheets client</description>
 
