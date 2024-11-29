@@ -1,11 +1,11 @@
 package com.devordie.rpgsheets.entities;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Campain {
   private String name;
   private String id;
@@ -13,8 +13,24 @@ public class Campain {
   private String description;
   private String gmDescription;
   private List<String> sheetIds = new ArrayList<>();
+  @JsonIgnore
   private boolean writable;
+  @JsonIgnore
   private boolean deletable;
+
+  public Campain() {
+  }
+
+  private Campain(Campain source) {
+    this.name = source.name;
+    this.id = source.id;
+    this.username = source.username;
+    this.description = source.description;
+    this.gmDescription = source.gmDescription;
+    this.sheetIds.addAll(source.sheetIds);
+    this.writable = source.writable;
+    this.deletable = source.deletable;
+  }
 
   public Campain setId(String id) {
     this.id = id;
@@ -37,38 +53,38 @@ public class Campain {
     return description;
   }
 
-  public Campain setSheetIds(List<String> sheetIds) {
-    if (this.sheetIds == null) {
-      this.sheetIds = new ArrayList<>();
-    } else {
-      this.sheetIds.clear();
-    }
-    this.sheetIds.addAll(sheetIds);
-    return this;
+  public Campain withSheetIds(List<String> sheetIds) {
+    final Campain campain = new Campain(this);
+    campain.sheetIds.clear();
+    campain.sheetIds.addAll(sheetIds);
+    return campain;
   }
 
   public List<String> getSheetIds() {
     if (sheetIds == null) {
       sheetIds = new ArrayList<>();
     }
-    return sheetIds;
+    return Collections.unmodifiableList(sheetIds);
   }
 
-  public Campain addSheetId(String sheetId) {
-    if (!sheetIds.contains(sheetId)) {
-      sheetIds.add(sheetId);
+  public Campain withAddedSheetId(String sheetId) {
+    final Campain campain = new Campain(this);
+    if (!campain.sheetIds.contains(sheetId)) {
+      campain.sheetIds.add(sheetId);
     }
-    return this;
+    return campain;
   }
 
-  public Campain removeSheetId(String sheetId) {
-    sheetIds.remove(sheetId);
-    return this;
+  public Campain withRemovedSheetId(String sheetId) {
+    final Campain campain = new Campain(this);
+    campain.sheetIds.remove(sheetId);
+    return campain;
   }
 
-  public Campain setUsername(String username) {
-    this.username = username;
-    return this;
+  public Campain withUsername(String username) {
+    final Campain campain = new Campain(this);
+    campain.username = username;
+    return campain;
   }
 
   public String getGmDescription() {
@@ -79,17 +95,19 @@ public class Campain {
     return writable;
   }
 
-  public Campain setWritable(boolean writable) {
-    this.writable = writable;
-    return this;
+  public Campain withWritable(boolean writable) {
+    final Campain campain = new Campain(this);
+    campain.writable = writable;
+    return campain;
   }
 
   public boolean isDeletable() {
     return deletable;
   }
 
-  public Campain setDeletable(boolean readable) {
-    this.deletable = readable;
-    return this;
+  public Campain withDeletable(boolean readable) {
+    final Campain campain = new Campain(this);
+    campain.deletable = readable;
+    return campain;
   }
 }

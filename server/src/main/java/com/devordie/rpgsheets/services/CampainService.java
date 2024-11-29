@@ -25,13 +25,14 @@ public class CampainService {
         .filter(this::isReadable)
         .findFirst().orElse(null);
     if (res != null) {
-      res.setWritable(isWritable(res))
-          .setDeletable(isDeletable(res))
-          .setSheetIds(res.getSheetIds().stream()
+      return res
+          .withWritable(isWritable(res))
+          .withDeletable(isDeletable(res))
+          .withSheetIds(res.getSheetIds().stream()
               .filter(sheetService::isReadable)
               .toList());
     }
-    return res;
+    return null;
   }
 
   private Campain getCampainUnifiltered(String campainId) {
@@ -39,9 +40,9 @@ public class CampainService {
         .filter(campain -> campain.getId().equals(campainId))
         .findFirst().orElse(null);
     if (res != null) {
-      res.setSheetIds(res.getSheetIds().stream().toList());
+      return res.withSheetIds(res.getSheetIds().stream().toList());
     }
-    return res;
+    return null;
   }
 
   public List<Campain> listCampains() {
@@ -56,15 +57,16 @@ public class CampainService {
   }
 
   public String createCampain(Campain campain) {
-    return campainRepository.createCampain(campain.setUsername(userService.getCurrentUser().getUsername()));
+    return campainRepository.createCampain(campain.withUsername(userService.getCurrentUser().getUsername()));
   }
 
   public void saveCampain(Campain campain) {
     final Campain refCampain = getCampainUnifiltered(campain.getId());
-    campain.setUsername(refCampain.getUsername());
-    campain.setSheetIds(refCampain.getSheetIds());
-    if (isWritable(campain)) {
-      campainRepository.saveCampain(campain);
+    final Campain savedCampain = campain
+        .withUsername(refCampain.getUsername())
+        .withSheetIds(refCampain.getSheetIds());
+    if (isWritable(savedCampain)) {
+      campainRepository.saveCampain(savedCampain);
     }
   }
 
@@ -76,13 +78,13 @@ public class CampainService {
 
   public void addToCampain(String campainId, String sheetId) {
     if (sheetService.isWritable(sheetId)) {
-      campainRepository.saveCampain(getCampainUnifiltered(campainId).addSheetId(sheetId));
+      campainRepository.saveCampain(getCampainUnifiltered(campainId).withAddedSheetId(sheetId));
     }
   }
 
   public void removeFromCampain(String campainId, String sheetId) {
     if (isWritable(campainId) || sheetService.isWritable(sheetId)) {
-      campainRepository.saveCampain(getCampainUnifiltered(campainId).removeSheetId(sheetId));
+      campainRepository.saveCampain(getCampainUnifiltered(campainId).withRemovedSheetId(sheetId));
     }
   }
 
@@ -91,7 +93,8 @@ public class CampainService {
         (campain.getUsername().equals(userService.getCurrentUser().getUsername()) ||
             campain.getSheetIds().stream()
                 .map(sheetService::getSheet)
-                .anyMatch(sheet -> sheet != null && sheet.getUsername().equals(userService.getCurrentUser().getUsername())));
+                .anyMatch(
+                    sheet -> sheet != null && sheet.getUsername().equals(userService.getCurrentUser().getUsername())));
   }
 
   public boolean isWritable(String campainId) {
