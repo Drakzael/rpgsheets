@@ -1,11 +1,16 @@
 package com.devordie.rpgsheets.repository;
 
 import java.io.IOException;
+import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.FileSystemNotFoundException;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -40,8 +45,18 @@ public class MetadataRepository {
       Files.createDirectories(getCustomPath());
       clearDirectory(getNativePath());
 
-      try (Stream<Path> files = Files
-          .list(Path.of(MetadataRepository.class.getResource(RESOURCE_METADATA_DIRECTORY).toURI()))) {
+      Path dirPath = null;
+      URI uri = null;
+      try {
+        uri = MetadataRepository.class.getResource(RESOURCE_METADATA_DIRECTORY).toURI();
+        dirPath = Paths.get(uri);
+      } catch (FileSystemNotFoundException e) {
+        // If this is thrown, then it means that we are running the JAR directly
+        // (example: not from an IDE)
+        dirPath = FileSystems.newFileSystem(uri, new HashMap<String, String>()).getPath(RESOURCE_METADATA_DIRECTORY);
+      }
+
+      try (final Stream<Path> files = Files.list(dirPath)) {
         files.forEach(file -> {
           try {
             final String filename = file.getFileName().toString();
