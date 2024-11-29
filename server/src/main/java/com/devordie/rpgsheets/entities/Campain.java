@@ -11,7 +11,10 @@ public class Campain {
   private String id;
   private String username;
   private String description;
+  private String gmDescription;
   private List<String> sheetIds = new ArrayList<>();
+  private boolean writable;
+  private boolean deletable;
 
   public Campain setId(String id) {
     this.id = id;
@@ -65,6 +68,28 @@ public class Campain {
 
   public Campain setUsername(String username) {
     this.username = username;
+    return this;
+  }
+
+  public String getGmDescription() {
+    return gmDescription;
+  }
+
+  public boolean isWritable() {
+    return writable;
+  }
+
+  public Campain setWritable(boolean writable) {
+    this.writable = writable;
+    return this;
+  }
+
+  public boolean isDeletable() {
+    return deletable;
+  }
+
+  public Campain setDeletable(boolean readable) {
+    this.deletable = readable;
     return this;
   }
 }

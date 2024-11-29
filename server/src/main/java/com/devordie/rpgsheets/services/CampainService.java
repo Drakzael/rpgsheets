@@ -25,9 +25,11 @@ public class CampainService {
         .filter(this::isReadable)
         .findFirst().orElse(null);
     if (res != null) {
-      res.setSheetIds(res.getSheetIds().stream()
-          .filter(sheetService::isReadable)
-          .toList());
+      res.setWritable(isWritable(res))
+          .setDeletable(isDeletable(res))
+          .setSheetIds(res.getSheetIds().stream()
+              .filter(sheetService::isReadable)
+              .toList());
     }
     return res;
   }
@@ -67,7 +69,7 @@ public class CampainService {
   }
 
   public void deleteCampain(String id) {
-    if (isWritable(id)) {
+    if (isDeletable(id)) {
       campainRepository.deleteCampain(id);
     }
   }
@@ -86,7 +88,10 @@ public class CampainService {
 
   public boolean isReadable(Campain campain) {
     return campain != null &&
-        campain.getUsername().equals(userService.getCurrentUser().getUsername());
+        (campain.getUsername().equals(userService.getCurrentUser().getUsername()) ||
+            campain.getSheetIds().stream()
+                .map(sheetService::getSheet)
+                .anyMatch(sheet -> sheet != null && sheet.getUsername().equals(userService.getCurrentUser().getUsername())));
   }
 
   public boolean isWritable(String campainId) {
@@ -95,5 +100,13 @@ public class CampainService {
 
   public boolean isWritable(Campain campain) {
     return campain != null && campain.getUsername().equals(userService.getCurrentUser().getUsername());
+  }
+
+  public boolean isDeletable(String campainId) {
+    return isDeletable(getCampainUnifiltered(campainId));
+  }
+
+  public boolean isDeletable(Campain campain) {
+    return isWritable(campain);
   }
 }

@@ -30,8 +30,7 @@ public class CampainController {
   public CampainController(
       CampainService campainService,
       SheetService sheetService,
-      UserService userService
-      ) {
+      UserService userService) {
     this.campainService = campainService;
     this.sheetService = sheetService;
     this.userService = userService;
@@ -40,9 +39,11 @@ public class CampainController {
   @GetMapping("{id}")
   public CampainResponse getCampain(@PathVariable Integer id) {
     final Campain campain = campainService.getCampain(id.toString());
-    return new CampainResponse()
+    final CampainResponse res = new CampainResponse()
         .setId(campain.getId())
         .setName(campain.getName())
+        .setWritable(campain.isWritable())
+        .setDeletable(campain.isDeletable())
         .setDescription(campain.getDescription())
         .setSheets(campain.getSheetIds().stream()
             .map(sheetId -> this.sheetService.getSheet(sheetId))
@@ -52,6 +53,10 @@ public class CampainController {
                 .setId(sheet.getId())
                 .setMine(sheet.getUsername().equals(userService.getCurrentUser().getUsername())))
             .toList());
+    if (campain.getUsername().equals(userService.getCurrentUser().getUsername())) {
+      res.setGmDescription(campain.getGmDescription());
+    }
+    return res;
   }
 
   @GetMapping("")

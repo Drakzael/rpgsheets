@@ -5,12 +5,15 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CampainResponse {
   private String id;
   private String name;
   private String description;
+  private String gmDescription;
   private List<SheetOverviewResponse> sheets = new ArrayList<>();
+  private boolean writable;
+  private boolean deletable;
 
   public String getId() {
     return id;
@@ -49,6 +52,33 @@ public class CampainResponse {
   public CampainResponse setSheets(List<SheetOverviewResponse> sheets) {
     this.getSheets().clear();
     this.getSheets().addAll(sheets);
+    return this;
+  }
+
+  public String getGmDescription() {
+    return gmDescription;
+  }
+
+  public CampainResponse setGmDescription(String gmDescription) {
+    this.gmDescription = gmDescription;
+    return this;
+  }
+
+  public boolean isWritable() {
+    return writable;
+  }
+
+  public CampainResponse setWritable(boolean writable) {
+    this.writable = writable;
+    return this;
+  }
+
+  public boolean isDeletable() {
+    return deletable;
+  }
+
+  public CampainResponse setDeletable(boolean deletable) {
+    this.deletable = deletable;
     return this;
   }
 }

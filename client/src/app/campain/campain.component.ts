@@ -58,6 +58,7 @@ export class CampainComponent implements OnInit {
   prepareNewCampain() {
     this.campain = new Campain();
     this.campain.sheets = [];
+    this.campain.gmDescription = "";
     this.viewMode = ViewMode.Edit;
   }
 
@@ -67,6 +68,10 @@ export class CampainComponent implements OnInit {
 
   updateDescription(description: string) {
     this.campain!.description = description;
+  }
+
+  updateGmDescription(description: string) {
+    this.campain!.gmDescription = description;
   }
 
   edit() {
