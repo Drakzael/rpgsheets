@@ -10,6 +10,8 @@ import { AccountService } from "./account.service";
 export class SheetService {
 
   private sheetsSubject: BehaviorSubject<SheetOverview[]>;
+  private metadataCache: { [key: string]: GameMetadata } = {};
+  private metadataList: GameMetadataOverview[] | null = null;
 
   constructor(
     private http: HttpClient,
@@ -30,12 +32,28 @@ export class SheetService {
     return this.sheetsSubject.value;
   }
 
-  getMetadata(game: string) {
-    return this.http.get<GameMetadata>(`/api/metadata/${game}`);
+  getMetadata(game: string): Observable<GameMetadata> {
+    if (this.metadataCache[game]) {
+      return of(this.metadataCache[game]);
+    } else {
+      return this.http.get<GameMetadata>(`/api/metadata/${game}`)
+        .pipe(map(metadata => {
+          this.metadataCache[game] = metadata;
+          return metadata;
+        }));
+    }
   }
 
-  listMetadata() {
-    return this.http.get<GameMetadataOverview[]>("/api/metadata");
+  listMetadata(): Observable<GameMetadataOverview[]> {
+    if (this.metadataList) {
+      return of(this.metadataList);
+    } else {
+      return this.http.get<GameMetadataOverview[]>("/api/metadata")
+        .pipe(map(list => {
+          this.metadataList = list;
+          return list;
+        }));
+    }
   }
 
   private refreshSheets() {
@@ -63,7 +81,7 @@ export class SheetService {
     return this.http.put<void>(`/api/sheet/${id}`, sheet.getData())
       .pipe(map(() => {
         this.refreshSheets();
-        return ;
+        return;
       }));
   }
 
@@ -71,7 +89,7 @@ export class SheetService {
     return this.http.delete<void>(`/api/sheet/${id}`)
       .pipe(map(() => {
         this.refreshSheets();
-        return ;
+        return;
       }));
   }
 
