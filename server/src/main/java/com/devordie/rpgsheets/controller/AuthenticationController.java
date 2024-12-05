@@ -29,7 +29,7 @@ public class AuthenticationController {
     this.userService = userService;
   }
 
-  @GetMapping("")
+  @GetMapping("me")
   public UserResponse getUserMe() {
     final User user = userService.getCurrentUser();
     return new UserResponse()
@@ -38,7 +38,7 @@ public class AuthenticationController {
         .setRoles(user.getRoles());
   }
 
-  @PostMapping("")
+  @PostMapping("login")
   public LoginResponse authenticate(@RequestBody Login login) {
     final User authenticatedUser = authenticationService.authenticate(login);
     final String jwtToken = jwtService.generateToken(authenticatedUser);
