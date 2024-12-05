@@ -2,7 +2,8 @@
   "name": "Loup-Garou",
   "code": "whitewolf.werewolf",
   "modes": [
-    { "code": "darkage", "name": "Age des Ténèbres" }
+    { "code": "darkage", "name": "Age des Ténèbres" },
+    { "code": "apocalypse", "name": "Apocalypse" }
   ],
   "editors": {
     "attribute": { "type": "dots", "min": 1, "max": 5 },
@@ -95,7 +96,8 @@
         { "name": "Expression", "value": "ability.expression" },
         { "name": "Intimidation", "value": "ability.intimidation" },
         { "name": "Appel primal", "value": "ability.primalUrge" },
-        { "name": "Conn. de la rue", "value": "ability.streetwise" },
+        { "name": "Larcin", "value": "ability.larceny", "mode": ["darkage"] },
+        { "name": "Conn. de la rue", "value": "ability.streetwise", "mode": ["apocalypse"] },
         { "name": "Subterfuge", "value": "ability.subterfuge" },
         { "type": "freeValue", "prefix": "ability.additionnal.talents" }
       ]
@@ -103,9 +105,11 @@
       "title": "Compétences",
       "rows": [
         { "name": "Animaux", "value": "ability.animalKen" },
-        { "name": "Conduite", "value": "ability.drive" },
+        { "name": "Conduite", "value": "ability.drive", "mode": ["apocalypse"] },
+        { "name": "Equitation", "value": "ability.riding", "mode": ["darkage"] },
         { "name": "Etiquette", "value": "ability.etiquette" },
-        { "name": "Armes à feu", "value": "ability.firearms" },
+        { "name": "Armes à feu", "value": "ability.firearms", "mode": ["apocalypse"] },
+        { "name": "Tir à l'arc", "value": "ability.archery", "mode": ["darkage"] },
         { "name": "Mélée", "value": "ability.melee" },
         { "name": "Commandement", "value": "ability.leadership" },
         { "name": "Représentation", "value": "ability.performance" },
@@ -117,7 +121,8 @@
     }, {
       "title": "Connaissances",
       "rows": [
-        { "name": "Informatique", "value": "ability.computer" },
+        { "name": "Informatique", "value": "ability.computer", "mode": ["apocalypse"] },
+        { "name": "Erudition", "value": "ability.erudition", "mode": ["darkage"] },
         { "name": "Enigmes", "value": "ability.enigmas" },
         { "name": "Investigation", "value": "ability.investigation" },
         { "name": "Droit", "value": "ability.law" },
