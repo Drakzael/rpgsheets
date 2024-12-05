@@ -6,16 +6,16 @@ import { CommonModule } from '@angular/common';
 import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'app-configuration',
+  selector: 'app-campain',
   standalone: true,
   imports: [
     CommonModule,
     FontAwesomeModule
   ],
-  templateUrl: './configuration.component.html',
-  styleUrl: './configuration.component.scss'
+  templateUrl: './campain.component.html',
+  styleUrl: './campain.component.scss'
 })
-export class ConfigurationComponent implements OnInit {
+export class CampainComponent implements OnInit {
 
   @Input() sheetId!: string;
   @Input() sheet!: Sheet;

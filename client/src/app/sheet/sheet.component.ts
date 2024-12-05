@@ -7,8 +7,8 @@ import { ViewMode } from '../_models/viewmode';
 import { SheetService } from '../_services/sheet.service';
 import { ActivatedRoute } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faPen, faSave, faCancel, faTrash, faMasksTheater, faDice, faGear, faPlus, faWarning } from '@fortawesome/free-solid-svg-icons';
-import { ConfigurationComponent } from './configuration/configuration.component';
+import { faPen, faSave, faCancel, faTrash, faMasksTheater, faDice, faPlus, faImage } from '@fortawesome/free-solid-svg-icons';
+import { CampainComponent } from './campain/campain.component';
 import { AccountService } from '../_services/account.service';
 
 @Component({
@@ -18,7 +18,7 @@ import { AccountService } from '../_services/account.service';
     CommonModule,
     RowComponent,
     FontAwesomeModule,
-    ConfigurationComponent
+    CampainComponent
   ],
   templateUrl: './sheet.component.html',
   styleUrl: './sheet.component.scss'
@@ -34,7 +34,7 @@ export class SheetComponent implements OnInit {
   isNewSheet = false;
   games!: GameMetadataOverview[];
 
-  isConfig = false;
+  isCampain = false;
 
   iconSave = faSave;
   iconEdit = faPen;
@@ -42,7 +42,7 @@ export class SheetComponent implements OnInit {
   iconDelete = faTrash;
   iconPlay = faMasksTheater;
   iconDice = faDice;
-  iconConfig = faGear;
+  iconCampain = faImage;
   iconAdd = faPlus;
 
   constructor(
@@ -93,7 +93,7 @@ export class SheetComponent implements OnInit {
     this.sheet = undefined;
     if (this.sheetId) {
       this.viewMode = ViewMode.View;
-      this.isConfig = false;
+      this.isCampain = false;
       this.sheetService.getSheet(this.sheetId!).subscribe(sheet => {
         this.sheet = sheet;
         if (!this.metadata || this.metadata.code !== sheet.game) {
@@ -110,7 +110,7 @@ export class SheetComponent implements OnInit {
   prepareNewSheet() {
     this.metadata = undefined;
     this.sheet = undefined;
-    this.isConfig = false;
+    this.isCampain = false;
     this.isNewSheet = true;
     this.getPages();
   }
@@ -183,8 +183,8 @@ export class SheetComponent implements OnInit {
     this.viewMode = ViewMode.View;
   }
 
-  config() {
-    this.isConfig = !this.isConfig;
+  campain() {
+    this.isCampain = !this.isCampain;
   }
 
   changeTemplate(game: string) {

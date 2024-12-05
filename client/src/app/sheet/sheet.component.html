@@ -3,15 +3,15 @@
     <button *ngIf="sheet.writable && (viewMode === mode.Edit || sheet.changed)" (click)="save()" class="{{ viewMode === mode.View ? 'save' : '' }}"><fa-icon [icon]="iconSave" title="Sauvegarder"/></button>
     <!-- <button *ngIf="viewMode === mode.Play" (click)="dice()"><fa-icon [icon]="iconDice" title="Mode Dés"/></button> -->
     <button *ngIf="viewMode === mode.View || viewMode === mode.Dice" (click)="play()"><fa-icon [icon]="iconPlay" title="Mode Jeu"/></button>
+    <button *ngIf="sheet.writable && viewMode === mode.View" (click)="campain()" title="Campagnes" class="{{isCampain ? 'campain' : ''}}"><fa-icon [icon]="iconCampain"></fa-icon></button>
     <button *ngIf="sheet.writable && viewMode === mode.View" (click)="edit()" title="Editer"><fa-icon [icon]="iconEdit"/></button>
     <button *ngIf="sheet.deletable && viewMode === mode.View" (click)="delete()"><fa-icon [icon]="iconDelete" title="Supprimer"/></button>
     <button *ngIf="sheet.deletable && viewMode === mode.Delete" (click)="delete()" class="delete"><fa-icon [icon]="iconDelete" title="Supprimer"/></button>
     <button *ngIf="viewMode === mode.Edit || viewMode === mode.Delete" (click)="cancel()"><fa-icon [icon]="iconCancel" title="Annuler"/></button>
     <button *ngIf="viewMode === mode.Play || viewMode === mode.Dice" (click)="stop()"><fa-icon [icon]="iconCancel" title="Annuler"/></button>
-    <button *ngIf="sheet.writable && viewMode === mode.View" (click)="config()" title="Configuration" class="{{isConfig ? 'config' : ''}}"><fa-icon [icon]="iconConfig"></fa-icon></button>
   </div>
   <div class="sheet rows" *ngFor="let page of pages">
-    <app-configuration *ngIf="page.pageNum === 0 && isConfig && !isCreation && viewMode === mode.View && sheet.writable"
+    <app-campain *ngIf="page.pageNum === 0 && isCampain && !isCreation && viewMode === mode.View && sheet.writable"
       [sheetId]="sheetId!"
       [sheet]="sheet" />
     <div *ngIf="page.pageNum === 0 && viewMode === mode.Edit">
