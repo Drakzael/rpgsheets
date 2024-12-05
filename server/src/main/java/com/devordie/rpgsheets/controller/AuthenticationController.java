@@ -11,7 +11,6 @@ import com.devordie.rpgsheets.services.AuthenticationService;
 import com.devordie.rpgsheets.services.JwtService;
 import com.devordie.rpgsheets.services.UserService;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,7 +29,7 @@ public class AuthenticationController {
     this.userService = userService;
   }
 
-  @GetMapping("me")
+  @GetMapping("")
   public UserResponse getUserMe() {
     final User user = userService.getCurrentUser();
     return new UserResponse()
@@ -39,13 +38,13 @@ public class AuthenticationController {
         .setRoles(user.getRoles());
   }
 
-  @PostMapping("login")
-  public ResponseEntity<LoginResponse> authenticate(@RequestBody Login login) {
+  @PostMapping("")
+  public LoginResponse authenticate(@RequestBody Login login) {
     final User authenticatedUser = authenticationService.authenticate(login);
     final String jwtToken = jwtService.generateToken(authenticatedUser);
 
-    return ResponseEntity.ok(new LoginResponse()
+    return new LoginResponse()
         .setToken(jwtToken)
-        .setExpiresIn(jwtService.getExpirationTime()));
+        .setExpiresIn(jwtService.getExpirationTime());
   }
 }
