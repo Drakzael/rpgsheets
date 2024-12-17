@@ -16,14 +16,16 @@ import java.util.stream.Stream;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.stereotype.Repository;
 
 import com.devordie.rpgsheets.entities.MetadataOverview;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@Repository
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+
+@ApplicationScoped
 public class MetadataRepository {
   private static final Log LOGGER = LogFactory.getLog(MetadataRepository.class);
   private static final ObjectMapper MAPPER = new ObjectMapper()
@@ -31,12 +33,10 @@ public class MetadataRepository {
   private static final String RESOURCE_METADATA_DIRECTORY = "/metadata";
   private static final String LOCAL_METADATA_DIRECTORY = "metadata";
   private static final String LOCAL_SOURCE_DIRECTORY = "metadata.source";
-  private final LocalRepository localRepository;
   private List<JsonNode> metadata = new ArrayList<>();
 
-  public MetadataRepository(LocalRepository localRepository) {
-    this.localRepository = localRepository;
-  }
+  @Inject
+  private LocalRepository localRepository;
 
   private void copyResources() {
     try {

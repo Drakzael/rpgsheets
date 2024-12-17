@@ -1,29 +1,13 @@
 package com.devordie.rpgsheets.entities;
 
-import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-@JsonIgnoreProperties({
-    "authorities",
-    "enabled",
-    "login",
-    "accountNonLocked",
-    "accountNonExpired",
-    "credentialsNonExpired"
-})
-public class User implements UserDetails {
+public class User {
   private String alias;
   private String username;
   private String password;
   private Set<Role> roles;
 
-  @Override
   public String getUsername() {
     return username;
   }
@@ -33,7 +17,6 @@ public class User implements UserDetails {
     return this;
   }
 
-  @Override
   public String getPassword() {
     return password;
   }
@@ -66,10 +49,5 @@ public class User implements UserDetails {
 
   public boolean hasRole(Role role) {
     return this.getRoles().contains(role);
-  }
-
-  @Override
-  public Collection<? extends GrantedAuthority> getAuthorities() {
-    return List.of();
   }
 }

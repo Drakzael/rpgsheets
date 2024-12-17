@@ -8,23 +8,22 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.stereotype.Repository;
-
 import com.devordie.rpgsheets.entities.User;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@Repository
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+
+@ApplicationScoped
 public final class UserRepository {
   private static final String USERS_FILE = "users.json";
   private static final ObjectMapper MAPPER = new ObjectMapper()
       .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-  private final LocalRepository localRepository;
   private List<User> users = null;
 
-  public UserRepository(LocalRepository localRepository) {
-    this.localRepository = localRepository;
-  }
+  @Inject
+  private LocalRepository localRepository;
 
   private List<User> getUsers() {
     if (users == null) {

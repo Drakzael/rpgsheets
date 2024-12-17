@@ -1,8 +1,5 @@
 package com.devordie.rpgsheets.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.devordie.rpgsheets.entities.Campain;
 import com.devordie.rpgsheets.entities.CampainResponse;
 import com.devordie.rpgsheets.entities.IdName;
@@ -11,33 +8,37 @@ import com.devordie.rpgsheets.services.CampainService;
 import com.devordie.rpgsheets.services.SheetService;
 import com.devordie.rpgsheets.services.UserService;
 
+import io.quarkus.security.Authenticated;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
+
 import java.util.List;
 
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PostMapping;
-
-@RestController
-@RequestMapping("/api/campain")
+@Path("api/campain")
+@Authenticated
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public class CampainController {
-  private final CampainService campainService;
-  private final SheetService sheetService;
-  private final UserService userService;
 
-  public CampainController(
-      CampainService campainService,
-      SheetService sheetService,
-      UserService userService) {
-    this.campainService = campainService;
-    this.sheetService = sheetService;
-    this.userService = userService;
-  }
+  @Inject
+  private CampainService campainService;
 
-  @GetMapping("{id}")
-  public CampainResponse getCampain(@PathVariable Integer id) {
+  @Inject
+  private SheetService sheetService;
+
+  @Inject
+  private UserService userService;
+
+  @GET
+  @Path("{id}")
+  public CampainResponse getCampain(Integer id) {
     final Campain campain = campainService.getCampain(id.toString());
     final CampainResponse res = new CampainResponse()
         .setId(campain.getId())
@@ -59,7 +60,7 @@ public class CampainController {
     return res;
   }
 
-  @GetMapping("")
+  @GET
   public List<CampainResponse> listCampains() {
     return campainService.listCampains().stream()
         .map(campain -> new CampainResponse()
@@ -76,35 +77,40 @@ public class CampainController {
         .toList();
   }
 
-  @GetMapping("all")
+  @GET
+  @Path("all")
   public List<IdName> listAllCampains() {
     return campainService.listAllCampains().stream()
         .map(campain -> new IdName(campain.getId(), campain.getName()))
         .toList();
   }
 
-  @PutMapping("{id}")
-  public void updateCampain(@PathVariable String id, @RequestBody Campain campain) {
+  @PUT
+  @Path("{id}")
+  public void updateCampain(String id, Campain campain) {
     campainService.saveCampain(campain);
   }
 
-  @PostMapping("")
-  public String addCampain(@RequestBody Campain campain) {
+  @POST
+  public String addCampain(Campain campain) {
     return campainService.createCampain(campain);
   }
 
-  @DeleteMapping("{id}")
-  public void deleteCampain(@PathVariable String id) {
+  @DELETE
+  @Path("{id}")
+  public void deleteCampain(String id) {
     campainService.deleteCampain(id);
   }
 
-  @PostMapping("{campainId}/{sheetId}")
-  public void addSheetToCampain(@PathVariable String campainId, @PathVariable String sheetId) {
+  @POST
+  @Path("{campainId}/{sheetId}")
+  public void addSheetToCampain(String campainId, String sheetId) {
     campainService.addToCampain(campainId, sheetId);
   }
 
-  @DeleteMapping("{campainId}/{sheetId}")
-  public void removeSheetFromCampain(@PathVariable String campainId, @PathVariable String sheetId) {
+  @DELETE
+  @Path("{campainId}/{sheetId}")
+  public void removeSheetFromCampain(String campainId, String sheetId) {
     campainService.removeFromCampain(campainId, sheetId);
   }
 }
