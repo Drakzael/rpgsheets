@@ -14,6 +14,7 @@
 		<jwt.version>0.11.5</jwt.version>
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
+    <quarkus.package.jar.type>uber-jar</quarkus.package.jar.type>
 	</properties>
 
 	<dependencies>
@@ -68,6 +69,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.3.1</version>
 				<executions>
 					<execution>
 						<phase>generate-resources</phase>
