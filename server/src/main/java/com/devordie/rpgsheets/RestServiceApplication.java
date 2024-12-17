@@ -1,13 +1,11 @@
 package com.devordie.rpgsheets;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
+import io.quarkus.runtime.Quarkus;
+import io.quarkus.runtime.annotations.QuarkusMain;
 
-@SpringBootApplication
-@ComponentScan
+@QuarkusMain
 public class RestServiceApplication {
   public static void main(String[] args) {
-    SpringApplication.run(RestServiceApplication.class, args);
+    Quarkus.run(args);
   }
 }

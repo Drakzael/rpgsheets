@@ -1,9 +1,5 @@
 package com.devordie.rpgsheets.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
-
 import com.devordie.rpgsheets.entities.IdName;
 import com.devordie.rpgsheets.entities.Sheet;
 import com.devordie.rpgsheets.entities.SheetOverviewResponse;
@@ -13,41 +9,49 @@ import com.devordie.rpgsheets.services.MetadataService;
 import com.devordie.rpgsheets.services.SheetService;
 import com.devordie.rpgsheets.services.UserService;
 
+import io.quarkus.security.Authenticated;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.NotFoundException;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
+
 import java.util.List;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
-@RestController
-@RequestMapping("/api/sheet")
+@Path("api/sheet")
+@Authenticated
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public class SheetController {
-  private final SheetService sheetService;
-  private final CampainService campainService;
-  private final MetadataService metadataService;
-  private final UserService userService;
+  private static final Log LOGGER = LogFactory.getLog(SheetController.class);
 
-  public SheetController(
-      SheetService sheetService,
-      CampainService campainService,
-      MetadataService metadataService,
-      UserService userService
-      ) {
-    this.sheetService = sheetService;
-    this.campainService = campainService;
-    this.metadataService = metadataService;
-    this.userService = userService;
-  }
+  @Inject
+  private SheetService sheetService;
 
-  @GetMapping("{id}")
-  public SheetResponse getSheet(@PathVariable String id) {
+  @Inject
+  private CampainService campainService;
+
+  @Inject
+  private MetadataService metadataService;
+
+  @Inject
+  private UserService userService;
+
+  @GET
+  @Path("{id}")
+  public SheetResponse getSheet(String id) {
+    LOGGER.debug("User " + userService.getCurrentUser().getUsername() + " accesses sheet #" + id);
     final Sheet sheet = sheetService.getSheet(id);
     if (sheet == null) {
-      throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+      throw new NotFoundException();
     }
     return new SheetResponse(sheet)
         .setUserAlias(userService.findByUsername(sheet.getUsername()).getAlias())
@@ -57,8 +61,10 @@ public class SheetController {
             .toList());
   }
 
-  @GetMapping("")
+  @GET
+  @Authenticated
   public List<SheetOverviewResponse> listMySheets() {
+    LOGGER.debug("User " + userService.getCurrentUser().getUsername() + " accesses its sheets.");
     return sheetService.listMySheets().stream()
         .map(sheet -> {
           SheetOverviewResponse res = new SheetOverviewResponse()
@@ -72,18 +78,20 @@ public class SheetController {
         .toList();
   }
 
-  @PutMapping("{sheetId}")
-  public void updateSheet(@PathVariable String sheetId, @RequestBody Sheet sheet) {
+  @PUT
+  @Path("{sheetId}")
+  public void updateSheet(String sheetId, Sheet sheet) {
     sheetService.saveSheet(sheet.setId(sheetId));
   }
 
-  @PostMapping("")
-  public String addSheet(@RequestBody Sheet sheet) {
+  @POST
+  public String addSheet(Sheet sheet) {
     return this.sheetService.createSheet(sheet);
   }
 
-  @DeleteMapping("{sheetId}")
-  public void deleteSheet(@PathVariable String sheetId) {
+  @DELETE
+  @Path("{sheetId}")
+  public void deleteSheet(String sheetId) {
     sheetService.deleteSheet(sheetId);
   }
 }

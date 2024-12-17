@@ -1,71 +1,70 @@
 package com.devordie.rpgsheets.configuration;
 
 import java.io.IOException;
+import java.security.Principal;
 
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-import org.springframework.stereotype.Component;
-import org.springframework.web.filter.OncePerRequestFilter;
-import org.springframework.web.servlet.HandlerExceptionResolver;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.devordie.rpgsheets.services.JwtService;
 
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import jakarta.annotation.Priority;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.container.ContainerRequestContext;
+import jakarta.ws.rs.container.ContainerRequestFilter;
+import jakarta.ws.rs.container.PreMatching;
+import jakarta.ws.rs.core.SecurityContext;
+import jakarta.ws.rs.ext.Provider;
 
-@Component
-public class JwtAuthenticationFilter extends OncePerRequestFilter {
-  private final JwtService jwtService;
-  private final UserDetailsService userDetailsService;
-  private final HandlerExceptionResolver handlerExceptionResolver;
+@Provider
+@ApplicationScoped
+@PreMatching
+@Priority(1)
+public class JwtAuthenticationFilter implements ContainerRequestFilter {
 
-  public JwtAuthenticationFilter(
-      JwtService jwtService,
-      UserDetailsService userDetailsService,
-      HandlerExceptionResolver handlerExceptionResolver) {
-    this.jwtService = jwtService;
-    this.userDetailsService = userDetailsService;
-    this.handlerExceptionResolver = handlerExceptionResolver;
-  }
+  private static final Log LOGGER = LogFactory.getLog(JwtAuthenticationFilter.class);
+
+  @Inject
+  private JwtService jwtService;
 
   @Override
-  protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-      throws ServletException, IOException {
-    final String authHeader = request.getHeader("Authorization");
+  public void filter(ContainerRequestContext requestContext) throws IOException {
 
-    if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-      filterChain.doFilter(request, response);
-      return;
-    }
-
-    try {
-      final String jwt = authHeader.substring(7);
-      final String username = jwtService.extractUsername(jwt);
-      final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-      if (username != null && authentication == null) {
-        final UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
-
-        if (jwtService.isTokenValid(jwt, userDetails)) {
-          final UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-              userDetails,
-              null,
-              userDetails.getAuthorities());
-
-          authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-          SecurityContextHolder.getContext().setAuthentication(authToken);
+    final String bearerToken = requestContext.getHeaderString("Authorization");
+    if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
+      final String token = bearerToken.substring(7);
+      try {
+      final String username = jwtService.extractUsername(token);
+      requestContext.setSecurityContext(new SecurityContext() {
+        @Override
+        public Principal getUserPrincipal() {
+          return new Principal() {
+            @Override
+            public String getName() {
+              return username;
+            }
+          };
         }
-      }
 
-      filterChain.doFilter(request, response);
-    } catch (Exception exception) {
-      handlerExceptionResolver.resolveException(request, response, null, exception);
+        @Override
+        public String getAuthenticationScheme() {
+          return "basic";
+        }
+
+        @Override
+        public boolean isSecure() {
+          return false;
+        }
+
+        @Override
+        public boolean isUserInRole(String role) {
+          return false;
+        }
+      });
+    } catch (Exception ex) {
+      LOGGER.warn("Failed to decrypt JWT token");
     }
+  }
   }
 }

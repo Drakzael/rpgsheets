@@ -7,27 +7,26 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
 
 import com.devordie.rpgsheets.entities.Role;
 import com.devordie.rpgsheets.entities.User;
 import com.devordie.rpgsheets.repository.UserRepository;
 
+import io.quarkus.elytron.security.common.BcryptUtil;
 import jakarta.annotation.PostConstruct;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.core.SecurityContext;
 
-@Service
+@ApplicationScoped
 public final class UserService {
   private static final Log LOGGER = LogFactory.getLog(UserService.class);
-  private final UserRepository userRepository;
-  private final PasswordEncoder passwordEncoder;
 
-  public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-    this.userRepository = userRepository;
-    this.passwordEncoder = passwordEncoder;
-  }
+  @Inject
+  private SecurityContext context;
+
+  @Inject
+  private UserRepository userRepository;
 
   public List<User> allUsers() {
     return userRepository.findAll();
@@ -39,8 +38,15 @@ public final class UserService {
   }
 
   public User getCurrentUser() {
-    final Authentication authenticationToken = SecurityContextHolder.getContext().getAuthentication();
-    return (User) authenticationToken.getPrincipal();
+    return findByUsername(context.getUserPrincipal().getName());
+  }
+
+  public String encodePassword(String password) {
+    return BcryptUtil.bcryptHash(password);
+  }
+
+  public boolean checkPassword(String password, String encodedPassword) {
+    return BcryptUtil.matches(password, encodedPassword);
   }
 
   @PostConstruct
@@ -71,7 +77,7 @@ public final class UserService {
 
     userRepository.createUser(new User()
         .setUsername(username)
-        .setPassword(passwordEncoder.encode(password))
+        .setPassword(encodePassword(password))
         .setRoles(Set.of(Role.Admin)));
 
     LOGGER.warn("Creating user '" + username + "' with password '" + password + "'");
@@ -103,8 +109,8 @@ public final class UserService {
     if (getCurrentUser().getUsername().equals(user.getUsername()) ||
         getCurrentUser().hasRole(Role.Admin)) {
       if (!getCurrentUser().getUsername().equals(user.getUsername()) ||
-          user.getPassword().equals(passwordEncoder.encode(oldPassword))) {
-        user.setPassword(passwordEncoder.encode(newPassword));
+          checkPassword(oldPassword, user.getPassword())) {
+        user.setPassword(encodePassword(newPassword));
         userRepository.updateUser(user);
       }
     }

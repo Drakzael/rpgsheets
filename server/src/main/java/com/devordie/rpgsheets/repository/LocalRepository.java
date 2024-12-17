@@ -6,9 +6,10 @@ import java.nio.file.Path;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.stereotype.Repository;
 
-@Repository
+import jakarta.enterprise.context.ApplicationScoped;
+
+@ApplicationScoped
 public final class LocalRepository {
   private static final Log LOGGER = LogFactory.getLog(LocalRepository.class);
   private static final Path LOCAL_REPOSITORY = Path.of("data");

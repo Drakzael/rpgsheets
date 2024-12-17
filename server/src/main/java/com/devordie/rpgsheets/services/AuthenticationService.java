@@ -1,27 +1,28 @@
 package com.devordie.rpgsheets.services;
 
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.stereotype.Service;
-
 import com.devordie.rpgsheets.entities.Login;
 import com.devordie.rpgsheets.entities.User;
 import com.devordie.rpgsheets.repository.UserRepository;
 
-@Service
-public class AuthenticationService {
-  private final UserRepository userRepository;
-  private final AuthenticationManager authenticationManager;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
-  public AuthenticationService(
-      UserRepository userRepository,
-      AuthenticationManager authenticationManager) {
-    this.userRepository = userRepository;
-    this.authenticationManager = authenticationManager;
-  }
+@ApplicationScoped
+public class AuthenticationService {
+
+  @Inject
+  private UserRepository userRepository;
+
+  @Inject
+  private UserService userService;
 
   public User authenticate(Login login) {
-    authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(login.username(), login.password()));
-    return userRepository.findByUsername(login.username()).orElseThrow();
+    final User user = userRepository.findByUsername(login.username()).orElse(null);
+    if (user != null) {
+      if (userService.checkPassword(login.password(), user.getPassword())) {
+        return user;
+      }
+    }
+    throw new IllegalStateException();
   }
 }

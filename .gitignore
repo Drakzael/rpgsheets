@@ -1,10 +1,12 @@
-.vscode/
+.vscode
 
-server/target/
+server/target
 
 client/.angular
-client/dist/
-client/target/
+client/dist
+client/target
 client/node
-client/node_modules/
+client/node_modules
 client/package-lock.json
+
+distribution/target

@@ -2,22 +2,23 @@ package com.devordie.rpgsheets.services;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
-
 import com.devordie.rpgsheets.entities.Campain;
 import com.devordie.rpgsheets.repository.CampainRepository;
 
-@Service
-public class CampainService {
-  private final CampainRepository campainRepository;
-  private final SheetService sheetService;
-  private final UserService userService;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
-  public CampainService(CampainRepository campainRepository, SheetService sheetService, UserService userService) {
-    this.campainRepository = campainRepository;
-    this.sheetService = sheetService;
-    this.userService = userService;
-  }
+@ApplicationScoped
+public class CampainService {
+
+  @Inject
+  private CampainRepository campainRepository;
+
+  @Inject
+  private SheetService sheetService;
+
+  @Inject
+  private UserService userService;
 
   public Campain getCampain(String campainId) {
     Campain res = campainRepository.listAllCampains().stream()

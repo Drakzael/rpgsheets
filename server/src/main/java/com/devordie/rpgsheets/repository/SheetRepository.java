@@ -8,22 +8,21 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
-import org.springframework.stereotype.Repository;
-
 import com.devordie.rpgsheets.entities.Sheet;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@Repository
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+
+@ApplicationScoped
 public class SheetRepository {
   private static final ObjectMapper MAPPER = new ObjectMapper()
       .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-  private final LocalRepository localRepository;
   private List<Sheet> _sheets = null;
 
-  public SheetRepository(LocalRepository localRepository) {
-    this.localRepository = localRepository;
-  }
+  @Inject
+  private LocalRepository localRepository;
 
   private List<Sheet> getSheets() {
     if (_sheets == null) {

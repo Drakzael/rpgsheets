@@ -1,38 +1,39 @@
 package com.devordie.rpgsheets.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.devordie.rpgsheets.entities.MetadataOverview;
 import com.devordie.rpgsheets.services.MetadataService;
 import com.fasterxml.jackson.databind.JsonNode;
 
+import io.quarkus.security.Authenticated;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.NotFoundException;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
+
 import java.util.List;
 
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-
-@RestController
-@RequestMapping("/api/metadata")
+@Path("api/metadata")
+@Authenticated
+@Produces(MediaType.APPLICATION_JSON)
 public class MetadataController {
-  private final MetadataService service;
 
-  public MetadataController(MetadataService service) {
-this.service = service;
-  }
+  @Inject
+  private MetadataService metadataService;
 
-  @GetMapping("{game}")
-  public ResponseEntity<JsonNode> getMetadataGame(@PathVariable String game) {
-    final JsonNode metadata = service.getMetadata(game);
+  @GET
+  @Path("{game}")
+  public JsonNode getMetadataGame(String game) {
+    final JsonNode metadata = metadataService.getMetadata(game);
     if (metadata == null) {
-      return ResponseEntity.notFound().build();
+      throw new NotFoundException();
     }
-      return ResponseEntity.ok(metadata);
+    return metadata;
   }
 
-  @GetMapping("")
-  public ResponseEntity<List<MetadataOverview>> listMetadataGames() {
-      return ResponseEntity.ok(service.listMetadata());
+  @GET
+  public List<MetadataOverview> listMetadataGames() {
+    return metadataService.listMetadata();
   }
 }

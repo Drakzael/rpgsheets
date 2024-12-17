@@ -29,7 +29,7 @@ export class AccountService {
   }
 
   login(username: string, password: string) {
-    return this.http.post<UserToken>("/api/auth/login", { username, password })
+    return this.http.post<UserToken>("/api/auth", { username, password })
       .pipe(map(user => {
         localStorage.setItem("user", JSON.stringify(user));
         this.userSubject.next(user);
@@ -49,6 +49,6 @@ export class AccountService {
   }
 
   refreshMe(): void {
-    this.http.get<User>("/api/auth/me").subscribe(me => this.meSubject.next(me));
+    this.http.get<User>("/api/auth").subscribe(me => this.meSubject.next(me));
   }
 }
