@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { IconComponent } from '../../../common/icon/icon.component';
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { Icon } from '../../../_models/icon';
 
 @Component({
   selector: 'app-health',
@@ -28,6 +29,8 @@ export class HealthComponent implements OnInit {
   editor!: GameMetadataEditor;
   levels!: number[];
   values!: { name: string, tip: string, level: number }[];
+
+  icons!: Icon[];
 
   iconPlus = faPlus;
   iconMinus = faMinus;
@@ -55,6 +58,14 @@ export class HealthComponent implements OnInit {
     this.editor = this.metadata.editors![this.editorCode];
     this.levels = Array(this.editor.types?.values.length).fill(0).map((_, i) => i);
     this.values = this.computeValues();
+
+    this.icons = [];
+    this.icons.push(this.getIcon(this.editor.types!.defaultIcon));
+    this.editor.types!.values.forEach(value => this.icons.push(this.getIcon(value.icon)));
+  }
+
+  private getIcon(icon: Icon | string): Icon {
+    return icon instanceof Object ? icon : this.metadata.icons![icon]
   }
 
   minus(level: number) {

@@ -5,7 +5,7 @@
       <button (click)="minus(level)" class="button">
         <fa-icon [icon]="iconMinus"/>
       </button>
-      <app-icon [icon]="this.editor.types!.values[level].icon"/>
+      <app-icon [icon]="icons[level]"/>
       <button (click)="plus(level)" class="button">
         <fa-icon [icon]="iconPlus"/>
       </button>
@@ -15,7 +15,7 @@
     <div *ngIf="value.name" class="name">{{ value.name }}</div>
     <div *ngIf="value.tip" class="tip">{{ value.tip }}</div>
     <div class="value">
-      <app-icon [icon]="value.level === 0 ? editor.types!.defaultIcon : editor.types!.values[value.level - 1].icon"/>
+      <app-icon [icon]="icons[value.level]"/>
     </div>
   </div>
 </div>

@@ -12,8 +12,8 @@ export class GameMetadataEditor {
   overlap?: boolean = true;
   values?: { name: string, tip: string}[];
   types?: {
-    defaultIcon: Icon,
-    values: { name: string, overlap: boolean, icon: Icon }[]
+    defaultIcon: string | Icon,
+    values: { name: string, overlap: boolean, icon: string | Icon }[]
   }
 }
 
@@ -77,6 +77,7 @@ export class GameMetadata {
   modes?: { name: string, code: string }[];
   editors?: { [key: string] : GameMetadataEditor };
   gridRows!: GameMetadataRow[];
+  icons?: { [key: string]: Icon };
 }
 
 export class GameMetadataOverview {
