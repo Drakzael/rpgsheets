@@ -8,7 +8,7 @@
   </ng-container>
   <div class="values">
     <ng-container *ngFor="let i of values">
-      <app-icon *ngIf="iconFull" [icon]="i <= score ? iconFull! : iconEmpty!"  (click)="clickValue(i)" class="{{ viewMode === mode.Edit ? 'button' : '' }}"/>
+      <app-icon *ngIf="iconFull" [icon]="i <= scores[0] ? iconFull! : i <= scores[1] ? iconMinus! : i <= scores[2] ? iconPlus! : iconEmpty!"  (click)="clickValue(i)" class="{{ viewMode === mode.Edit ? 'button' : '' }}"/>
       <fa-icon *ngIf="!iconFull" [icon]="i <= score ? iconDotFill : iconDotEmpty" (click)="clickValue(i)" class="{{ viewMode === mode.Edit ? 'button' : '' }}"/>
     </ng-container>
   </div>

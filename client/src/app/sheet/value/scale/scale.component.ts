@@ -53,8 +53,8 @@ export class ScaleComponent implements OnInit {
     }
     this.iconEmpty = this.editor.icons?.empty && this.metadata.icons![this.editor.icons?.empty] || undefined;
     this.iconFull = this.editor.icons?.full && this.metadata.icons![this.editor.icons.full] || undefined;
-    this.iconPlus = this.editor.icons?.plus && this.metadata.icons![this.editor.icons.plus] || undefined;
-    this.iconMinus = this.editor.icons?.minus && this.metadata.icons![this.editor.icons.minus] || undefined;
+    this.iconPlus = this.editor.icons?.plus && this.metadata.icons![this.editor.icons.plus] || this.iconFull;
+    this.iconMinus = this.editor.icons?.minus && this.metadata.icons![this.editor.icons.minus] || this.iconEmpty;
 
     const onChange = (() => {
       if (this.editor.maxExpr) {
@@ -81,6 +81,18 @@ export class ScaleComponent implements OnInit {
       return this.sheet.getNumber(this.value.value, defaultValue, true);
     } else {
       return this.sheet.getNumber(this.value.value, defaultValue);
+    }
+  }
+
+  get scores(): number[] {
+    const defaultValue = this.editor.defaultValue as number || this.editor.min || 0;
+    if (this.viewMode === ViewMode.Play) {
+      const current = this.sheet.getNumber(this.value.value, defaultValue, true);
+      const normal = this.sheet.getNumber(this.value.value, defaultValue);
+      return [current < normal ? current : normal, normal, current > normal ? current : normal];
+    } else {
+      const normal = this.sheet.getNumber(this.value.value, defaultValue);
+      return [normal, normal, normal];
     }
   }
 
