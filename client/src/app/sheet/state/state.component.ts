@@ -22,6 +22,8 @@ export class StateComponent implements OnInit {
   @Input() defaultType?: ValueType;
   @Input() viewMode!: ViewMode;
 
+  ViewMode = ViewMode;
+
   group!: string;
   action?: string;
 

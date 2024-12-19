@@ -61,11 +61,11 @@ export class DotsComponent implements OnInit {
   }
 
   get score(): number {
-    let value = this.sheet.getNumber(this.value.value);
-    if (value === undefined) {
-      return this.editor.defaultValue as number || this.editor.min || 0;
+    const defaultValue = this.editor.defaultValue as number || this.editor.min || 0;
+    if (this.viewMode === ViewMode.Play) {
+      return this.sheet.getNumber(this.value.value, defaultValue, true);
     } else {
-      return value;
+      return this.sheet.getNumber(this.value.value, defaultValue);
     }
   }
 

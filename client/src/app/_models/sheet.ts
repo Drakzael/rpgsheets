@@ -11,14 +11,14 @@ export class SheetData {
   stringValues: { [key: string]: string } = {};
   writable!: boolean;
   deletable!: boolean;
-  campains!: { id: string, name: string}[];
+  campains!: { id: string, name: string }[];
 }
 
 export class Sheet {
 
   private _changed = false;
   private _onChange: (() => void)[] = [];
-  private _tmpValues: { [key: string]: number } = {};
+  private _tmpValues: { [key: string]: { [key: string]: (x: number) => number } } = {};
   private _states: { [key: string]: { value: string, action: string } } = {};
 
   constructor(
@@ -103,7 +103,32 @@ export class Sheet {
   }
 
   public selectState(group: string, value: string, action = ""): void {
-    this._states[group] = {value, action};
+    this._states[group] = { value, action };
+    delete this._tmpValues[group];
+
+    if (action.startsWith("${") && action.endsWith("}")) {
+      let expr = action.substring(2, action.length - 1);
+      expr.match(/\$[a-zA-Z0-9\.]+/g)?.forEach(match => {
+        const valueCode = match.substring(1);
+        if (!this.impactValues.includes(valueCode)) {
+          this.impactValues.push(valueCode);
+        }
+        if (this.numericValues[valueCode] !== undefined) {
+          expr = expr.replace(`${match}`, this.stringValues[valueCode].toString());
+        } else if (this.stringValues[valueCode] !== undefined) {
+          expr = expr.replace(`${match}`, `"${this.stringValues[valueCode]}"`);
+        } else {
+          expr = expr.replace(`${match}`, "''");
+        }
+      });
+      let actions: { [key: string]: (x: number) => number } = {};
+      for (let match of expr.matchAll(/@([a-zA-Z0-9\.]+)\s*=\s*(.+?);/g)) {
+        const value = match[1];
+        const fnc = match[2];
+        actions[value] = window.eval(fnc) as (x: number) => number;
+      };
+      this._tmpValues[group] = actions;
+    }
   }
 
   public isSelectedState(group: string, value: string, defaultState = false): boolean {
@@ -128,12 +153,12 @@ export class Sheet {
       });
       expr.match(/@[a-zA-Z0-9\.]+/g)?.forEach(match => {
         const valueCode = match.substring(1);
-          expr = expr.replace(`${match}`, `values[${valueCode}]`);
+        expr = expr.replace(`${match}`, `values[${valueCode}]`);
       });
       // expr = transpile(expr);
-//       var obj = {x:3};
-// eval("with (obj) x = 2");
-// console.log(obj.x)
+      //       var obj = {x:3};
+      // eval("with (obj) x = 2");
+      // console.log(obj.x)
       return window.eval("with ({values: this._tmpValues}) " + expr);
       // with ({values: this._tmpValues}) return window.eval(expr);
       // return window.eval(expr);
@@ -157,12 +182,21 @@ export class Sheet {
       .replaceAll(/-([a-zA-Z0-9]+)-/g, "<strike>$1</strike>");
   }
 
-  getNumber(code: string): number {
-    if (code.startsWith("$")) {
-      return this.resolve(code) as number;
-    } else {
-      return this.numericValues[code];
+  getNumber(code: string, defaultValue = 0, withTmp = false): number {
+    let value = code.startsWith("$")
+      ? this.resolve(code) as number
+      : this.numericValues[code];
+    if (value === undefined) {
+      value = defaultValue;
     }
+    if (withTmp) {
+      Object.values(this._tmpValues).forEach(tmp => {
+        if (tmp[code]) {
+          value = tmp[code](value);
+        }
+      })
+    }
+    return value;
   }
 
   setNumber(code: string, value: number | null): void {
