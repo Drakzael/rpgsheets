@@ -1,0 +1,15 @@
+<div class="scale {{ viewMode === mode.Dice ? 'dice' : '' }} {{ value.name ? '' : 'unamed' }}">
+  <ng-container *ngIf="value.nameValue">
+    <div class="name" *ngIf="viewMode !== mode.Edit">{{ name }}</div>
+    <input #nameInput type="text" class="name" *ngIf="viewMode === mode.Edit" value="{{ name }}" (change)="updateName(nameInput.value)" />
+  </ng-container>
+  <ng-container *ngIf="!value.nameValue">
+    <div class="name" *ngIf="name">{{ name }}</div>
+  </ng-container>
+  <div class="values">
+    <ng-container *ngFor="let i of values">
+      <app-icon *ngIf="iconFull" [icon]="i <= score ? iconFull! : iconEmpty!"  (click)="clickValue(i)" class="{{ viewMode === mode.Edit ? 'button' : '' }}"/>
+      <fa-icon *ngIf="!iconFull" [icon]="i <= score ? iconDotFill : iconDotEmpty" (click)="clickValue(i)" class="{{ viewMode === mode.Edit ? 'button' : '' }}"/>
+    </ng-container>
+  </div>
+</div>

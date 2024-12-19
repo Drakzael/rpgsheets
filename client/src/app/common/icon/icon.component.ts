@@ -8,9 +8,6 @@ import { Icon } from '../../_models/icon';
   templateUrl: './icon.component.html',
   styleUrl: './icon.component.scss'
 })
-export class IconComponent implements OnInit {
+export class IconComponent {
   @Input() icon!: Icon;
-
-  ngOnInit(): void {
-  }
 }

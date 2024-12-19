@@ -14,7 +14,13 @@ export class GameMetadataEditor {
   types?: {
     defaultIcon: string | Icon,
     values: { name: string, overlap: boolean, icon: string | Icon }[]
-  }
+  };
+  icons?: {
+    empty: string,
+    full: string,
+    plus?: string,
+    minus?: string
+  };
 }
 
 export type RowType = "title" | "note" | "spacer" | "value" | "freeValue" | "state-start" | "state-end" | "state";

@@ -6,18 +6,21 @@ import { faCircle as faCircleEmpty } from "@fortawesome/free-regular-svg-icons";
 import { Sheet } from '../../../_models/sheet';
 import { CommonModule } from '@angular/common';
 import { ViewMode } from '../../../_models/viewmode';
+import { Icon } from '../../../_models/icon';
+import { IconComponent } from '../../../common/icon/icon.component';
 
 @Component({
-  selector: 'app-dots',
+  selector: 'app-scale',
   standalone: true,
   imports: [
     CommonModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    IconComponent
   ],
-  templateUrl: './dots.component.html',
-  styleUrl: './dots.component.scss'
+  templateUrl: './scale.component.html',
+  styleUrl: './scale.component.scss'
 })
-export class DotsComponent implements OnInit {
+export class ScaleComponent implements OnInit {
   @Input() value!: GameMetadataValue;
   @Input() editorCode!: string;
   @Input() metadata!: GameMetadata;
@@ -27,6 +30,11 @@ export class DotsComponent implements OnInit {
 
   iconDotFill = faCircleFull;
   iconDotEmpty = faCircleEmpty;
+
+  iconFull?: Icon;
+  iconEmpty?: Icon;
+  iconPlus?: Icon;
+  iconMinus?: Icon;
 
   editor!: GameMetadataEditor;
   max!: number;
@@ -43,6 +51,10 @@ export class DotsComponent implements OnInit {
     } else {
       this.name = this.value.name;
     }
+    this.iconEmpty = this.editor.icons?.empty && this.metadata.icons![this.editor.icons?.empty] || undefined;
+    this.iconFull = this.editor.icons?.full && this.metadata.icons![this.editor.icons.full] || undefined;
+    this.iconPlus = this.editor.icons?.plus && this.metadata.icons![this.editor.icons.plus] || undefined;
+    this.iconMinus = this.editor.icons?.minus && this.metadata.icons![this.editor.icons.minus] || undefined;
 
     const onChange = (() => {
       if (this.editor.maxExpr) {
@@ -83,7 +95,7 @@ export class DotsComponent implements OnInit {
     }
   }
  
-  clickDot(i: number) {
+  clickValue(i: number) {
     if (this.viewMode === ViewMode.Edit ||
       this.viewMode === ViewMode.Play && this.editor.freeEdit) {
       if (i === this.score) {
