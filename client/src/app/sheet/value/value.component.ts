@@ -10,7 +10,7 @@ import { HealthComponent } from './health/health.component';
 import { SquaresComponent } from './squares/squares.component';
 import { FreeValueComponent } from '../free-value/free-value.component';
 import { NumberComponent } from './number/number.component';
-import { faUnderline } from '@fortawesome/free-solid-svg-icons';
+import { StateComponent } from '../state/state.component';
 
 @Component({
   selector: 'app-value',
@@ -23,7 +23,8 @@ import { faUnderline } from '@fortawesome/free-solid-svg-icons';
     SquaresComponent,
     DotsSquaresComponent,
     HealthComponent,
-    FreeValueComponent
+    FreeValueComponent,
+    StateComponent
   ],
   templateUrl: './value.component.html',
   styleUrl: './value.component.scss'
@@ -34,6 +35,7 @@ export class ValueComponent implements OnInit {
   @Input() value!: GameMetadataValue;
   @Input() defaultType?: ValueType;
   @Input() viewMode!: ViewMode;
+  @Input() rows?: GameMetadataValue[];
 
   name!: string;
   type?: RowType;

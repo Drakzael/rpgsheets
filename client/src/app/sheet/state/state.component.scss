@@ -1,0 +1,28 @@
+.rows {
+  margin-top: 0.3em;
+  padding-bottom: 0.3em;
+  cursor: pointer;
+}
+
+.selected {
+  border: 1px solid #666;
+  border-right-color: #bbb;
+  border-bottom-color: #bbb;
+  background-color: rgba(white, 40%);
+}
+
+.title {
+  text-align: center;
+  background-color: rgba(black, 20%);
+  margin-bottom: 0.3em;
+}
+
+.note {
+  height: 1.3em;
+  margin-left: 0.3em;
+  margin-right: 0.3em;
+}
+
+.spacer {
+  height: 1.3em;
+}

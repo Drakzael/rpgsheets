@@ -117,7 +117,6 @@ export class SheetComponent implements OnInit {
 
   newSheet(game: string) {
     this.sheetService.getMetadata(game).subscribe(metadata => {
-      console.log("new sheet");
       this.metadata = metadata;
       this.sheet = new Sheet();
       this.sheet.game = game;

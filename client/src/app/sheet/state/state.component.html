@@ -1,0 +1,7 @@
+<div class="rows {{ selected ? 'selected' : '' }}" (click)="selectState()">
+  <div *ngFor="let row of state.rows">
+    <div *ngIf="row.type === 'title'" class="title">{{ row.name }}</div>
+    <div *ngIf="row.type === 'note'" class="note">{{ row.name }}</div>
+    <div *ngIf="row.type === 'spacer'" class="spacer"></div>
+  </div>
+</div>

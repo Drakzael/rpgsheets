@@ -42,6 +42,13 @@
   [defaultType]="editorCode"
   [viewMode]="viewMode"/>
 
+<app-state *ngIf="type === 'state'"
+  [sheet]="sheet"
+  [state]="value"
+  [metadata]="metadata"
+  [defaultType]="editorCode"
+  [viewMode]="viewMode"/>
+
 <div *ngIf="type === 'title'" class="title">{{ name }}</div>
 <div *ngIf="type === 'note'" class="note">{{ name }}</div>
 

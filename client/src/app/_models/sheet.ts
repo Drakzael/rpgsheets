@@ -18,6 +18,8 @@ export class Sheet {
 
   private _changed = false;
   private _onChange: (() => void)[] = [];
+  private _tmpValues: { [key: string]: number } = {};
+  private _states: { [key: string]: { value: string, action: string } } = {};
 
   constructor(
     private data?: SheetData
@@ -100,6 +102,14 @@ export class Sheet {
     }
   }
 
+  public selectState(group: string, value: string, action = ""): void {
+    this._states[group] = {value, action};
+  }
+
+  public isSelectedState(group: string, value: string, defaultState = false): boolean {
+    return this._states[group] === undefined ? defaultState : this._states[group].value === value;
+  }
+
   public resolve(code: string) {
     if (code.startsWith("${") && code.endsWith("}")) {
       let expr = code.substring(2, code.length - 1);
@@ -116,8 +126,17 @@ export class Sheet {
           expr = expr.replace(`${match}`, "''");
         }
       });
+      expr.match(/@[a-zA-Z0-9\.]+/g)?.forEach(match => {
+        const valueCode = match.substring(1);
+          expr = expr.replace(`${match}`, `values[${valueCode}]`);
+      });
       // expr = transpile(expr);
-      return window.eval(expr);
+//       var obj = {x:3};
+// eval("with (obj) x = 2");
+// console.log(obj.x)
+      return window.eval("with ({values: this._tmpValues}) " + expr);
+      // with ({values: this._tmpValues}) return window.eval(expr);
+      // return window.eval(expr);
     } else if (code.startsWith("$")) {
       switch (code) {
         case "$sheet.name":

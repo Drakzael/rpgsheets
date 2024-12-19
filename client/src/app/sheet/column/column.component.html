@@ -1,6 +1,6 @@
 <div *ngIf="column.title" class="title">{{ column.title }}</div>
-<div *ngIf="column.rows" class="rows">
-  <app-value *ngFor="let value of column.rows"
+<div *ngIf="rows" class="rows">
+  <app-value *ngFor="let value of rows"
     [value]="value"
     [metadata]="metadata"
     [sheet]="sheet"
