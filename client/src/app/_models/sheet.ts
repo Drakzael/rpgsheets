@@ -129,6 +129,7 @@ export class Sheet {
       };
       this._tmpValues[group] = actions;
     }
+    this._onChange.forEach(callback => callback.call(this));
   }
 
   public isSelectedState(group: string, value: string, defaultState = false): boolean {
@@ -156,12 +157,7 @@ export class Sheet {
         expr = expr.replace(`${match}`, `values[${valueCode}]`);
       });
       // expr = transpile(expr);
-      //       var obj = {x:3};
-      // eval("with (obj) x = 2");
-      // console.log(obj.x)
-      return window.eval("with ({values: this._tmpValues}) " + expr);
-      // with ({values: this._tmpValues}) return window.eval(expr);
-      // return window.eval(expr);
+      return window.eval(expr);
     } else if (code.startsWith("$")) {
       switch (code) {
         case "$sheet.name":

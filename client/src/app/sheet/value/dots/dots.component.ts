@@ -50,6 +50,9 @@ export class DotsComponent implements OnInit {
       } else {
         this.max = this.editor.max!;
       }
+      if (this.score > this.max) {
+        this.max = this.score;
+      }
 
     }).bind(this);
     this.sheet.listenChange(onChange);
