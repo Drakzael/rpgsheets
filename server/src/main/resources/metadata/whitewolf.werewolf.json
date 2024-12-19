@@ -52,9 +52,9 @@
       ]
     }, {
       "rows": [
-        { "name": "Lignée", "value": "general.breed", "hints": [ "Homidé", "Lupus", "Métis" ] },
+        { "name": "Lignée", "value": "general.breed", "hint": [ "Homidé", "Lupus", "Métis" ] },
         { "name": "Auspice", "value": "general.auspice" },
-        { "name": "Tribe", "value": "general.tribe" }
+        { "name": "Tribu", "value": "general.tribe" }
       ]
     }, {
       "rows": [
