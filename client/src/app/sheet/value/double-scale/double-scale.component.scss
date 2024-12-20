@@ -7,11 +7,11 @@
   margin: 0 auto;
 }
 
-.dots, .squares {
+.first, .second {
   display: table-row;
 }
 
-.dots fa-icon, .squares fa-icon {
+.first fa-icon, .second fa-icon, .first app-icon, .second app-icon {
   display: table-cell;
   padding: 0 0.2em;
 }

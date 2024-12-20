@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { GameMetadata, GameMetadataValue, RowType, ValueType } from '../../_models/gamemetadata';
 import { TextComponent } from './text/text.component';
 import { CommonModule } from '@angular/common';
-import { DotsSquaresComponent } from './dots-squares/dots-squares.component';
 import { ViewMode } from '../../_models/viewmode';
 import { Sheet } from '../../_models/sheet';
 import { HealthComponent } from './health/health.component';
@@ -11,6 +10,7 @@ import { FreeValueComponent } from '../free-value/free-value.component';
 import { NumberComponent } from './number/number.component';
 import { StateComponent } from '../state/state.component';
 import { ScaleComponent } from './scale/scale.component';
+import { DoubleScaleComponent } from './double-scale/double-scale.component';
 
 @Component({
   selector: 'app-value',
@@ -21,7 +21,7 @@ import { ScaleComponent } from './scale/scale.component';
     NumberComponent,
     ScaleComponent,
     SquaresComponent,
-    DotsSquaresComponent,
+    DoubleScaleComponent,
     HealthComponent,
     FreeValueComponent,
     StateComponent
@@ -62,7 +62,7 @@ export class ValueComponent implements OnInit {
       } else {
         if (["number", "scale", "dots", "squares"].includes(this.editorType)) {
           this.mode = this.sheet.getNumber(this.value.value) != undefined;
-        } else if (["dots_squares"].includes(this.editorType)) {
+        } else if (["doubleScale", "dots_squares"].includes(this.editorType)) {
           this.mode = this.value.values.map(value => this.sheet.getNumber(value)).filter(value => value !== undefined).length > 0;
         } else if (["text"].includes(this.editorType)) {
           this.mode = this.sheet.getString(this.value.value) != undefined;

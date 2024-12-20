@@ -21,7 +21,7 @@
     [editorCode]="editorCode"
     [metadata]="metadata"
     [viewMode]="viewMode"/>
-  <app-dots-squares *ngIf="editorType === 'dots_squares'"
+  <app-double-scale *ngIf="editorType === 'doubleScale' || editorType === 'dots_squares'"
     [sheet]="sheet"
     [value]="value"
     [editorCode]="editorCode"

@@ -1,14 +1,16 @@
 import { Icon } from "./icon";
 
 export class GameMetadataEditor {
-  type!: "number" | "text" | "scale" | "dots" | "squares" | "dots_squares" | "health";
+  type!: "number" | "text" | "scale" | "doubleScale" | "dots" | "squares" | "dots_squares" | "health";
   min?: number;
   max?: number;
   maxExpr?: string;
   defaultValue?: string | number;
   freeEdit?: boolean = false;
   freeEditDots?: boolean = false;
+  freeEditFirst?: boolean = false;
   freeEditSquares?: boolean = false;
+  freeEditSecond?: boolean = false;
   overlap?: boolean = true;
   values?: { name: string, tip: string}[];
   types?: {
@@ -16,10 +18,14 @@ export class GameMetadataEditor {
     values: { name: string, overlap: boolean, icon: string | Icon }[]
   };
   icons?: {
-    empty: string,
-    full: string,
+    empty?: string,
+    full?: string,
     plus?: string,
-    minus?: string
+    minus?: string,
+    firstEmpty?: string,
+    firstFull?: string,
+    secondEmpty?: string,
+    secondFull?: string
   };
 }
 
