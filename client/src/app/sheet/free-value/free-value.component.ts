@@ -4,7 +4,7 @@ import { Sheet } from '../../_models/sheet';
 import { ViewMode } from '../../_models/viewmode';
 import { CommonModule } from '@angular/common';
 import { TextComponent } from './text/text.component';
-import { DotsComponent } from './dots/dots.component';
+import { ScaleComponent } from './scale/scale.component';
 
 @Component({
   selector: 'app-free-value',
@@ -12,7 +12,7 @@ import { DotsComponent } from './dots/dots.component';
   imports: [
     CommonModule,
     TextComponent,
-    DotsComponent
+    ScaleComponent
   ],
   templateUrl: './free-value.component.html',
   styleUrl: './free-value.component.scss'

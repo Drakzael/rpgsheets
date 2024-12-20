@@ -178,6 +178,10 @@ export class Sheet {
       .replaceAll(/-([a-zA-Z0-9]+)-/g, "<strike>$1</strike>");
   }
 
+  hasNumber(code: string): boolean {
+    return this.numericValues[code] !== undefined;
+  }
+
   getNumber(code: string, defaultValue = 0, withTmp = false): number {
     let value = code.startsWith("$")
       ? this.resolve(code) as number

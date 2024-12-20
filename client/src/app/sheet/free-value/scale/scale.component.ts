@@ -6,20 +6,23 @@ import { CommonModule } from '@angular/common';
 import { faCircle as faCircleFull } from '@fortawesome/free-solid-svg-icons';
 import { faCircle as faCircleEmpty } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { Icon } from '../../../_models/icon';
+import { IconComponent } from '../../../common/icon/icon.component';
 
 let uniqueId = 0;
 
 @Component({
-  selector: 'app-dots',
+  selector: 'app-scale',
   standalone: true,
   imports: [
     CommonModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    IconComponent
   ],
-  templateUrl: './dots.component.html',
-  styleUrl: './dots.component.scss'
+  templateUrl: './scale.component.html',
+  styleUrl: './scale.component.scss'
 })
-export class DotsComponent implements OnInit {
+export class ScaleComponent implements OnInit {
   @Input() value!: GameMetadataFreeValue;
   @Input() editorCode!: string;
   @Input() metadata!: GameMetadata;
@@ -30,6 +33,9 @@ export class DotsComponent implements OnInit {
   iconDotFill = faCircleFull;
   iconDotEmpty = faCircleEmpty;
 
+  iconFull?: Icon;
+  iconEmpty?: Icon;
+
   editor!: GameMetadataEditor;
   rows!: { name: string, index: number, value: number }[];
   max!: number;
@@ -39,6 +45,9 @@ export class DotsComponent implements OnInit {
   ngOnInit(): void {
     this.editor = this.metadata.editors![this.editorCode];
     this.rows = this.computeRows();
+
+    this.iconEmpty = this.editor.icons?.empty && this.metadata.icons![this.editor.icons?.empty] || undefined;
+    this.iconFull = this.editor.icons?.full && this.metadata.icons![this.editor.icons.full] || undefined;
 
     const onChange = (() => {
       if (this.editor.maxExpr) {
@@ -79,7 +88,7 @@ export class DotsComponent implements OnInit {
     if (this.rows[index].name) {
       this.sheet.setNumber(`${this.prefix}${this.rows[index].name}`, null);
     }
-    if (this.sheet.getNumber(`${this.prefix}${text}`) !== undefined) { // Avoid colision
+    if (this.sheet.hasNumber(`${this.prefix}${text}`)) { // Avoid colision
       text = "";
     }
     if (text) {
@@ -113,7 +122,7 @@ export class DotsComponent implements OnInit {
     }
   }
 
-  clickDot(index: number, value: number) {
+  clickValue(index: number, value: number) {
     if (this.viewMode === ViewMode.Edit ||
       this.viewMode === ViewMode.Play && this.editor.freeEdit) {
       if (!this.rows[index].name) {
