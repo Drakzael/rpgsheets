@@ -5,16 +5,20 @@
     { "name": "Age des Ténèbres", "code": "darkage" },
     { "name": "La Mascarade", "code": "mascarade" }
   ],
+  "icons": {
+    "blood.full": { "viewBox": "0 0 100 105", "path": "M 49.971627,0 A 35,35 0 0 1 32.000114,29.530497 v 0.04599 A 40,42.5 0 0 0 9.9999064,67.499756 40,42.5 0 0 0 10.048999,68.96685 40,30 0 0 0 9.9999064,69.999862 40,30 0 0 0 50.000049,100.0001 40,30 0 0 0 90.000191,69.999862 40,30 0 0 0 89.959884,68.691931 40,42.5 0 0 0 90.000191,67.499756 40,42.5 0 0 0 67.999984,29.576489 v -0.04599 A 35,35 0 0 1 50.028471,0 Z m 30.751094,56.927275 a 15,20 0 0 1 1.277442,8.072892 15,20 0 0 1 -11.067025,19.288745 3.5150001,3.5225 0 0 1 -1.418001,0.302307 3.5150001,3.5225 0 0 1 -3.515031,-3.522782 3.5150001,3.5225 0 0 1 1.547709,-2.918685 h -0.02119 A 27.500895,29.385445 0 0 0 80.722721,56.927275 Z" },
+    "blood.empty": { "viewBox": "0 0 100 105", "path": "M 49.971627 0 A 35 35 0 0 1 32.000114 29.530497 L 32.000114 29.576489 A 40 42.5 0 0 0 9.9999064 67.499756 A 40 42.5 0 0 0 10.048999 68.96685 A 40 30 0 0 0 9.9999064 69.999862 A 40 30 0 0 0 50.000049 100.0001 A 40 30 0 0 0 90.000191 69.999862 A 40 30 0 0 0 89.959884 68.691931 A 40 42.5 0 0 0 90.000191 67.499756 A 40 42.5 0 0 0 67.999984 29.576489 L 67.999984 29.530497 A 35 35 0 0 1 50.028471 0 L 49.971627 0 z M 50.004183 27.668079 A 13.503692 15.39 0 0 0 57.864168 36.236548 A 30 35 0 0 1 79.980648 69.318766 A 30 20 0 0 1 79.999768 69.999862 A 30 20 0 0 1 50.000049 90.000191 A 30 20 0 0 1 19.999813 69.999862 A 30 35 0 0 1 42.137996 36.235514 A 13.503692 15.39 0 0 0 50.004183 27.668079 z " }
+  },
   "editors": {
-    "attribute": { "type": "dots", "min": 1, "maxExpr": "${ $general.generation ? Math.max(5, 13 - $general.generation) : 5 }" },
-    "attribute.appearance": { "type": "dots", "min": 1, "maxExpr": "${ $general.clan === 'Nosferatu' ? 0 : $general.generation ? Math.max(5, 13 - $general.generation) : 5 }" },
-    "ability": { "type": "dots", "maxExpr": "${ $general.generation ? Math.max(5, 13 - $general.generation) : 5 }" },
-    "background": { "type": "dots", "max": 5 },
-    "discipline": { "type": "dots", "maxExpr": "${ $general.generation ? Math.max(5, 13 - $general.generation) : 5 }" },
-    "willpower": { "type": "dots_squares", "max": 10, "overlap": false, "freeEditSquares": true },
-    "blood": { "type": "squares", "maxExpr": "${ if ($general.generation) switch (Number($general.generation)) { case 4: 50; break; case 5: 40; break; case 6: 30; break; case 7: 20; break; default: Math.max(10, 23 - Number($general.generation)); break; } else 10 }", "freeEdit": true },
-    "path": { "type": "dots", "max": 10 },
-    "virtue": { "type": "dots", "defaultValue": 1, "max": 5 },
+    "attribute": { "type": "scale", "min": 1, "maxExpr": "${ $general.generation ? Math.max(5, 13 - $general.generation) : 5 }" },
+    "attribute.appearance": { "type": "scale", "min": 1, "maxExpr": "${ $general.clan === 'Nosferatu' ? 0 : $general.generation ? Math.max(5, 13 - $general.generation) : 5 }" },
+    "ability": { "type": "scale", "maxExpr": "${ $general.generation ? Math.max(5, 13 - $general.generation) : 5 }" },
+    "background": { "type": "scale", "max": 5 },
+    "discipline": { "type": "scale", "maxExpr": "${ $general.generation ? Math.max(5, 13 - $general.generation) : 5 }" },
+    "willpower": { "type": "doubleScale", "max": 10, "overlap": false, "freeEditSquares": true },
+    "blood": { "type": "scale", "display": "grid", "columns": 10, "maxExpr": "${ if ($general.generation) switch (Number($general.generation)) { case 4: 50; break; case 5: 40; break; case 6: 30; break; case 7: 20; break; default: Math.max(10, 23 - Number($general.generation)); break; } else 10 }", "freeEdit": true, "icons": { "empty": "blood.empty", "full": "blood.full" } },
+    "path": { "type": "scale", "max": 10 },
+    "virtue": { "type": "scale", "defaultValue": 1, "max": 5 },
     "health": {
       "type": "health",
       "values": [

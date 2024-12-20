@@ -5,6 +5,8 @@ export class GameMetadataEditor {
   min?: number;
   max?: number;
   maxExpr?: string;
+  display?: "inline" | "grid"; // default inline
+  columns?: number;
   defaultValue?: string | number;
   freeEdit?: boolean = false;
   freeEditDots?: boolean = false;

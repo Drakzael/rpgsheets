@@ -25,15 +25,15 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="0.9050967"
-     inkscape:cx="118.21941"
-     inkscape:cy="255.22135"
+     inkscape:zoom="0.64000001"
+     inkscape:cx="178.125"
+     inkscape:cy="434.37499"
      inkscape:window-width="1920"
      inkscape:window-height="1043"
      inkscape:window-x="0"
      inkscape:window-y="452"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer11" />
+     inkscape:current-layer="layer14" />
   <defs
      id="defs2">
     <inkscape:path-effect
@@ -150,18 +150,16 @@
      id="layer10"
      inkscape:label="Square Full"
      style="display:none">
-    <rect
-       style="fill:#000000;stroke-width:0.27294"
+    <path
        id="rect450"
-       width="90"
-       height="90"
-       x="5"
-       y="5" />
+       style="stroke-width:0.27294"
+       d="M 5,5 H 95 V 95 H 5 Z" />
   </g>
   <g
      inkscape:groupmode="layer"
      id="layer11"
-     inkscape:label="Square Cross">
+     inkscape:label="Square Cross"
+     style="display:none">
     <path
        id="rect477-3"
        style="display:none;fill:#000000;stroke-width:0.266582"
@@ -192,7 +190,211 @@
     <path
        id="rect477-3-5"
        style="display:inline;fill:#000000;stroke-width:0.266582"
-       d="M 5.0002116 5.0002116 L 5.0002116 94.999886 L 94.999886 94.999886 L 94.999886 5.0002116 L 5.0002116 5.0002116 z M 25.08064 15.000118 L 74.375305 15.000118 L 49.784558 39.644092 L 25.08064 15.000118 z M 15.000118 25.226884 L 39.642025 49.808846 L 15.000118 74.503979 L 15.000118 25.226884 z M 84.99998 25.495085 L 84.99998 74.773214 L 60.357556 50.190735 L 84.99998 25.495085 z M 50.215023 60.355489 L 74.919458 84.99998 L 25.623759 84.99998 L 50.215023 60.355489 z " />
+       d="M 5.0002116,5.0002116 V 94.999886 H 94.999886 V 5.0002116 Z M 25.08064,15.000118 H 74.375305 L 49.784558,39.644092 Z M 15.000118,25.226884 39.642025,49.808846 15.000118,74.503979 Z M 84.99998,25.495085 V 74.773214 L 60.357556,50.190735 Z M 50.215023,60.355489 74.919458,84.99998 H 25.623759 Z" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer12"
+     inkscape:label="Blood"
+     style="display:inline">
+    <g
+       id="g1623"
+       style="display:none">
+      <g
+         id="g1633">
+        <ellipse
+           style="display:none;fill:#000000;stroke-width:0.2912"
+           id="path1053"
+           cx="50"
+           cy="67.5"
+           rx="40"
+           ry="42.5" />
+        <rect
+           style="display:none;fill:#ffffff;stroke-width:0.413817"
+           id="rect1055"
+           width="100"
+           height="50"
+           x="0"
+           y="70"
+           rx="3.519807e-17"
+           ry="5.0844107" />
+        <path
+           id="ellipse1625"
+           style="display:inline;fill:#000000;stroke-width:0.2912"
+           d="M 50.000049,25.000024 A 40,42.5 0 0 0 9.9999064,67.499756 40,42.5 0 0 0 10.083622,69.999862 H 89.915959 A 40,42.5 0 0 0 90.000191,67.499756 40,42.5 0 0 0 50.000049,25.000024 Z" />
+      </g>
+      <ellipse
+         style="display:inline;fill:#000000;stroke-width:0.367519"
+         id="path1051"
+         cx="50"
+         cy="70"
+         rx="40"
+         ry="30" />
+      <g
+         id="g1398"
+         style="display:inline">
+        <rect
+           style="display:none;fill:#ff0000;stroke-width:0.271269"
+           id="rect1544"
+           width="36"
+           height="35"
+           x="32"
+           y="-6.9388939e-18"
+           rx="3.6710385e-17"
+           ry="5.1244407" />
+        <circle
+           style="display:none;fill:#00ffff;stroke-width:0.516975"
+           id="ellipse1195"
+           cx="15"
+           cy="-1.05"
+           r="35" />
+        <circle
+           style="display:none;fill:#00ffff;stroke-width:0.516975"
+           id="ellipse1197"
+           cx="85"
+           cy="-1.05"
+           r="35" />
+        <path
+           id="rect1548"
+           style="display:inline;fill:#000000;stroke-width:0.271269"
+           d="M 49.971627,0 A 35,35 0 0 1 32.000114,29.530497 v 0.345199 5.124235 h 35.99987 V 29.875696 29.530497 A 35,35 0 0 1 50.028471,0 Z" />
+      </g>
+    </g>
+    <g
+       id="g1525"
+       style="display:none">
+      <ellipse
+         style="display:inline;fill:#ffffff;stroke-width:0.276022"
+         id="path1409"
+         cx="67"
+         cy="65"
+         rx="15"
+         ry="20" />
+      <rect
+         style="display:inline;fill:#000000;stroke-width:0.346225"
+         id="rect1519"
+         width="14.021"
+         height="10"
+         x="56.596001"
+         y="78.150002"
+         rx="3.9414266e-17"
+         ry="7.7750535" />
+      <g
+         id="g1532"
+         style="display:inline">
+        <ellipse
+           style="display:none;fill:#000000;stroke-width:0.264583"
+           id="path1411"
+           cx="53.493382"
+           cy="52.89423"
+           rx="27.500895"
+           ry="29.385445" />
+        <rect
+           style="display:none;fill:#ffffff;stroke-width:0.264583"
+           id="rect1527"
+           width="90.235023"
+           height="38.380032"
+           x="4.07623"
+           y="11.658428"
+           rx="3.519807e-17"
+           ry="5.0844107" />
+        <path
+           id="ellipse1536"
+           style="fill:#000000;stroke-width:0.264583"
+           d="m 65.685396,43.995764 a 13.271404,5.4996867 0 0 0 -13.271024,5.499406 13.271404,5.4996867 0 0 0 0.07183,0.543119 H 26.136389 a 27.500895,29.385445 0 0 0 -0.14366,2.856157 27.500895,29.385445 0 0 0 27.500647,29.385286 27.500895,29.385445 0 0 0 27.500647,-29.385286 27.500895,29.385445 0 0 0 -0.132809,-2.856157 h -1.976107 a 13.271404,5.4996867 0 0 0 0.07183,-0.543119 13.271404,5.4996867 0 0 0 -13.271541,-5.499406 z" />
+      </g>
+      <ellipse
+         style="display:inline;fill:#ffffff;stroke-width:0.122078"
+         id="path1413"
+         cx="69.514999"
+         cy="81.068489"
+         rx="3.5150001"
+         ry="3.5225" />
+    </g>
+    <g
+       id="g1382"
+       style="display:none">
+      <title
+         id="title1384">Bulle Interieure</title>
+      <g
+         id="g1405"
+         transform="translate(-1.93e-4,0.100085)"
+         style="display:inline">
+        <path
+           id="path1265"
+           style="display:none;fill:#ffff00;stroke-width:0.256072"
+           d="M 43.326892,19.999813 A 8.8000817,10 0 0 0 41.2,26.517244 8.8000817,10 0 0 0 50,36.517151 8.8000817,10 0 0 0 58.8,26.517244 8.8000817,10 0 0 0 56.674008,19.999813 Z" />
+        <ellipse
+           style="display:none;fill:#00ff00;stroke-width:0.33391"
+           id="path1261"
+           cx="62"
+           cy="19.549999"
+           rx="13"
+           ry="12.5" />
+        <ellipse
+           style="display:none;fill:#00ff00;stroke-width:0.33391"
+           id="circle1263"
+           cx="38"
+           cy="19.549999"
+           rx="13"
+           ry="12.5" />
+        <path
+           id="path1386"
+           style="display:inline;fill:#ffffff;stroke-width:0.289588"
+           d="m 50.004219,27.567915 a 13.503692,15.39 0 0 1 -8.004026,8.627417 9.1410456,12.312 0 0 0 8.000269,6.372583 9.1410456,12.312 0 0 0 7.999731,-6.372583 13.503692,15.39 0 0 1 -7.995974,-8.627417 z" />
+      </g>
+      <g
+         id="g1870"
+         style="display:inline">
+        <rect
+           style="display:none;fill:#ffff00;stroke-width:0.316519"
+           id="rect1872"
+           width="100"
+           height="40"
+           x="0"
+           y="70"
+           rx="4.0496523e-17"
+           ry="10.829656" />
+        <ellipse
+           style="display:none;fill:#ffff00;stroke-width:0.275753"
+           id="path1866"
+           cx="50"
+           cy="70"
+           rx="30"
+           ry="35" />
+        <path
+           id="ellipse1877"
+           style="display:inline;fill:#ffffff;stroke-width:0.275753"
+           d="M 50.000049,34.999931 A 30,35 0 0 0 19.999813,69.999862 H 79.999768 A 30,35 0 0 0 50.000049,34.999931 Z" />
+      </g>
+      <ellipse
+         style="display:inline;fill:#ffffff;stroke-width:0.342615"
+         id="path1201"
+         cx="50"
+         cy="70"
+         ry="20"
+         rx="30" />
+    </g>
+    <g
+       inkscape:groupmode="layer"
+       id="layer13"
+       inkscape:label="BloodFull"
+       style="display:none">
+      <path
+         id="path1679"
+         style="display:inline;fill:#000000;stroke-width:0.2912"
+         d="M 49.971627,0 A 35,35 0 0 1 32.000114,29.530497 v 0.04599 A 40,42.5 0 0 0 9.9999064,67.499756 40,42.5 0 0 0 10.048999,68.96685 40,30 0 0 0 9.9999064,69.999862 40,30 0 0 0 50.000049,100.0001 40,30 0 0 0 90.000191,69.999862 40,30 0 0 0 89.959884,68.691931 40,42.5 0 0 0 90.000191,67.499756 40,42.5 0 0 0 67.999984,29.576489 v -0.04599 A 35,35 0 0 1 50.028471,0 Z m 30.751094,56.927275 a 15,20 0 0 1 1.277442,8.072892 15,20 0 0 1 -11.067025,19.288745 3.5150001,3.5225 0 0 1 -1.418001,0.302307 3.5150001,3.5225 0 0 1 -3.515031,-3.522782 3.5150001,3.5225 0 0 1 1.547709,-2.918685 h -0.02119 A 27.500895,29.385445 0 0 0 80.722721,56.927275 Z" />
+    </g>
+    <g
+       inkscape:groupmode="layer"
+       id="layer14"
+       inkscape:label="BloodEmpty"
+       style="display:inline">
+      <path
+         id="path1712"
+         style="display:inline;fill:#000000;stroke-width:0.2912"
+         d="M 49.971627 0 A 35 35 0 0 1 32.000114 29.530497 L 32.000114 29.576489 A 40 42.5 0 0 0 9.9999064 67.499756 A 40 42.5 0 0 0 10.048999 68.96685 A 40 30 0 0 0 9.9999064 69.999862 A 40 30 0 0 0 50.000049 100.0001 A 40 30 0 0 0 90.000191 69.999862 A 40 30 0 0 0 89.959884 68.691931 A 40 42.5 0 0 0 90.000191 67.499756 A 40 42.5 0 0 0 67.999984 29.576489 L 67.999984 29.530497 A 35 35 0 0 1 50.028471 0 L 49.971627 0 z M 50.004183 27.668079 A 13.503692 15.39 0 0 0 57.864168 36.236548 A 30 35 0 0 1 79.980648 69.318766 A 30 20 0 0 1 79.999768 69.999862 A 30 20 0 0 1 50.000049 90.000191 A 30 20 0 0 1 19.999813 69.999862 A 30 35 0 0 1 42.137996 36.235514 A 13.503692 15.39 0 0 0 50.004183 27.668079 z " />
+    </g>
   </g>
   <g
      inkscape:groupmode="layer"

@@ -28,6 +28,11 @@ input.name {
   column-gap: 0.1em;
 }
 
+.values.grid {
+  display: inline-grid;
+  grid-auto-flow: row;
+}
+
 .unamed .values {
   display: inline-grid;
   column-gap: 0.4em;
