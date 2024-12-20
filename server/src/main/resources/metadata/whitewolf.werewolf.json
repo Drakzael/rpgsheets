@@ -23,7 +23,7 @@
   "editors": {
     "attribute": { "type": "scale", "min": 1, "max": 5, "icons": { "empty": "dot.empty", "full": "dot.full", "plus": "dot.plus", "minus": "dot.minus" } },
     "ability": { "type": "scale", "min": 0, "max": 5, "icons": { "empty": "dot.empty", "full": "dot.full"} },
-    "renown": { "type": "doubleScale", "min": 0, "max": 10, "overlap": true, "icons": { "firstEmpty": "dot.empty", "firstFull": "dot.full", "secondEmpty": "square.empty", "secondFull": "square.crossed" } },
+    "renown": { "type": "doubleScale", "min": 0, "max": 10, "overlap": true, "icons": { "firstEmpty": "dot.empty", "firstFull": "dot.full", "secondEmpty": "square.empty", "secondFull": "square.full" } },
     "willpower": { "type": "doubleScale", "min": 0, "max": 10, "overlap": false, "freeEditSecond": true, "icons": { "firstEmpty": "dot.empty", "firstFull": "dot.full", "secondEmpty": "square.empty", "secondFull": "square.crossed" } },
     "health": {
       "type": "health",
