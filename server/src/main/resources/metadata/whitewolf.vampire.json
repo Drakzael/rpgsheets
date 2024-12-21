@@ -219,5 +219,13 @@
         { "editor": "text", "value": "character.experience", "defaultCount": 2 }
       ]
     }]
+  }, {
+    "title": "Notes",
+    "pageBreak": true,
+    "gridColumns": [{
+      "rows": [
+        { "editor": "text", "defaultCount": 30, "value": "notes.1" }
+      ]
+    }]
   }]
 }

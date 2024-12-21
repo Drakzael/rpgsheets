@@ -271,5 +271,12 @@
         { "type": "freeValue", "prefix": "advantage.weakness", "defaultCount": 4 }
       ]
     }, {}, {}]
+  }, {
+    "title": "Notes",
+    "gridColumns": [{
+      "rows": [
+        { "editor": "text", "defaultCount": 30, "value": "notes.1" }
+      ]
+    }]
   }]
 }
