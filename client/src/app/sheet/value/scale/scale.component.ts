@@ -1,20 +1,17 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { GameMetadata, GameMetadataEditor, GameMetadataValue } from '../../../_models/gamemetadata';
-import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
-import { faCircle as faCircleFull } from "@fortawesome/free-solid-svg-icons";
-import { faCircle as faCircleEmpty } from "@fortawesome/free-regular-svg-icons";
 import { Sheet } from '../../../_models/sheet';
 import { CommonModule } from '@angular/common';
 import { ViewMode } from '../../../_models/viewmode';
 import { Icon } from '../../../_models/icon';
 import { IconComponent } from '../../../common/icon/icon.component';
+import { IconDotEmpty, IconDotFull, IconDotMinus, IconDotPlus } from '../../../_icons/dot';
 
 @Component({
   selector: 'app-scale',
   standalone: true,
   imports: [
     CommonModule,
-    FontAwesomeModule,
     IconComponent
   ],
   templateUrl: './scale.component.html',
@@ -28,9 +25,6 @@ export class ScaleComponent implements OnInit {
   @Input() viewMode!: ViewMode;
   mode = ViewMode;
 
-  iconDotFill = faCircleFull;
-  iconDotEmpty = faCircleEmpty;
-
   iconFull?: Icon;
   iconEmpty?: Icon;
   iconPlus?: Icon;
@@ -39,6 +33,8 @@ export class ScaleComponent implements OnInit {
   editor!: GameMetadataEditor;
   max!: number;
   name!: string;
+
+  originalScore!: number;
 
   get values(): number[] {
     return Array(this.max).fill(0).map((_, i) => i + 1);
@@ -51,10 +47,10 @@ export class ScaleComponent implements OnInit {
     } else {
       this.name = this.value.name;
     }
-    this.iconEmpty = this.editor.icons?.empty && this.metadata.icons![this.editor.icons?.empty] || undefined;
-    this.iconFull = this.editor.icons?.full && this.metadata.icons![this.editor.icons.full] || undefined;
-    this.iconPlus = this.editor.icons?.plus && this.metadata.icons![this.editor.icons.plus] || this.iconFull;
-    this.iconMinus = this.editor.icons?.minus && this.metadata.icons![this.editor.icons.minus] || this.iconEmpty;
+    this.iconEmpty = this.editor.icons?.empty && this.metadata.icons![this.editor.icons?.empty] || IconDotEmpty;
+    this.iconFull = this.editor.icons?.full && this.metadata.icons![this.editor.icons.full] || IconDotFull;
+    this.iconPlus = this.editor.icons?.plus && this.metadata.icons![this.editor.icons.plus] || IconDotPlus;
+    this.iconMinus = this.editor.icons?.minus && this.metadata.icons![this.editor.icons.minus] || IconDotMinus;
 
     const onChange = (() => {
       if (this.editor.maxExpr) {
@@ -69,6 +65,8 @@ export class ScaleComponent implements OnInit {
     }).bind(this);
     this.sheet.listenChange(onChange);
     onChange();
+
+    this.originalScore = this.sheet.getNumber(this.value.value, this.editor.defaultValue as number || this.editor.min || 0);
   }
 
   get isEdit(): boolean {
@@ -90,6 +88,9 @@ export class ScaleComponent implements OnInit {
       const current = this.sheet.getNumber(this.value.value, defaultValue, true);
       const normal = this.sheet.getNumber(this.value.value, defaultValue);
       return [current < normal ? current : normal, normal, current > normal ? current : normal];
+    } else if (this.viewMode === ViewMode.Edit) {
+      const current = this.sheet.getNumber(this.value.value, defaultValue);
+      return [current < this.originalScore ? current : this.originalScore, this.originalScore, current > this.originalScore ? current : this.originalScore];
     } else {
       const normal = this.sheet.getNumber(this.value.value, defaultValue);
       return [normal, normal, normal];
