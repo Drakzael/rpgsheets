@@ -85,7 +85,7 @@ export class DoubleScaleComponent implements OnInit {
   clickFirst(i: number) {
     if (this.viewMode === ViewMode.Edit ||
       this.viewMode === ViewMode.Play && (this.editor.freeEditFirst || this.editor.freeEditDots)) {
-      if (i === this.scoreFirst) {
+      if (i <= this.scoreFirst) {
         i = this.scoreFirst - 1;
       }
       this.scoreFirst = i;
@@ -98,7 +98,7 @@ export class DoubleScaleComponent implements OnInit {
   clickSecond(i: number) {
     if (this.viewMode === ViewMode.Edit ||
       this.viewMode === ViewMode.Play && (this.editor.freeEditSecond || this.editor.freeEditSquares)) {
-      if (i === this.scoreSecond) {
+      if (i <= this.scoreSecond) {
         i = this.scoreSecond - 1;
       }
       if (!this.editor.overlap && i > this.scoreFirst) {

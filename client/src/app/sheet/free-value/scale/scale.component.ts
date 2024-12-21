@@ -128,7 +128,7 @@ export class ScaleComponent implements OnInit {
       if (!this.rows[index].name) {
         return;
       }
-      if (value === this.rows[index].value) {
+      if (value <= this.rows[index].value) {
         value = this.rows[index].value - 1;
       }
       this.rows[index].value = value;

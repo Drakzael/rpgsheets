@@ -65,7 +65,7 @@ export class SquaresComponent {
   clickBox(i: number) {
     if (this.viewMode === ViewMode.Edit ||
       this.viewMode === ViewMode.Play && this.editor.freeEdit) {
-      if (i === this.score) {
+      if (i <= this.score) {
         i = this.score - 1;
       }
       this.score = i;
