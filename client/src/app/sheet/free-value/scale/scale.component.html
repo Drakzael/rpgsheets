@@ -3,10 +3,7 @@
   <div *ngIf="viewMode === mode.Edit && value.hint"><input class="value" #textInput type="text" (change)="updateRow(row.index, textInput.value)" value="{{ row.name }}" [attr.list]="inputId"/></div>
   <div *ngIf="viewMode === mode.Edit && !value.hint"><input class="value" #textInput type="text" (change)="updateRow(row.index, textInput.value)" value="{{ row.name }}"/></div>
   <div class="values">
-  <ng-container *ngFor="let i of values">
-    <app-icon *ngIf="iconFull" [icon]="i <= row.value ? iconFull! : iconEmpty!"  (click)="clickValue(row.index, i)" class="{{ viewMode === mode.Edit ? 'button' : '' }}"/>
-    <fa-icon *ngIf="!iconFull" [icon]="i <= row.value ? iconDotFill : iconDotEmpty" (click)="clickValue(row.index, i)" class="{{ viewMode === mode.Edit ? 'button' : '' }}"/>
-  </ng-container>
+  <app-icon *ngFor="let i of values" [icon]="i <= row.value ? iconFull : iconEmpty"  (click)="clickValue(row.index, i)" class="{{ viewMode === mode.Edit ? 'button' : '' }}"/>
 </div>
 </div>
 <datalist id="{{ inputId }}" *ngIf="viewMode === mode.Edit && value.hint">

@@ -3,11 +3,9 @@ import { GameMetadata, GameMetadataEditor, GameMetadataFreeValue } from '../../.
 import { Sheet } from '../../../_models/sheet';
 import { ViewMode } from '../../../_models/viewmode';
 import { CommonModule } from '@angular/common';
-import { faCircle as faCircleFull } from '@fortawesome/free-solid-svg-icons';
-import { faCircle as faCircleEmpty } from '@fortawesome/free-regular-svg-icons';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { Icon } from '../../../_models/icon';
 import { IconComponent } from '../../../common/icon/icon.component';
+import { IconDotEmpty, IconDotFull, IconDotMinus, IconDotPlus } from '../../../_icons/dot';
 
 let uniqueId = 0;
 
@@ -16,7 +14,6 @@ let uniqueId = 0;
   standalone: true,
   imports: [
     CommonModule,
-    FontAwesomeModule,
     IconComponent
   ],
   templateUrl: './scale.component.html',
@@ -30,11 +27,10 @@ export class ScaleComponent implements OnInit {
   @Input() viewMode!: ViewMode;
   mode = ViewMode;
 
-  iconDotFill = faCircleFull;
-  iconDotEmpty = faCircleEmpty;
-
-  iconFull?: Icon;
-  iconEmpty?: Icon;
+  iconFull!: Icon;
+  iconEmpty!: Icon;
+  iconPlus!: Icon;
+  iconMinus!: Icon;
 
   editor!: GameMetadataEditor;
   rows!: { name: string, index: number, value: number }[];
@@ -46,8 +42,10 @@ export class ScaleComponent implements OnInit {
     this.editor = this.metadata.editors![this.editorCode];
     this.rows = this.computeRows();
 
-    this.iconEmpty = this.editor.icons?.empty && this.metadata.icons![this.editor.icons?.empty] || undefined;
-    this.iconFull = this.editor.icons?.full && this.metadata.icons![this.editor.icons.full] || undefined;
+    this.iconEmpty = this.editor.icons?.empty && this.metadata.icons![this.editor.icons?.empty] || IconDotEmpty;
+    this.iconFull = this.editor.icons?.full && this.metadata.icons![this.editor.icons.full] || IconDotFull;
+    this.iconPlus = this.editor.icons?.plus && this.metadata.icons![this.editor.icons.plus] || IconDotPlus;
+    this.iconMinus = this.editor.icons?.minus && this.metadata.icons![this.editor.icons.minus] || IconDotMinus;
 
     const onChange = (() => {
       if (this.editor.maxExpr) {

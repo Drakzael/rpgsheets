@@ -25,10 +25,10 @@ export class ScaleComponent implements OnInit {
   @Input() viewMode!: ViewMode;
   mode = ViewMode;
 
-  iconFull?: Icon;
-  iconEmpty?: Icon;
-  iconPlus?: Icon;
-  iconMinus?: Icon;
+  iconFull!: Icon;
+  iconEmpty!: Icon;
+  iconPlus!: Icon;
+  iconMinus!: Icon;
 
   editor!: GameMetadataEditor;
   max!: number;
