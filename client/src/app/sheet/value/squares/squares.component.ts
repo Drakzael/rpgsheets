@@ -66,7 +66,7 @@ export class SquaresComponent {
     if (this.viewMode === ViewMode.Edit ||
       this.viewMode === ViewMode.Play && this.editor.freeEdit) {
       if (i <= this.score) {
-        i = this.score - 1;
+        --i;
       }
       this.score = i;
     }

@@ -33,10 +33,12 @@ export class ScaleComponent implements OnInit {
   iconMinus!: Icon;
 
   editor!: GameMetadataEditor;
-  rows!: { name: string, index: number, value: number }[];
+  rows!: { name: string, index: number, value: number, scores: number[] }[];
   max!: number;
   inputId = `free-dot-input-${uniqueId++}`;
   hints?: string[];
+
+  originalScores!: { [key: string]: number };
 
   ngOnInit(): void {
     this.editor = this.metadata.editors![this.editorCode];
@@ -58,6 +60,19 @@ export class ScaleComponent implements OnInit {
     this.sheet.listenChange(onChange);
     onChange();
     this.updateHint();
+
+    this.originalScores = {};
+    this.rows
+      .filter(row => row.name)
+      .filter(row => row.value)
+      .forEach(row => this.originalScores[row.name] = row.value);
+  }
+
+  getOriginalScore(name: string) {
+    if (this.originalScores[name] === undefined) {
+      return 0;
+    }
+    return this.originalScores[name];
   }
 
   get prefix() {
@@ -71,13 +86,13 @@ export class ScaleComponent implements OnInit {
   computeRows() {
     this.cleanRows();
     const rows = this.sheet.getNumbersStartingWith(this.prefix)
-      .map((value, index) => ({ name: value.key.substring(this.prefix.length), index, value: value.value }));
+      .map((value, index) => ({ name: value.key.substring(this.prefix.length), index, value: value.value, scores: [value.value, value.value, value.value] }));
     if (rows.length < this.value.defaultCount - 1) {
       for (let i = rows.length; i < this.value.defaultCount; ++i) {
-        rows.push({ name: "", index: rows.length, value: 0 });
+        rows.push({ name: "", index: rows.length, value: 0, scores: [0, 0, 0] });
       }
     } else {
-      rows.push({ name: "", index: rows.length, value: 0 });
+      rows.push({ name: "", index: rows.length, value: 0, scores: [0, 0, 0] });
     }
     return rows;
   }
@@ -97,7 +112,7 @@ export class ScaleComponent implements OnInit {
     this.rows[index].name = text;
 
     if (text && index === this.rows.length - 1) { // if non empty text on last row, add new row
-      this.rows.push({ name: "", index: this.rows.length, value: 0 });
+      this.rows.push({ name: "", index: this.rows.length, value: 0, scores: [0, 0, 0] });
     }
     // remove additionnal rows
     for (let i = this.rows.length - 1; i >= this.value.defaultCount && !this.rows[i].name && !this.rows[i - 1].name; --i) {
@@ -127,9 +142,11 @@ export class ScaleComponent implements OnInit {
         return;
       }
       if (value <= this.rows[index].value) {
-        value = this.rows[index].value - 1;
+        --value;
       }
       this.rows[index].value = value;
+      const originalScore = this.getOriginalScore(this.rows[index].name);
+      this.rows[index].scores = [value < originalScore ? value : originalScore, originalScore, value > originalScore ? value : originalScore];
       this.sheet.setNumber(`${this.prefix}${this.rows[index].name}`, value);
     }
   }

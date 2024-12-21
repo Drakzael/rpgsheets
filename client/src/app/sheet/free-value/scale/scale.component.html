@@ -3,7 +3,7 @@
   <div *ngIf="viewMode === mode.Edit && value.hint"><input class="value" #textInput type="text" (change)="updateRow(row.index, textInput.value)" value="{{ row.name }}" [attr.list]="inputId"/></div>
   <div *ngIf="viewMode === mode.Edit && !value.hint"><input class="value" #textInput type="text" (change)="updateRow(row.index, textInput.value)" value="{{ row.name }}"/></div>
   <div class="values">
-  <app-icon *ngFor="let i of values" [icon]="i <= row.value ? iconFull : iconEmpty"  (click)="clickValue(row.index, i)" class="{{ viewMode === mode.Edit ? 'button' : '' }}"/>
+  <app-icon *ngFor="let i of values" [icon]="i <= row.scores[0] ? iconFull : i <= row.scores[1] ? iconMinus : i <= row.scores[2] ? iconPlus : iconEmpty"  (click)="clickValue(row.index, i)" class="{{ viewMode === mode.Edit ? 'button' : '' }}"/>
 </div>
 </div>
 <datalist id="{{ inputId }}" *ngIf="viewMode === mode.Edit && value.hint">
