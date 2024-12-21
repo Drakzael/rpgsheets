@@ -8,6 +8,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ViewMode } from '../../../_models/viewmode';
 import { Icon } from '../../../_models/icon';
 import { IconComponent } from '../../../common/icon/icon.component';
+import { IconDotEmpty, IconDotFull, IconDotMinus, IconDotPlus } from '../../../_icons/dot';
+import { IconSquareCrossed, IconSquareEmpty } from '../../../_icons/square';
 
 @Component({
   selector: 'app-double-scale',
@@ -36,19 +38,51 @@ export class DoubleScaleComponent implements OnInit {
   iconSquareFill = faSquareFull;
   iconSquareEmpty = faSquareEmpty;
 
-  iconFirstFull?: Icon;
-  iconFirstEmpty?: Icon;
-  iconSecondFull?: Icon;
-  iconSecondEmpty?: Icon;
+  iconFirstFull!: Icon;
+  iconFirstEmpty!: Icon;
+  iconFirstPlus!: Icon;
+  iconFirstMinus!: Icon;
+  iconSecondFull!: Icon;
+  iconSecondEmpty!: Icon;
+  iconSecondPlus!: Icon;
+  iconSecondMinus!: Icon;
+
+  originalScoreFirst!: number;
+  originalScoreSecond!: number;
 
   ngOnInit(): void {
     this.editor = this.metadata.editors![this.editorCode];
     this.values = Array(this.editor.max).fill(0).map((_, i) => i + 1);
 
-    this.iconFirstEmpty = this.editor.icons?.firstEmpty && this.metadata.icons![this.editor.icons?.firstEmpty] || undefined;
-    this.iconFirstFull = this.editor.icons?.firstFull && this.metadata.icons![this.editor.icons?.firstFull] || undefined;
-    this.iconSecondEmpty = this.editor.icons?.secondEmpty && this.metadata.icons![this.editor.icons?.secondEmpty] || undefined;
-    this.iconSecondFull = this.editor.icons?.secondFull && this.metadata.icons![this.editor.icons?.secondFull] || undefined;
+    this.iconFirstEmpty = this.editor.icons?.firstEmpty && this.metadata.icons![this.editor.icons?.firstEmpty] || IconDotEmpty;
+    this.iconFirstFull = this.editor.icons?.firstFull && this.metadata.icons![this.editor.icons?.firstFull] || IconDotFull;
+    this.iconFirstPlus = this.editor.icons?.firstPlus && this.metadata.icons![this.editor.icons.firstPlus] || IconDotPlus;
+    this.iconFirstMinus = this.editor.icons?.firstMinus && this.metadata.icons![this.editor.icons.firstMinus] || IconDotMinus;
+    this.iconSecondEmpty = this.editor.icons?.secondEmpty && this.metadata.icons![this.editor.icons?.secondEmpty] || IconSquareEmpty;
+    this.iconSecondFull = this.editor.icons?.secondFull && this.metadata.icons![this.editor.icons?.secondFull] || IconSquareCrossed;
+    this.iconSecondPlus = this.editor.icons?.secondPlus && this.metadata.icons![this.editor.icons.secondPlus] || this.iconSecondFull;
+    this.iconSecondMinus = this.editor.icons?.secondMinus && this.metadata.icons![this.editor.icons.secondMinus] || this.iconSecondEmpty;
+
+    this.originalScoreFirst = this.scoreFirst;
+    this.originalScoreSecond = this.scoreSecond;
+  }
+
+  getScores(value: string) {
+    const scores = (current: number, original = current) => [
+      current < original ? current : original,
+      original,
+      current > original ? current : original
+    ];
+    const defaultValue = this.editor.defaultValue as number || this.editor.min || 0;
+    const baseValue = this.sheet.getNumber(value, defaultValue);
+    const modifiedValue = this.sheet.getNumber(value, defaultValue, true);
+    if (this.viewMode === ViewMode.Play) {
+      return scores(modifiedValue, baseValue);
+    } else if (this.viewMode === ViewMode.Edit) {
+      return scores(baseValue, this.originalScoreFirst);;
+    } else {
+      return scores(baseValue);
+    }
   }
 
   get scoreFirst(): number {
@@ -57,8 +91,16 @@ export class DoubleScaleComponent implements OnInit {
       0;
   }
 
+  get scoresFirst(): number[] {
+    return this.getScores(this.firstValueName());
+  }
+
   set scoreFirst(i: number) {
     this.sheet.setNumber(this.firstValueName(), Math.max(this.editor.min || 0, i));
+  }
+
+  get scoresSecond(): number[] {
+    return this.getScores(this.secondValueName());
   }
 
   get scoreSecond(): number {

@@ -2,16 +2,10 @@
   <div class="name" *ngIf="value.name">{{ value.name }}</div>
   <div class="values">
     <div class="first {{ viewMode === mode.Dice ? 'dice' : '' }}">
-      <ng-container *ngFor="let i of values">
-        <app-icon *ngIf="iconFirstFull && iconFirstEmpty" [icon]="i <= scoreFirst ? iconFirstFull! : iconFirstEmpty!" (click)="clickFirst(i)" class="{{ viewMode === mode.Edit ? 'button' : '' }}"/>
-        <fa-icon *ngIf="!(iconFirstFull && iconFirstEmpty)" [icon]="i <= scoreFirst ? iconDotFill : iconDotEmpty" (click)="clickFirst(i)" class="{{ viewMode === mode.Edit ? 'button' : '' }}"/>
-    </ng-container>
-  </div>
+      <app-icon *ngFor="let i of values" [icon]="i <= scoresFirst[0] ? iconFirstFull : i <= scoresFirst[1] ? iconFirstMinus : i <= scoresFirst[2] ? iconFirstPlus : iconFirstEmpty" (click)="clickFirst(i)" class="{{ viewMode === mode.Edit ? 'button' : '' }}"/>
+    </div>
     <div class="second {{ viewMode === mode.Dice ? 'dice' : '' }}">
-      <ng-container *ngFor="let i of values">
-        <app-icon *ngIf="iconSecondFull && iconSecondEmpty" [icon]="i <= scoreSecond ? iconSecondFull! : iconSecondEmpty!" (click)="clickSecond(i)" class="{{ viewMode === mode.Edit ? 'button' : '' }}"/>
-        <fa-icon *ngIf="!(iconSecondFull && iconSecondEmpty)" [icon]="i <= scoreSecond ? iconSquareFill : iconSquareEmpty" (click)="clickSecond(i)" class="{{ viewMode === mode.Edit ? 'button' : '' }}"/>
-      </ng-container>
+      <app-icon *ngFor="let i of values" [icon]="i <= scoresSecond[0] ? iconSecondFull : i <= scoresSecond[1] ? iconSecondMinus : i <= scoresSecond[2] ? iconSecondPlus : iconSecondEmpty" (click)="clickSecond(i)" class="{{ viewMode === mode.Edit ? 'button' : '' }}"/>
     </div>
   </div>
 </div>

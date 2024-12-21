@@ -26,8 +26,12 @@ export class GameMetadataEditor {
     minus?: string,
     firstEmpty?: string,
     firstFull?: string,
+    firstPlus?: string,
+    firstMinus?: string,
     secondEmpty?: string,
     secondFull?: string
+    secondPlus?: string,
+    secondMinus?: string,
   };
 }
 
