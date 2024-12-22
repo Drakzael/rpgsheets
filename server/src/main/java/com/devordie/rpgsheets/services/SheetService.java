@@ -81,7 +81,15 @@ public class SheetService {
   }
 
   public boolean isWritable(Sheet sheet) {
-    return sheet != null && sheet.getUsername().equals(userService.getCurrentUser().getUsername());
+    if (sheet == null) {
+      return false;
+    }
+    if (sheet.getUsername().equals(userService.getCurrentUser().getUsername())) {
+      return true;
+    }
+    return campainRepository.listAllCampains().stream()
+        .filter(campain -> campain.getUsername().equals(userService.getCurrentUser().getUsername()))
+        .anyMatch(campain -> campain.getSheetIds().contains(sheet.getId()));
   }
 
   public boolean isDeletable(String sheetId) {
