@@ -3,7 +3,7 @@
   <button *ngIf="campain?.writable && viewMode === mode.View" (click)="edit()" title="Editer"><fa-icon [icon]="iconEdit"/></button>
   <button *ngIf="campain?.deletable && viewMode === mode.View" (click)="delete()"><fa-icon [icon]="iconDelete" title="Supprimer"/></button>
   <button *ngIf="campain?.deletable && viewMode === mode.Delete" (click)="delete()" class="delete"><fa-icon [icon]="iconDelete" title="Supprimer"/></button>
-  <button *ngIf="campain?.writable && (viewMode === mode.Edit || viewMode === mode.Delete)" (click)="cancel()"><fa-icon [icon]="iconCancel" title="Annuler"/></button>
+  <button *ngIf="campainId && campain?.writable && (viewMode === mode.Edit || viewMode === mode.Delete)" (click)="cancel()"><fa-icon [icon]="iconCancel" title="Annuler"/></button>
 </div>
 <div *ngIf="viewMode !== mode.Edit" class="campain">
   <div class="name">{{ campain?.name }}</div>

@@ -57,6 +57,8 @@ export class CampainComponent implements OnInit {
 
   prepareNewCampain() {
     this.campain = new Campain();
+    this.campain.writable = true;
+    this.campain.deletable = false;
     this.campain.sheets = [];
     this.campain.gmDescription = "";
     this.viewMode = ViewMode.Edit;
