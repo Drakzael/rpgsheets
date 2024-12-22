@@ -2,13 +2,13 @@
   "name": "Vampire d'Orient",
   "code": "kueijin",
   "editors": {
-    "attribute": { "type": "dots", "min": 1, "max": 6 },
-    "ability": { "type": "dots", "max": 6 },
-    "background": { "type": "dots", "max": 6 },
-    "discipline": { "type": "dots", "max": 6 },
-    "willpower": { "type": "dots_squares", "max": 10, "overlap": false, "freeEditSquares": true },
+    "attribute": { "type": "scale", "min": 1, "max": 6 },
+    "ability": { "type": "scale", "max": 6 },
+    "background": { "type": "scale", "max": 6 },
+    "discipline": { "type": "scale", "max": 6 },
+    "willpower": { "type": "doubleScale", "max": 10, "overlap": false, "freeEditSquares": true },
     "ki": { "type": "squares", "max": 10, "freeEdit": true },
-    "path": { "type": "dots", "max": 10 },
+    "path": { "type": "scale", "max": 10 },
     "health": {
       "type": "health",
       "values": [

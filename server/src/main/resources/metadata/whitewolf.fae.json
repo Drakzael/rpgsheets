@@ -2,11 +2,11 @@
   "name": "Fée",
   "code": "whitewolf.fae",
   "editors": {
-    "attribute": { "type": "dots", "min": 1, "max": 6 },
-    "ability": { "type": "dots", "min": 0, "max": 5 },
-    "dominion": { "type": "dots", "max": 5 },
-    "background": { "type": "dots", "max": 5 },
-    "willpower": { "type": "dots_squares", "max": 10, "overlap": false, "freeEditSquares": true },
+    "attribute": { "type": "scale", "min": 1, "max": 6 },
+    "ability": { "type": "scale", "min": 0, "max": 5 },
+    "dominion": { "type": "scale", "max": 5 },
+    "background": { "type": "scale", "max": 5 },
+    "willpower": { "type": "doubleScale", "max": 10, "overlap": false, "freeEditSquares": true },
     "health": {
       "type": "health",
       "values": [
