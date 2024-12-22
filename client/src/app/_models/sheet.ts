@@ -175,10 +175,10 @@ export class Sheet {
 
   public format(text: string) {
     return text?.replaceAll("<", "&lt;").replaceAll(">", "&gt;")
-    .replaceAll(/-([a-zA-Z0-9 ]+?)-/g, "<strike>$1</strike>")
-    .replaceAll(/\/([a-zA-Z0-9 ]+?)\//g, "<i>$1</i>")
-    .replaceAll(/_([a-zA-Z0-9 ]+?)_/g, "<u>$1</u>")
-    .replaceAll(/\*([a-zA-Z0-9 ]+?)\*/g, "<b>$1</b>");
+    .replaceAll(/--(.+?)--/g, "<strike>$1</strike>")
+    .replaceAll(/\/\/(.+?)\/\//g, "<i>$1</i>")
+    .replaceAll(/__(.+?)__/g, "<u>$1</u>")
+    .replaceAll(/\*\*(.+?)\*\*/g, "<b>$1</b>");
   }
 
   hasNumber(code: string): boolean {
