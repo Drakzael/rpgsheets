@@ -39,6 +39,14 @@ export class MenuComponent implements OnInit {
     return this.campainService.campains;
   }
 
+  get gmCampains() {
+    return this.campains.filter(campain => campain.mine);
+  }
+
+  get playerCampains() {
+    return this.campains.filter(campain => !campain.mine);
+  }
+
   constructor(
     private accountService: AccountService,
     private sheetService: SheetService,

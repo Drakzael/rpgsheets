@@ -8,4 +8,5 @@ export class Campain {
   sheets!: SheetOverview[];
   writable!: boolean;
   deletable!: boolean;
+  mine!: boolean;
 }

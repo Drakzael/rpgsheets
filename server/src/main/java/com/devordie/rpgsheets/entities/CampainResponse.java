@@ -14,6 +14,7 @@ public class CampainResponse {
   private List<SheetOverviewResponse> sheets = new ArrayList<>();
   private boolean writable;
   private boolean deletable;
+  private boolean mine;
 
   public String getId() {
     return id;
@@ -79,6 +80,15 @@ public class CampainResponse {
 
   public CampainResponse setDeletable(boolean deletable) {
     this.deletable = deletable;
+    return this;
+  }
+
+  public boolean isMine() {
+    return mine;
+  }
+
+  public CampainResponse setMine(boolean mine) {
+    this.mine = mine;
     return this;
   }
 }
