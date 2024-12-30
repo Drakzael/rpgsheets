@@ -74,7 +74,7 @@ export class ScaleComponent implements OnInit {
   }
 
   get score(): number {
-    const defaultValue = this.editor.defaultValue as number || this.editor.min || 0;
+      const defaultValue = this.editor.defaultValue as number || this.editor.min || 0;
     if (this.viewMode === ViewMode.Play) {
       return this.sheet.getNumber(this.value.value, defaultValue, true);
     } else {

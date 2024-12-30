@@ -136,41 +136,42 @@ export class Sheet {
     return this._states[group] === undefined ? defaultState : this._states[group].value === value;
   }
 
-  public resolve(code: string) {
-    if (code.startsWith("${") && code.endsWith("}")) {
-      let expr = code.substring(2, code.length - 1);
-      expr.match(/\$[a-zA-Z0-9\.]+/g)?.forEach(match => {
-        const valueCode = match.substring(1);
-        if (!this.impactValues.includes(valueCode)) {
-          this.impactValues.push(valueCode);
+  public resolve(code: string | number): any {
+    if (typeof(code) === "string") {
+      if (code.startsWith("${") && code.endsWith("}")) {
+        let expr = code.substring(2, code.length - 1);
+        expr.match(/\$[a-zA-Z0-9\.]+/g)?.forEach(match => {
+          const valueCode = match.substring(1);
+          if (!this.impactValues.includes(valueCode)) {
+            this.impactValues.push(valueCode);
+          }
+          if (this.numericValues[valueCode] !== undefined) {
+            expr = expr.replace(`${match}`, this.stringValues[valueCode].toString());
+          } else if (this.stringValues[valueCode] !== undefined) {
+            expr = expr.replace(`${match}`, `"${this.stringValues[valueCode]}"`);
+          } else {
+            expr = expr.replace(`${match}`, "''");
+          }
+        });
+        expr.match(/@[a-zA-Z0-9\.]+/g)?.forEach(match => {
+          const valueCode = match.substring(1);
+          expr = expr.replace(`${match}`, `values[${valueCode}]`);
+        });
+        // expr = transpile(expr);
+        return window.eval(expr);
+      } else if (code.startsWith("$")) {
+        switch (code) {
+          case "$sheet.name":
+            return this.name;
+          case "$sheet.player":
+            return this.playerName;
+          default:
+            const valueCode = code.substring(1);
+            return this.numericValues[valueCode]?.toString() || this.stringValues[valueCode] || "";
         }
-        if (this.numericValues[valueCode] !== undefined) {
-          expr = expr.replace(`${match}`, this.stringValues[valueCode].toString());
-        } else if (this.stringValues[valueCode] !== undefined) {
-          expr = expr.replace(`${match}`, `"${this.stringValues[valueCode]}"`);
-        } else {
-          expr = expr.replace(`${match}`, "''");
-        }
-      });
-      expr.match(/@[a-zA-Z0-9\.]+/g)?.forEach(match => {
-        const valueCode = match.substring(1);
-        expr = expr.replace(`${match}`, `values[${valueCode}]`);
-      });
-      // expr = transpile(expr);
-      return window.eval(expr);
-    } else if (code.startsWith("$")) {
-      switch (code) {
-        case "$sheet.name":
-          return this.name;
-        case "$sheet.player":
-          return this.playerName;
-        default:
-          const valueCode = code.substring(1);
-          return this.numericValues[valueCode]?.toString() || this.stringValues[valueCode] || "";
       }
-    } else {
-      return code;
     }
+    return code;
   }
 
   public format(text: string) {
@@ -185,7 +186,10 @@ export class Sheet {
     return this.numericValues[code] !== undefined;
   }
 
-  getNumber(code: string, defaultValue = 0, withTmp = false): number {
+  getNumber(code: string | number, defaultValue = 0, withTmp = false): number {
+    if (typeof(code) === "number") {
+      return code as number;
+    }
     let value = code.startsWith("$")
       ? this.resolve(code) as number
       : this.numericValues[code];

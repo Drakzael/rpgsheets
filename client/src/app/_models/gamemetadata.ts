@@ -53,6 +53,7 @@ export class GameMetadataValue {
   mode?: string[]; // value limited to modes
   editor?: ValueType; // value, freeValue
   value!: string; // value
+  defaultValue?: number | string;
   values!: string[]; // value.dots_squares
   nameValue!: string; // value (code for modifying name)
   hint?: string[]; // text

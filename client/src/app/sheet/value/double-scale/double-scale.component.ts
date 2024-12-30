@@ -67,13 +67,18 @@ export class DoubleScaleComponent implements OnInit {
     this.originalScoreSecond = this.scoreSecond;
   }
 
-  getScores(value: string) {
+  getScores(index: 0 | 1) {
+    const value = index === 0 ? this.firstValueName() : this.secondValueName();
     const scores = (current: number, original = current) => [
       current < original ? current : original,
       original,
       current > original ? current : original
     ];
-    const defaultValue = this.editor.defaultValue as number || this.editor.min || 0;
+    let valueDefault = undefined;
+    if (this.value.defaultValue) {
+      valueDefault = (this.sheet.resolve(this.value.defaultValue) as number[])[index];
+    }
+    const defaultValue = valueDefault || this.editor.defaultValue as number || this.editor.min || 0;
     const baseValue = this.sheet.getNumber(value, defaultValue);
     const modifiedValue = this.sheet.getNumber(value, defaultValue, true);
     if (this.viewMode === ViewMode.Play) {
@@ -92,7 +97,7 @@ export class DoubleScaleComponent implements OnInit {
   }
 
   get scoresFirst(): number[] {
-    return this.getScores(this.firstValueName());
+    return this.getScores(0);
   }
 
   set scoreFirst(i: number) {
@@ -100,7 +105,7 @@ export class DoubleScaleComponent implements OnInit {
   }
 
   get scoresSecond(): number[] {
-    return this.getScores(this.secondValueName());
+    return this.getScores(1);
   }
 
   get scoreSecond(): number {
