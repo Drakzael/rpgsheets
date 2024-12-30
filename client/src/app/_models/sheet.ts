@@ -146,16 +146,12 @@ export class Sheet {
             this.impactValues.push(valueCode);
           }
           if (this.numericValues[valueCode] !== undefined) {
-            expr = expr.replace(`${match}`, this.stringValues[valueCode].toString());
+            expr = expr.replace(`${match}`, this.numericValues[valueCode].toString());
           } else if (this.stringValues[valueCode] !== undefined) {
             expr = expr.replace(`${match}`, `"${this.stringValues[valueCode]}"`);
           } else {
             expr = expr.replace(`${match}`, "''");
           }
-        });
-        expr.match(/@[a-zA-Z0-9\.]+/g)?.forEach(match => {
-          const valueCode = match.substring(1);
-          expr = expr.replace(`${match}`, `values[${valueCode}]`);
         });
         // expr = transpile(expr);
         return window.eval(expr);

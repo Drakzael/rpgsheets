@@ -84,7 +84,7 @@ export class DoubleScaleComponent implements OnInit {
     if (this.viewMode === ViewMode.Play) {
       return scores(modifiedValue, baseValue);
     } else if (this.viewMode === ViewMode.Edit) {
-      return scores(baseValue, this.originalScoreFirst);;
+      return scores(baseValue, this.originalScoreFirst);
     } else {
       return scores(baseValue);
     }

@@ -83,7 +83,11 @@ export class ScaleComponent implements OnInit {
   }
 
   get scores(): number[] {
-    const defaultValue = this.editor.defaultValue as number || this.editor.min || 0;
+    let valueDefault = undefined;
+    if (this.value.defaultValue) {
+      valueDefault = (this.sheet.resolve(this.value.defaultValue) as number);
+    }
+    const defaultValue = valueDefault || this.editor.defaultValue as number || this.editor.min || 0;
     if (this.viewMode === ViewMode.Play) {
       const current = this.sheet.getNumber(this.value.value, defaultValue, true);
       const normal = this.sheet.getNumber(this.value.value, defaultValue);
