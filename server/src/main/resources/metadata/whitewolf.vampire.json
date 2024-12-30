@@ -203,10 +203,10 @@
       "rows": [
         { "type": "title", "name": "Voie" },
         { "type": "value", "editor": "text", "value": "path.path" },
-        { "type": "value", "editor": "path", "value": "path.score" },
+        { "type": "value", "editor": "path", "value": "path.score", "defaultValue": "${ $virtue.conscience.value + $virtue.instinct.value }" },
         { "type": "spacer" },
         { "type": "title", "name": "Volonté" },
-        { "type": "value", "editor": "willpower", "values": ["willpower.max", "willpower.current"] },
+        { "type": "value", "editor": "willpower", "values": ["willpower.max", "willpower.current"], "defaultValue": "${ [ $virtue.courage.value, 0 ] }" },
         { "type": "spacer" },
         { "type": "title", "name": "Points de Sang", "nameExpr": "${ let blood = 1; switch (Number($general.generation)) { case 4: blood = 10; break; case 5: blood = 8; break; case 6: blood = 6; break; case 7: blood = 4; break; case 8: blood = 3; break; case 9: blood = 2; break; default: break; } 'Points de Sang (max ' + blood + ' / tour)'; }" },
         { "type": "value", "editor": "blood", "value": "blood.value" }

@@ -56,8 +56,8 @@
     }, {
       "rows": [
         { "name": "Lignée", "value": "general.breed", "hint": [ "Homidé", "Lupus", "Métis" ] },
-        { "name": "Auspice", "value": "general.auspice" },
-        { "name": "Tribu", "value": "general.tribe" }
+        { "name": "Auspice", "value": "general.auspice", "hint": [ "Ragabash", "Théurge", "Philodoxe", "Gaillard", "Arhoun" ] },
+        { "name": "Tribu", "value": "general.tribe", "hint": [ "Furie Noire", "Rongeur d'Os", "Enfant de Gaïa", "Fianna", "Fenrir", "Griffe Rouge", "Seigneur des Ombres", "Arpenteur Silencieux", "Croc d'Argent", "Gardien" ] }
       ]
     }, {
       "rows": [
@@ -165,9 +165,9 @@
       "title": "Renom",
       "defaultType": "renown",
       "rows": [
-        { "name": "Gloire", "values": ["renown.glory_perma", "renown.glory_tmp"] },
-        { "name": "Honneur", "values": ["renown.honor_perma", "renown.honor_tmp"] },
-        { "name": "Sagesse", "values": ["renown.wisdom_perma", "renown.wisdom_tmp"] },
+        { "name": "Gloire", "values": ["renown.glory_perma", "renown.glory_tmp"], "defaultValue": "${ let max; switch ($general.auspice) { case 'Ragabash': max = 0; break; case 'Gaillard': max = 2; break; case 'Arhoun': max = 2; break; default: max = 0; break; } [ max, 0 ]; }" },
+        { "name": "Honneur", "values": ["renown.honor_perma", "renown.honor_tmp"], "defaultValue": "${ let max; switch ($general.auspice) { case 'Ragabash': max = 0; break; case 'Philodoxe': max = 3; break; case 'Arhoun': max = 1; break; default: max = 0; break; } [ max, 0 ]; }" },
+        { "name": "Sagesse", "values": ["renown.wisdom_perma", "renown.wisdom_tmp"], "defaultValue": "${ let max; switch ($general.auspice) { case 'Ragabash': max = 0; break; case 'Théurge': max = 3; break; case 'Gaillard': max = 1; break; break; default: max = 0; break; } [ max, 0 ]; }" },
         { "type": "spacer" },
         { "name": "Rang", "editor": "number", "value": "renown.rank" }
       ]
@@ -175,13 +175,13 @@
       "defaultType": "willpower",
       "rows": [
         { "type": "title", "name": "Rage" },
-        { "values": ["rage.max", "rage.current"]},
+        { "values": ["rage.max", "rage.current"], "defaultValue": "${ let max; switch ($general.auspice) { case 'Ragabash': max = 1; break; case 'Théurge': max = 2; break; case 'Philodoxe': max = 3; break; case 'Gaillard': max = 4; break; case 'Arhoun': max = 5; break; default: max = 0; break; } [ max, 0 ]; }"},
         { "type": "spacer" },
         { "type": "title", "name": "Gnose" },
-        { "values": ["gnosis.max", "gnosis.current"]},
+        { "values": ["gnosis.max", "gnosis.current"], "defaultValue": "${ let max; switch ($general.breed) { case 'Homidé': max = 1; break; case 'Lupus': max = 5; break; case 'Métis': max = 3; break; default: max = 0; break; } [ max, 0 ]; }"},
         { "type": "spacer" },
         { "type": "title", "name": "Volonté" },
-        { "values": ["willpower.max", "willpower.current"]}
+        { "values": ["willpower.max", "willpower.current"], "defaultValue": "${ let max; switch ($general.tribe) { case 'Furie Noire': max = 3; break; case \"Rongeur d'Os\": max = 4; break; case 'Enfant de Gaïa': max = 4; break; case 'Fianna': max = 3; break; case 'Fenrir': max = 3; break; case 'Griffe Rouge': max = 3; break; case 'Seigneur des Ombres': max = 3; break; case 'Arpenteur Silencieux': max = 3; break; case \"Croc d'Argent\": max = 4; break; case 'Gardien': max = 3; break; default: max = 0; break; } [ max, 0 ]; }"}
       ]
     }, {
       "rows": [

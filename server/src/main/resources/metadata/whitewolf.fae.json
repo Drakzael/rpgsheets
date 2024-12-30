@@ -50,7 +50,7 @@
     }, {
       "rows": [
         { "name": "Court", "value": "general.court", "hint": [ "Printemps", "Eté", "Automne", "Hivers", "Solstice" ] },
-        { "name": "Naissance", "value": "general.origin", "defaultValue": [ "Vraie Fée", "Changelin", "Elementaire" ] },
+        { "name": "Naissance", "value": "general.origin", "hint": [ "Vraie Fée", "Changelin", "Elémentaire" ] },
         { "name": "Agenda", "value": "general.agenda" }
       ]
     }]
@@ -183,13 +183,13 @@
       "defaultType": "willpower",
       "rows": [
         { "type": "title", "name": "Volonté" },
-        { "type": "value", "values": ["willpower.max", "willpower.current"] },
+        { "type": "value", "values": ["willpower.max", "willpower.current"], "defaultValue": [ 4, 0 ] },
         { "type": "spacer" },
         { "type": "title", "name": "/Mist/" },
-        { "type": "value", "values": ["mist.max", "mist.current"] },
+        { "type": "value", "values": ["mist.max", "mist.current"], "defaultValue": "${ let max; switch ($general.origin) { case 'Vraie Fée': max = 4; break; case 'Changelin': max = 2; break; case 'Elémentaire': max = 3; break; default: max = 0; break; } [ max, 0 ]; }" },
         { "type": "spacer" },
         { "type": "title", "name": "/Weaving/" },
-        { "type": "value", "values": ["weaving.max", "weaving.current"] }
+        { "type": "value", "values": ["weaving.max", "weaving.current"], "defaultValue": "${ let max; switch ($general.origin) { case 'Vraie Fée': max = 2; break; case 'Changelin': max = 4; break; case 'Elémentaire': max = 3; break; default: max = 0; break; } [ max, 0 ]; }" }
       ]
     }, {
       "rows": [
