@@ -53,6 +53,7 @@ public class CampainController {
             .map(sheet -> new SheetOverviewResponse()
                 .setName(sheet.getName())
                 .setId(sheet.getId())
+                .setGame(sheet.getGame())
                 .setMine(sheet.getUsername().equals(userService.getCurrentUser().getUsername())))
             .toList());
     if (campain.getUsername().equals(userService.getCurrentUser().getUsername())) {
@@ -75,6 +76,7 @@ public class CampainController {
                 .map(sheet -> new SheetOverviewResponse()
                     .setName(sheet.getName())
                     .setId(sheet.getId())
+                    .setGame(sheet.getGame())
                     .setMine(sheet.getUsername().equals(userService.getCurrentUser().getUsername())))
                 .toList()))
         .toList();
