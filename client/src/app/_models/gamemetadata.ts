@@ -93,6 +93,7 @@ export class GameMetadataRow {
 export class GameMetadata {
   name!: string;
   code!: string;
+  icon?: string;
   modes?: { name: string, code: string }[];
   editors?: { [key: string] : GameMetadataEditor };
   gridRows!: GameMetadataRow[];
@@ -102,5 +103,6 @@ export class GameMetadata {
 export class GameMetadataOverview {
   code!: string;
   name!: string;
+  icon?: Icon;
   deprecated?: boolean;
 }

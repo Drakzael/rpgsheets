@@ -7,6 +7,8 @@ import { faUser, faSignOut, faUsers, faImage, faImagePortrait, faPlus, faWarning
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CampainService } from '../_services/campain.service';
 import { Role, User } from '../_models/user';
+import { GameMetadataOverview } from '../_models/gamemetadata';
+import { IconComponent } from '../common/icon/icon.component';
 
 @Component({
   selector: 'app-menu',
@@ -14,7 +16,8 @@ import { Role, User } from '../_models/user';
   imports: [
     CommonModule,
     RouterLink,
-    FontAwesomeModule
+    FontAwesomeModule,
+    IconComponent
   ],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.scss'
@@ -22,6 +25,7 @@ import { Role, User } from '../_models/user';
 export class MenuComponent implements OnInit {
 
   me?: User | null;
+  metadata!: {[key: string]: GameMetadataOverview };
   iconUser = faUser;
   iconUsers = faUsers;
   iconLogout = faSignOut;
@@ -53,6 +57,10 @@ export class MenuComponent implements OnInit {
     private campainService: CampainService
   ) {
     this.accountService.me.subscribe(me => this.me = me);
+    this.sheetService.listMetadata().subscribe(metadata => {
+      this.metadata = {};
+      metadata.forEach(game => this.metadata[game.code] = game);
+    });
   }
 
   ngOnInit(): void {

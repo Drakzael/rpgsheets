@@ -249,5 +249,6 @@ export class SheetOverview {
   id!: string;
   name!: string;
   mine?: boolean;
+  game?: string;
   deprecated?: boolean;
 }

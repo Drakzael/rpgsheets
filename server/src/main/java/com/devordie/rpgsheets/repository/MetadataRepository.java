@@ -17,6 +17,7 @@ import java.util.stream.Stream;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.devordie.rpgsheets.entities.Icon;
 import com.devordie.rpgsheets.entities.MetadataOverview;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -135,7 +136,14 @@ public class MetadataRepository {
 
   public List<MetadataOverview> listAllMetadata() {
     return getMetadata().stream()
-        .map(json -> MAPPER.convertValue(json, MetadataOverview.class))
+        .map(json -> {
+          final String name = json.get("name").asText();
+          final String code = json.get("code").asText();
+          final String iconCode = json.has("icon") ? json.get("icon").asText() : null;
+          final Icon icon = iconCode == null ? null : MAPPER.convertValue(json.get("icons").get(iconCode), Icon.class);
+          final boolean deprecated = json.has("deprecated") ? json.get("deprecated").asBoolean() : false;
+          return new MetadataOverview(name, code, icon, deprecated);
+        })
         .toList();
   }
 

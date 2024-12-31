@@ -69,7 +69,8 @@ public class SheetController {
         .map(sheet -> {
           SheetOverviewResponse res = new SheetOverviewResponse()
               .setName(sheet.getName())
-              .setId(sheet.getId());
+              .setId(sheet.getId())
+              .setGame(sheet.getGame());
           if (metadataService.getMetadataOverview(sheet.getGame()).deprecated()) {
             res.setDeprecated(true);
           }
