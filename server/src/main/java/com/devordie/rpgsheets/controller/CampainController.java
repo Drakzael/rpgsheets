@@ -68,6 +68,7 @@ public class CampainController {
         .map(campain -> new CampainResponse()
             .setId(campain.getId())
             .setName(campain.getName())
+            .setGmName(userService.findByUsername(campain.getUsername()).getAlias())
             .setMine(campain.getUsername().equals(userService.getCurrentUser().getUsername()))
             .setSheets(campain.getSheetIds().stream()
                 .map(sheetId -> this.sheetService.getSheet(sheetId))

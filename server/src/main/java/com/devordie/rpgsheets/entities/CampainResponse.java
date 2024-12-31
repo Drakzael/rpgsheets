@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 public class CampainResponse {
   private String id;
   private String name;
+  private String gmName;
   private String description;
   private String gmDescription;
   private List<SheetOverviewResponse> sheets = new ArrayList<>();
@@ -89,6 +90,15 @@ public class CampainResponse {
 
   public CampainResponse setMine(boolean mine) {
     this.mine = mine;
+    return this;
+  }
+
+  public String getGmName() {
+    return this.gmName;
+  }
+
+  public CampainResponse setGmName(String gmName) {
+    this.gmName = gmName;
     return this;
   }
 }

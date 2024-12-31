@@ -19,9 +19,26 @@ nav {
   margin-top: 1em;
 }
 
+.sheets .title {
+  display: grid;
+  grid-template-columns: max-content auto max-content;
+  column-gap: 0.3em;
+}
+
 .mine {
   font-style: italic;
   color: #555;
+}
+
+.campainName {
+  display: inline;
+  text-decoration: underline;
+}
+
+.gmName {
+  display: inline;
+  margin-left: 0.3em;
+  font-style: italic;
 }
 
 .link {

@@ -16,8 +16,7 @@
     <div class="title"><fa-icon [icon]="iconCampain"/> Campagnes (MJ)</div>
     <div *ngFor="let campain of gmCampains">
       <div [routerLink]="['/campain', campain.id]" class="campain link">
-        <fa-icon [icon]="iconCampain" *ngIf="!campain.mine"/>
-        {{ campain.name === "" ? "Campagne sans nom": campain.name }}
+        <div class="campainName">{{ campain.name === "" ? "Campagne sans nom": campain.name }}</div>
       </div>
       <div *ngFor="let sheet of campain.sheets">
         <div [routerLink]="['/sheet', sheet.id]" class="campainsheet link {{ sheet.mine ? 'mine' : 'notmine' }}">
@@ -32,7 +31,8 @@
     <div class="title"><fa-icon [icon]="iconCampain"/> Campagnes (PJ)</div>
     <div *ngFor="let campain of playerCampains">
       <div [routerLink]="['/campain', campain.id]" class="campain link">
-        {{ campain.name === "" ? "Campagne sans nom": campain.name }}
+        <div class="campainName">{{ campain.name === "" ? "Campagne sans nom": campain.name }}</div>
+        <div class="gmName">({{ campain.gmName }})</div>
       </div>
       <div *ngFor="let sheet of campain.sheets">
         <div [routerLink]="['/sheet', sheet.id]" class="campainsheet link">
@@ -44,7 +44,11 @@
   </div>
 
   <div class="sheets">
-    <div class="title"><fa-icon [icon]="iconCharacter"/> Personnages</div>
+    <div class="title">
+      <div><fa-icon [icon]="iconCharacter"/></div>
+      <div>Personnages</div>
+      <div><input #chkAllSheets type="checkbox" (change)="allSheets = chkAllSheets.checked" title="Afficher aussi les fiches incluses dans une campagne"/></div>
+    </div>
     <div *ngFor="let sheet of sheets">
       <div [routerLink]="['/sheet', sheet.id]" class="link">
         <fa-icon [icon]="iconDeprecated" *ngIf="sheet.deprecated" />

@@ -25,7 +25,7 @@ import { IconComponent } from '../common/icon/icon.component';
 export class MenuComponent implements OnInit {
 
   me?: User | null;
-  metadata!: {[key: string]: GameMetadataOverview };
+  metadata!: { [key: string]: GameMetadataOverview };
   iconUser = faUser;
   iconUsers = faUsers;
   iconLogout = faSignOut;
@@ -35,8 +35,12 @@ export class MenuComponent implements OnInit {
   iconDeprecated = faWarning;
   Role = Role;
 
+  allSheets = false;
+
   get sheets() {
-    return this.sheetService.sheets;
+    return this.allSheets
+      ? this.sheetService.sheets
+      : this.sheetService.sheets.filter(sheet => !this.campains.flatMap(campain => campain.sheets.map(sheet => sheet.id)).includes(sheet.id));
   }
 
   get campains() {
