@@ -20,10 +20,14 @@ public class MetadataService {
   }
 
   public MetadataOverview getMetadataOverview(String id) {
-    return repository.listAllMetadata().stream()
+    final MetadataOverview res = repository.listAllMetadata().stream()
         .filter(metadata -> metadata.code().equals(id))
         .findFirst()
         .orElse(null);
+    if (res == null) {
+      throw new IllegalStateException("Could not find metadata " + id);
+    }
+    return res;
   }
 
   public JsonNode getMetadata(String id) {

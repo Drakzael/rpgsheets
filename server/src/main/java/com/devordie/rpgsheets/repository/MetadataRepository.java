@@ -90,37 +90,35 @@ public class MetadataRepository {
     }
   }
 
-  private List<JsonNode> getMetadata() {
-    synchronized (metadata) {
-      if (metadata.isEmpty()) {
-        copyResources();
-        metadata = new ArrayList<>();
-        try (Stream<Path> files = Files.list(getCustomPath())) {
-          for (final Path file : files.filter(file -> file.toString().endsWith(".json")).toList()) {
-            JsonNode node = MAPPER.readTree(Files.readAllBytes(file));
-            LOGGER.info("Adding custom " + node.get("name").asText() + " metadata from "
-                + getCustomPath().toAbsolutePath().toString());
+  private synchronized List<JsonNode> getMetadata() {
+    if (metadata.isEmpty()) {
+      copyResources();
+      metadata = new ArrayList<>();
+      try (Stream<Path> files = Files.list(getCustomPath())) {
+        for (final Path file : files.filter(file -> file.toString().endsWith(".json")).toList()) {
+          JsonNode node = MAPPER.readTree(Files.readAllBytes(file));
+          LOGGER.info("Adding custom " + node.get("name").asText() + " metadata from "
+              + getCustomPath().toAbsolutePath().toString());
+          metadata.add(node);
+        }
+      } catch (IOException ex) {
+        throw new IllegalStateException("Can't list metadata files in " + LOCAL_METADATA_DIRECTORY, ex);
+      }
+      try (Stream<Path> files = Files.list(getNativePath())) {
+        for (final Path file : files.filter(file -> file.toString().endsWith(".json")).toList()) {
+          JsonNode node = MAPPER.readTree(Files.readAllBytes(file));
+          if (metadata.stream().filter(meta -> node.get("code").asText().equals(meta.get("code").asText()))
+              .count() == 0) {
+            LOGGER.info("Adding native " + node.get("name").asText() + " metadata from "
+                + getNativePath().toAbsolutePath().toString());
             metadata.add(node);
+          } else {
+            LOGGER.debug("Skipping native " + node.get("name").asText() + " metadata from "
+                + getNativePath().toAbsolutePath().toString() + " : already added");
           }
-        } catch (IOException ex) {
-          throw new IllegalStateException("Can't list metadata files in " + LOCAL_METADATA_DIRECTORY, ex);
         }
-        try (Stream<Path> files = Files.list(getNativePath())) {
-          for (final Path file : files.filter(file -> file.toString().endsWith(".json")).toList()) {
-            JsonNode node = MAPPER.readTree(Files.readAllBytes(file));
-            if (metadata.stream().filter(meta -> node.get("code").asText().equals(meta.get("code").asText()))
-                .count() == 0) {
-              LOGGER.info("Adding native " + node.get("name").asText() + " metadata from "
-                  + getNativePath().toAbsolutePath().toString());
-              metadata.add(node);
-            } else {
-              LOGGER.debug("Skipping native " + node.get("name").asText() + " metadata from "
-                  + getNativePath().toAbsolutePath().toString() + " : already added");
-            }
-          }
-        } catch (IOException ex) {
-          throw new IllegalStateException("Can't list metadata files in " + LOCAL_SOURCE_DIRECTORY, ex);
-        }
+      } catch (IOException ex) {
+        throw new IllegalStateException("Can't list metadata files in " + LOCAL_SOURCE_DIRECTORY, ex);
       }
     }
     return metadata;
