@@ -20,7 +20,7 @@
       </div>
       <div *ngFor="let sheet of campain.sheets">
         <div [routerLink]="['/sheet', sheet.id]" class="campainsheet link {{ sheet.mine ? 'mine' : 'notmine' }}">
-          <app-icon [icon]="metadata[sheet.game!].icon!" *ngIf="metadata[sheet.game!].icon" />
+          <app-icon [icon]="metadata[sheet.game!].icon!" *ngIf="metadata && metadata[sheet.game!]?.icon" />
           {{ sheet.name === "" ? "Fiche sans nom" : sheet.name }}</div>
       </div>
     </div>
@@ -37,7 +37,7 @@
       <div *ngFor="let sheet of campain.sheets">
         <div [routerLink]="['/sheet', sheet.id]" class="campainsheet link">
           <fa-icon [icon]="iconCharacter" *ngIf="!sheet.mine" />
-          <app-icon [icon]="metadata[sheet.game!].icon!" *ngIf="metadata[sheet.game!].icon" />
+          <app-icon [icon]="metadata[sheet.game!].icon!" *ngIf="metadata && metadata[sheet.game!]?.icon" />
           {{ sheet.name === "" ? "Fiche sans nom" : sheet.name }}</div>
       </div>
     </div>
@@ -52,7 +52,7 @@
     <div *ngFor="let sheet of sheets">
       <div [routerLink]="['/sheet', sheet.id]" class="link">
         <fa-icon [icon]="iconDeprecated" *ngIf="sheet.deprecated" />
-        <app-icon [icon]="metadata[sheet.game!].icon!" *ngIf="metadata[sheet.game!].icon" />
+        <app-icon [icon]="metadata[sheet.game!].icon!" *ngIf="metadata && metadata[sheet.game!]?.icon" />
         {{ sheet.name === "" ? "Fiche sans nom" : sheet.name }}
       </div>
     </div>
