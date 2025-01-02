@@ -27,7 +27,7 @@ import { DoubleScaleComponent } from './double-scale/double-scale.component';
     StateComponent
   ],
   templateUrl: './value.component.html',
-  styleUrl: './value.component.scss'
+  styleUrls: ['./value.component.scss', './value.component.print.scss']
 })
 export class ValueComponent implements OnInit {
   @Input() metadata!: GameMetadata;

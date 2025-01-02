@@ -12,7 +12,7 @@ import { RouterOutlet } from '@angular/router';
     MenuComponent
   ],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+  styleUrls: ['./home.component.scss', './home.component.print.scss']
 })
 export class HomeComponent {
 

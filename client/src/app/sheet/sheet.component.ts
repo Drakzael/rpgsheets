@@ -21,7 +21,7 @@ import { AccountService } from '../_services/account.service';
     CampainComponent
   ],
   templateUrl: './sheet.component.html',
-  styleUrl: './sheet.component.scss'
+  styleUrls: ['./sheet.component.scss', './sheet.component.print.scss']
 })
 export class SheetComponent implements OnInit {
   sheetId!: string | null;

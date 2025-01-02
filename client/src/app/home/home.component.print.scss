@@ -1,0 +1,9 @@
+@media print {
+  .layout {
+    grid-template-columns: max-content;
+  }
+
+  app-menu {
+    display: none;
+  }
+}

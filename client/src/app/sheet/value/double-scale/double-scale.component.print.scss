@@ -1,0 +1,9 @@
+@media print {
+  .view {
+    display: none;
+  }
+
+  .printer {
+    display: inherit;
+  }
+}

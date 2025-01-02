@@ -13,7 +13,7 @@ import { Sheet } from '../../_models/sheet';
     ColumnComponent
   ],
   templateUrl: './row.component.html',
-  styleUrl: './row.component.scss'
+  styleUrls: ['./row.component.scss', './row.component.print.scss']
 })
 export class RowComponent {
   @Input() metadata!: GameMetadata;

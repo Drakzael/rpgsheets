@@ -6,7 +6,14 @@
   <ng-container *ngIf="!value.nameValue">
     <div class="name" *ngIf="name">{{ name }}</div>
   </ng-container>
-  <div class="values {{ editor.display === 'grid' ? 'grid' : 'inline' }}" [attr.style]="editor.display === 'grid' && editor.columns ? 'grid-template-columns: repeat(' + editor.columns + ', max-content);' : ''">
-    <app-icon *ngFor="let i of values" [icon]="i <= scores[0] ? iconFull : i <= scores[1] ? iconMinus : i <= scores[2] ? iconPlus : iconEmpty"  (click)="clickValue(i)" class="{{ viewMode === mode.Edit ? 'button' : '' }}"/>
+  <div class="view">
+    <div class="values {{ editor.display === 'grid' ? 'grid' : 'inline' }}" [attr.style]="editor.display === 'grid' && editor.columns ? 'grid-template-columns: repeat(' + editor.columns + ', max-content);' : ''">
+      <app-icon *ngFor="let i of values" [icon]="i <= scores[0] ? iconFull : i <= scores[1] ? iconMinus : i <= scores[2] ? iconPlus : iconEmpty" (click)="clickValue(i)" class="{{ viewMode === mode.Edit ? 'button' : '' }}" />
+    </div>
+  </div>
+  <div class="printer">
+    <div class="values {{ editor.display === 'grid' ? 'grid' : 'inline' }}" [attr.style]="editor.display === 'grid' && editor.columns ? 'grid-template-columns: repeat(' + editor.columns + ', max-content);' : ''">
+      <app-icon *ngFor="let i of values" [icon]="i > score || freeEdit ? iconEmpty : iconFull" />
+    </div>
   </div>
 </div>

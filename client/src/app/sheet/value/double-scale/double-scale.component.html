@@ -1,11 +1,17 @@
 <div class="double-scale">
   <div class="name" *ngIf="value.name">{{ value.name }}</div>
   <div class="values">
-    <div class="first {{ viewMode === mode.Dice ? 'dice' : '' }}">
-      <app-icon *ngFor="let i of values" [icon]="i <= scoresFirst[0] ? iconFirstFull : i <= scoresFirst[1] ? iconFirstMinus : i <= scoresFirst[2] ? iconFirstPlus : iconFirstEmpty" (click)="clickFirst(i)" class="{{ viewMode === mode.Edit ? 'button' : '' }}"/>
+    <div class="first view {{ viewMode === mode.Dice ? 'dice' : '' }}">
+      <app-icon *ngFor="let i of values" [icon]="i <= scoresFirst[0] ? iconFirstFull : i <= scoresFirst[1] ? iconFirstMinus : i <= scoresFirst[2] ? iconFirstPlus : iconFirstEmpty" (click)="clickFirst(i)" class="view {{ viewMode === mode.Edit || viewMode === mode.Play && freeEditFirst ? 'button' : '' }}"/>
     </div>
-    <div class="second {{ viewMode === mode.Dice ? 'dice' : '' }}">
-      <app-icon *ngFor="let i of values" [icon]="i <= scoresSecond[0] ? iconSecondFull : i <= scoresSecond[1] ? iconSecondMinus : i <= scoresSecond[2] ? iconSecondPlus : iconSecondEmpty" (click)="clickSecond(i)" class="{{ viewMode === mode.Edit ? 'button' : '' }}"/>
+    <div class="first printer {{ viewMode === mode.Dice ? 'dice' : '' }}">
+      <app-icon *ngFor="let i of values" [icon]="freeEditFirst || i > scoreFirst ? iconFirstEmpty : iconFirstFull"/>
+    </div>
+    <div class="second view {{ viewMode === mode.Dice ? 'dice' : '' }}">
+      <app-icon *ngFor="let i of values" [icon]="i <= scoresSecond[0] ? iconSecondFull : i <= scoresSecond[1] ? iconSecondMinus : i <= scoresSecond[2] ? iconSecondPlus : iconSecondEmpty" (click)="clickSecond(i)" class="view {{ viewMode === mode.Edit || viewMode === mode.Play && freeEditSecond ? 'button' : '' }}"/>
+    </div>
+    <div class="second printer {{ viewMode === mode.Dice ? 'dice' : '' }}">
+      <app-icon *ngFor="let i of values" [icon]="freeEditSecond || i > scoreSecond ? iconSecondEmpty : iconSecondFull"/>
     </div>
   </div>
 </div>

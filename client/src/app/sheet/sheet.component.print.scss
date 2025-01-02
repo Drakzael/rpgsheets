@@ -1,0 +1,12 @@
+@media print {
+  .sheet {
+    background-image: none;
+    break-after: always;
+    font-size: 0.9em;
+    height: 29.7cm;
+  }
+
+  .actions {
+    display: none;
+  }
+}

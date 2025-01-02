@@ -15,7 +15,7 @@ import { IconDotEmpty, IconDotFull, IconDotMinus, IconDotPlus } from '../../../_
     IconComponent
   ],
   templateUrl: './scale.component.html',
-  styleUrl: './scale.component.scss'
+  styleUrls: ['./scale.component.scss', './scale.component.print.scss']
 })
 export class ScaleComponent implements OnInit {
   @Input() value!: GameMetadataValue;
@@ -79,6 +79,10 @@ export class ScaleComponent implements OnInit {
     return this.viewMode === ViewMode.Edit;
   }
 
+  get freeEdit(): boolean {
+    return this.editor.freeEdit || false;
+  }
+
   get score(): number {
     const defaultValue = this.editor.defaultValue as number || this.editor.min || 0;
     if (this.viewMode === ViewMode.Play) {
@@ -120,7 +124,7 @@ export class ScaleComponent implements OnInit {
 
   clickValue(i: number) {
     if (this.viewMode === ViewMode.Edit ||
-      this.viewMode === ViewMode.Play && this.editor.freeEdit) {
+      this.viewMode === ViewMode.Play && this.freeEdit) {
       if (i <= this.score) {
         --i;
       }

@@ -20,7 +20,7 @@ import { IconSquareCrossed, IconSquareEmpty } from '../../../_icons/square';
     IconComponent
   ],
   templateUrl: './double-scale.component.html',
-  styleUrl: './double-scale.component.scss'
+  styleUrls: ['./double-scale.component.scss', './double-scale.component.print.scss']
 })
 export class DoubleScaleComponent implements OnInit {
   @Input() value!: GameMetadataValue;
@@ -131,6 +131,32 @@ export class DoubleScaleComponent implements OnInit {
     return this.editor.max!;
   }
 
+  get freeEditFirst() {
+    if (this.editor.freeEditFirst !== undefined) {
+      return this.editor.freeEditFirst;
+    }
+    if (this.editor.freeEditDots !== undefined) {
+      return this.editor.freeEditDots;
+    }
+    if (this.editor.freeEdit !== undefined) {
+      return this.editor.freeEdit;
+    }
+    return false;
+  }
+
+  get freeEditSecond() {
+    if (this.editor.freeEditSecond !== undefined) {
+      return this.editor.freeEditSecond;
+    }
+    if (this.editor.freeEditSquares !== undefined) {
+      return this.editor.freeEditSquares;
+    }
+    if (this.editor.freeEdit !== undefined) {
+      return this.editor.freeEdit;
+    }
+    return false;
+  }
+
   firstValueName() {
     return this.value.values[0];
   }
@@ -141,7 +167,7 @@ export class DoubleScaleComponent implements OnInit {
 
   clickFirst(i: number) {
     if (this.viewMode === ViewMode.Edit ||
-      this.viewMode === ViewMode.Play && (this.editor.freeEditFirst || this.editor.freeEditDots)) {
+      this.viewMode === ViewMode.Play && this.freeEditFirst) {
       if (i <= this.scoreFirst) {
         --i;
       }
@@ -154,7 +180,7 @@ export class DoubleScaleComponent implements OnInit {
 
   clickSecond(i: number) {
     if (this.viewMode === ViewMode.Edit ||
-      this.viewMode === ViewMode.Play && (this.editor.freeEditSecond || this.editor.freeEditSquares)) {
+      this.viewMode === ViewMode.Play && this.freeEditSecond) {
       if (i <= this.scoreSecond) {
         --i;
       }

@@ -21,3 +21,9 @@ input[type=text] {
   height: 1.3em;
   width: calc(100% - 0.5em);
 }
+
+@media print {
+  html {
+    background-color: inherit;
+  }
+}
