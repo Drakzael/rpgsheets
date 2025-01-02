@@ -47,10 +47,16 @@ export class ScaleComponent implements OnInit {
     } else {
       this.name = this.value.name;
     }
-    this.iconEmpty = this.editor.icons?.empty && this.metadata.icons![this.editor.icons?.empty] || IconDotEmpty;
-    this.iconFull = this.editor.icons?.full && this.metadata.icons![this.editor.icons.full] || IconDotFull;
-    this.iconPlus = this.editor.icons?.plus && this.metadata.icons![this.editor.icons.plus] || IconDotPlus;
-    this.iconMinus = this.editor.icons?.minus && this.metadata.icons![this.editor.icons.minus] || IconDotMinus;
+    this.iconEmpty = this.editor.icons?.empty && this.metadata.icons![this.editor.icons?.empty]
+      || IconDotEmpty;
+    this.iconFull = this.editor.icons?.full && this.metadata.icons![this.editor.icons.full]
+      || IconDotFull;
+    this.iconPlus = this.editor.icons?.plus && this.metadata.icons![this.editor.icons.plus]
+      || this.editor.icons?.full && this.metadata.icons![this.editor.icons.full]
+      || IconDotPlus;
+    this.iconMinus = this.editor.icons?.minus && this.metadata.icons![this.editor.icons.minus]
+      || this.editor.icons?.empty && this.metadata.icons![this.editor.icons?.empty]
+      || IconDotMinus;
 
     const onChange = (() => {
       if (this.editor.maxExpr) {
@@ -74,7 +80,7 @@ export class ScaleComponent implements OnInit {
   }
 
   get score(): number {
-      const defaultValue = this.editor.defaultValue as number || this.editor.min || 0;
+    const defaultValue = this.editor.defaultValue as number || this.editor.min || 0;
     if (this.viewMode === ViewMode.Play) {
       return this.sheet.getNumber(this.value.value, defaultValue, true);
     } else {
@@ -111,7 +117,7 @@ export class ScaleComponent implements OnInit {
       this.sheet.setString(this.value.nameValue, name || null);
     }
   }
- 
+
   clickValue(i: number) {
     if (this.viewMode === ViewMode.Edit ||
       this.viewMode === ViewMode.Play && this.editor.freeEdit) {

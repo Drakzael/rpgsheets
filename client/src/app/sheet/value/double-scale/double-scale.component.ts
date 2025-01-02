@@ -54,14 +54,24 @@ export class DoubleScaleComponent implements OnInit {
     this.editor = this.metadata.editors![this.editorCode];
     this.values = Array(this.editor.max).fill(0).map((_, i) => i + 1);
 
-    this.iconFirstEmpty = this.editor.icons?.firstEmpty && this.metadata.icons![this.editor.icons?.firstEmpty] || IconDotEmpty;
-    this.iconFirstFull = this.editor.icons?.firstFull && this.metadata.icons![this.editor.icons?.firstFull] || IconDotFull;
-    this.iconFirstPlus = this.editor.icons?.firstPlus && this.metadata.icons![this.editor.icons.firstPlus] || IconDotPlus;
-    this.iconFirstMinus = this.editor.icons?.firstMinus && this.metadata.icons![this.editor.icons.firstMinus] || IconDotMinus;
-    this.iconSecondEmpty = this.editor.icons?.secondEmpty && this.metadata.icons![this.editor.icons?.secondEmpty] || IconSquareEmpty;
-    this.iconSecondFull = this.editor.icons?.secondFull && this.metadata.icons![this.editor.icons?.secondFull] || IconSquareCrossed;
-    this.iconSecondPlus = this.editor.icons?.secondPlus && this.metadata.icons![this.editor.icons.secondPlus] || this.iconSecondFull;
-    this.iconSecondMinus = this.editor.icons?.secondMinus && this.metadata.icons![this.editor.icons.secondMinus] || this.iconSecondEmpty;
+    this.iconFirstEmpty = this.editor.icons?.firstEmpty && this.metadata.icons![this.editor.icons?.firstEmpty]
+      || IconDotEmpty;
+    this.iconFirstFull = this.editor.icons?.firstFull && this.metadata.icons![this.editor.icons?.firstFull]
+      || IconDotFull;
+    this.iconFirstPlus = this.editor.icons?.firstPlus && this.metadata.icons![this.editor.icons.firstPlus]
+      || this.editor.icons?.firstFull && this.metadata.icons![this.editor.icons?.firstFull]
+      || IconDotPlus;
+    this.iconFirstMinus = this.editor.icons?.firstMinus && this.metadata.icons![this.editor.icons.firstMinus]
+      || this.editor.icons?.firstEmpty && this.metadata.icons![this.editor.icons?.firstEmpty]
+      || IconDotMinus;
+    this.iconSecondEmpty = this.editor.icons?.secondEmpty && this.metadata.icons![this.editor.icons?.secondEmpty]
+      || IconSquareEmpty;
+    this.iconSecondFull = this.editor.icons?.secondFull && this.metadata.icons![this.editor.icons?.secondFull]
+      || IconSquareCrossed;
+    this.iconSecondPlus = this.editor.icons?.secondPlus && this.metadata.icons![this.editor.icons.secondPlus]
+      || this.iconSecondFull;
+    this.iconSecondMinus = this.editor.icons?.secondMinus && this.metadata.icons![this.editor.icons.secondMinus]
+      || this.iconSecondEmpty;
 
     this.originalScoreFirst = this.scoreFirst;
     this.originalScoreSecond = this.scoreSecond;

@@ -44,10 +44,16 @@ export class ScaleComponent implements OnInit {
     this.editor = this.metadata.editors![this.editorCode];
     this.rows = this.computeRows();
 
-    this.iconEmpty = this.editor.icons?.empty && this.metadata.icons![this.editor.icons?.empty] || IconDotEmpty;
-    this.iconFull = this.editor.icons?.full && this.metadata.icons![this.editor.icons.full] || IconDotFull;
-    this.iconPlus = this.editor.icons?.plus && this.metadata.icons![this.editor.icons.plus] || IconDotPlus;
-    this.iconMinus = this.editor.icons?.minus && this.metadata.icons![this.editor.icons.minus] || IconDotMinus;
+    this.iconEmpty = this.editor.icons?.empty && this.metadata.icons![this.editor.icons?.empty]
+      || IconDotEmpty;
+    this.iconFull = this.editor.icons?.full && this.metadata.icons![this.editor.icons.full]
+      || IconDotFull;
+    this.iconPlus = this.editor.icons?.plus && this.metadata.icons![this.editor.icons.plus]
+      || this.editor.icons?.full && this.metadata.icons![this.editor.icons.full]
+      || IconDotPlus;
+    this.iconMinus = this.editor.icons?.minus && this.metadata.icons![this.editor.icons.minus]
+      || this.editor.icons?.empty && this.metadata.icons![this.editor.icons?.empty]
+      || IconDotMinus;
 
     const onChange = (() => {
       if (this.editor.maxExpr) {
