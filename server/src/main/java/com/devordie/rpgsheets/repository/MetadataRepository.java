@@ -12,6 +12,8 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Stream;
 
 import org.apache.commons.logging.Log;
@@ -22,6 +24,7 @@ import com.devordie.rpgsheets.entities.MetadataOverview;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -34,7 +37,7 @@ public class MetadataRepository {
   private static final String RESOURCE_METADATA_DIRECTORY = "/metadata";
   private static final String LOCAL_METADATA_DIRECTORY = "metadata";
   private static final String LOCAL_SOURCE_DIRECTORY = "metadata.source";
-  private List<JsonNode> metadata = new ArrayList<>();
+  private List<JsonNode> metadata = null;
 
   @Inject
   private LocalRepository localRepository;
@@ -91,15 +94,20 @@ public class MetadataRepository {
   }
 
   private synchronized List<JsonNode> getMetadata() {
-    if (metadata.isEmpty()) {
+    if (this.metadata == null) {
       copyResources();
-      metadata = new ArrayList<>();
+      final List<JsonNode> metadata = new ArrayList<>();
+      final Map<String, JsonNode> technicalMetadata = new HashMap<>();
       try (Stream<Path> files = Files.list(getCustomPath())) {
         for (final Path file : files.filter(file -> file.toString().endsWith(".json")).toList()) {
           JsonNode node = MAPPER.readTree(Files.readAllBytes(file));
           LOGGER.info("Adding custom " + node.get("name").asText() + " metadata from "
               + getCustomPath().toAbsolutePath().toString());
-          metadata.add(node);
+          if (node.has("technical") && node.get("technical").asBoolean()) {
+            technicalMetadata.put(node.get("code").asText(), node);
+          } else {
+            metadata.add(node);
+          }
         }
       } catch (IOException ex) {
         throw new IllegalStateException("Can't list metadata files in " + LOCAL_METADATA_DIRECTORY, ex);
@@ -111,7 +119,11 @@ public class MetadataRepository {
               .count() == 0) {
             LOGGER.info("Adding native " + node.get("name").asText() + " metadata from "
                 + getNativePath().toAbsolutePath().toString());
-            metadata.add(node);
+            if (node.has("technical") && node.get("technical").asBoolean()) {
+              technicalMetadata.put(node.get("code").asText(), node);
+            } else {
+              metadata.add(node);
+            }
           } else {
             LOGGER.debug("Skipping native " + node.get("name").asText() + " metadata from "
                 + getNativePath().toAbsolutePath().toString() + " : already added");
@@ -120,8 +132,40 @@ public class MetadataRepository {
       } catch (IOException ex) {
         throw new IllegalStateException("Can't list metadata files in " + LOCAL_SOURCE_DIRECTORY, ex);
       }
+
+      this.metadata = metadata.stream()
+          .map(mdNode -> mdNode.has("inherit") && technicalMetadata.containsKey(mdNode.get("inherit").asText())
+              ? inheritMetadata(mdNode, technicalMetadata.get(mdNode.get("inherit").asText()))
+              : mdNode)
+          .toList();
     }
     return metadata;
+  }
+
+  private ObjectNode inheritMetadataAux(JsonNode child, JsonNode parent) {
+    final ObjectNode node = new ObjectNode(null);
+    for (final Entry<String, JsonNode> jsonNode : parent.properties()) {
+      node.set(jsonNode.getKey(), jsonNode.getValue().deepCopy());
+    }
+    for (Entry<String, JsonNode> jsonNode : child.properties()) {
+      if (node.has(jsonNode.getKey()) && jsonNode.getValue().isObject()) {
+        node.set(jsonNode.getKey(), inheritMetadataAux(jsonNode.getValue(), parent.get(jsonNode.getKey())));
+        // for (Entry<String, JsonNode> subNode : jsonNode.getValue().properties()) {
+        //   ((ObjectNode) node.get(jsonNode.getKey())).set(subNode.getKey(), subNode.getValue());
+        // }
+      } else {
+        node.set(jsonNode.getKey(), jsonNode.getValue());
+      }
+    }
+    return node;
+  }
+  
+  private JsonNode inheritMetadata(JsonNode child, JsonNode parent) {
+    LOGGER.info("Inheriting " + child.get("name").asText() + " from " + parent.get("name").asText());
+    final ObjectNode node = inheritMetadataAux(child, parent);
+    node.remove("inherit");
+    node.remove("technical");
+    return node;
   }
 
   private Path getCustomPath() {
