@@ -61,11 +61,11 @@ export class ValueComponent implements OnInit {
         this.mode = true;
       } else {
         if (["number", "scale", "dots", "squares"].includes(this.editorType)) {
-          this.mode = this.sheet.getNumber(this.value.value) != undefined;
+          this.mode = this.sheet.hasNumber(this.value.value) && this.sheet.getNumber(this.value.value) !== 0;
         } else if (["doubleScale", "dots_squares"].includes(this.editorType)) {
           this.mode = this.value.values.map(value => this.sheet.getNumber(value)).filter(value => value !== undefined).length > 0;
         } else if (["text"].includes(this.editorType)) {
-          this.mode = this.sheet.getString(this.value.value) != undefined;
+          this.mode = this.sheet.hasText(this.value.value);
         }
       }
     }

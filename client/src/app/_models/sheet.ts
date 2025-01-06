@@ -219,6 +219,10 @@ export class Sheet {
     }
   }
 
+  hasText(code: string): boolean {
+    return this.stringValues[code] !== undefined;
+  }
+
   setString(code: string, value: string | null): void {
     if (code === "$sheet.name") {
       this.name = value as string;
