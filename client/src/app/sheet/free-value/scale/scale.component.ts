@@ -156,4 +156,8 @@ export class ScaleComponent implements OnInit {
       this.sheet.setNumber(`${this.prefix}${this.rows[index].name}`, value);
     }
   }
+
+  clickDice(i: number) {
+    this.sheet.diceStat(i);
+  }
 }

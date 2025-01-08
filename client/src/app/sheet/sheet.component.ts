@@ -10,6 +10,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faPen, faSave, faCancel, faTrash, faMasksTheater, faDice, faPlus, faImage } from '@fortawesome/free-solid-svg-icons';
 import { CampainComponent } from './campain/campain.component';
 import { AccountService } from '../_services/account.service';
+import { DiceComponent } from './dice/dice.component';
 
 @Component({
   selector: 'app-sheet',
@@ -18,7 +19,8 @@ import { AccountService } from '../_services/account.service';
     CommonModule,
     RowComponent,
     FontAwesomeModule,
-    CampainComponent
+    CampainComponent,
+    DiceComponent
   ],
   templateUrl: './sheet.component.html',
   styleUrls: ['./sheet.component.scss', './sheet.component.print.scss']

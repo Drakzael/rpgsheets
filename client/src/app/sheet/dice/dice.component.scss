@@ -1,0 +1,36 @@
+.box {
+  width: 25em;
+  height: 25em;
+  border: 1px solid black;
+  border-bottom-color: #666;
+  border-right-color: #666;
+  padding: 1em;
+  background-color: #bbb;
+}
+
+.input {
+  display: inline-grid;
+  grid-template-columns: auto auto;
+  column-gap: 0.2em;
+}
+
+.dice {
+  font-size: 4em;
+  line-height: 1em;
+}
+
+.resultDice {
+  position: relative;
+  display: inline-block
+}
+
+.d10Value {
+  position: absolute;
+  top: 1.05em;
+  left: 1.4em;
+  color: white;
+  transform: rotate(47deg);
+  width: 1.5em;
+  text-align: center;
+  font-size: 1.1em;
+}

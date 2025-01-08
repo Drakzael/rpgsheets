@@ -23,6 +23,8 @@
 
 .actions {
   text-align:right;
+  margin-top: -1.5em;
+  margin-bottom: -0.5em;
 }
 
 .actions button {
@@ -57,4 +59,9 @@
 
 .actions button.config {
   background-color: #999;
+}
+
+.playground {
+  display: grid;
+  grid-template-columns: auto max-content;
 }

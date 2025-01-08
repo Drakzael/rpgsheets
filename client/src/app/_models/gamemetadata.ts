@@ -90,14 +90,40 @@ export class GameMetadataRow {
   pageBreak?: boolean;
 }
 
+export class GameMetadataDiceInput {
+  name!: string;
+  type!: "select" | "check";
+  valueType!: "number" | "boolean" | "string";
+  defaultValue!: number | boolean | string;
+  min?: number;
+  max?: number;
+  values?: {name: string, value: number | boolean}[];
+}
+
+export class GameMetadataDiceThrow {
+  code!: string;
+  name!: string;
+  dice!: number;
+  statClick!: "pool" | "dice";
+  input?: { [key: string]: GameMetadataDiceInput };
+  resultType!: "number" | "boolean";
+  resultFunction!: "string"; // (dices: number[], input: {[key: string]: number | boolean} ) => number | boolean
+  resultColor?: "string"; // (dice: number, input: {[key: string]: number | boolean} ) => string[];
+}
+
+export class GameMetadataDice {
+  throws!: GameMetadataDiceThrow[];
+}
+
 export class GameMetadata {
   name!: string;
   code!: string;
   icon?: string;
   modes?: { name: string, code: string }[];
-  editors?: { [key: string] : GameMetadataEditor };
+  editors?: { [key: string]: GameMetadataEditor };
   gridRows!: GameMetadataRow[];
   icons?: { [key: string]: Icon };
+  dice?: GameMetadataDice;
 }
 
 export class GameMetadataOverview {

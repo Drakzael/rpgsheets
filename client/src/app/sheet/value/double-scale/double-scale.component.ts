@@ -190,4 +190,8 @@ export class DoubleScaleComponent implements OnInit {
       this.scoreSecond = i;
     }
   }
+
+  clickDice(i: number) {
+    this.sheet.diceStat(i);
+  }
 }

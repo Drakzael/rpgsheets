@@ -1,4 +1,4 @@
-<div class="scale {{ viewMode === mode.Dice ? 'dice' : '' }} {{ value.name ? '' : 'unamed' }}">
+<div class="scale {{ viewMode === mode.Dice ? 'dice' : '' }} {{ value.name ? '' : 'unamed' }}" (click)="viewMode === mode.Dice && clickDice()">
   <ng-container *ngIf="value.nameValue">
     <div class="name" *ngIf="viewMode !== mode.Edit">{{ name }}</div>
     <input #nameInput type="text" class="name" *ngIf="viewMode === mode.Edit" value="{{ name }}" (change)="updateName(nameInput.value)" />

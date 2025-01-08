@@ -18,6 +18,7 @@ export class Sheet {
 
   private _changed = false;
   private _onChange: (() => void)[] = [];
+  private _onDiceStat?: (i: number) => void = undefined;
   private _tmpValues: { [key: string]: { [key: string]: (x: number) => number } } = {};
   private _states: { [key: string]: { value: string, action: string } } = {};
 
@@ -246,6 +247,16 @@ export class Sheet {
     return Object.keys(this.stringValues)
       .filter(key => key.startsWith(prefix))
       .map(key => ({ key, value: this.getString(key) }));
+  }
+
+  registerDiceStat(cb: (i: number) => void) {
+    this._onDiceStat = cb;
+  }
+
+  diceStat(i: number) {
+    if (this._onDiceStat) {
+      this._onDiceStat(i);
+    }
   }
 }
 

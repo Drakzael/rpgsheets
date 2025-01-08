@@ -1,42 +1,45 @@
-<div *ngIf="metadata && sheet">
-  <div class="actions">
-    <button *ngIf="sheet.writable && (viewMode === mode.Edit || sheet.changed)" (click)="save()" class="{{ viewMode === mode.View ? 'save' : '' }}"><fa-icon [icon]="iconSave" title="Sauvegarder"/></button>
-    <!-- <button *ngIf="viewMode === mode.Play" (click)="dice()"><fa-icon [icon]="iconDice" title="Mode Dés"/></button> -->
-    <button *ngIf="viewMode === mode.View || viewMode === mode.Dice" (click)="play()"><fa-icon [icon]="iconPlay" title="Mode Jeu"/></button>
-    <button *ngIf="sheet.writable && viewMode === mode.View" (click)="campain()" title="Campagnes" class="{{isCampain ? 'campain' : ''}}"><fa-icon [icon]="iconCampain"></fa-icon></button>
-    <button *ngIf="sheet.writable && viewMode === mode.View" (click)="edit()" title="Editer"><fa-icon [icon]="iconEdit"/></button>
-    <button *ngIf="sheet.deletable && viewMode === mode.View" (click)="delete()"><fa-icon [icon]="iconDelete" title="Supprimer"/></button>
-    <button *ngIf="sheet.deletable && viewMode === mode.Delete" (click)="delete()" class="delete"><fa-icon [icon]="iconDelete" title="Supprimer"/></button>
-    <button *ngIf="viewMode === mode.Edit || viewMode === mode.Delete" (click)="cancel()"><fa-icon [icon]="iconCancel" title="Annuler"/></button>
-    <button *ngIf="viewMode === mode.Play || viewMode === mode.Dice" (click)="stop()"><fa-icon [icon]="iconCancel" title="Annuler"/></button>
-  </div>
-  <div class="sheet rows" *ngFor="let page of pages">
-    <app-campain *ngIf="page.pageNum === 0 && isCampain && !isCreation && viewMode === mode.View && sheet.writable"
-      [sheetId]="sheetId!"
-      [sheet]="sheet" />
-    <div *ngIf="page.pageNum === 0 && viewMode === mode.Edit">
-      <select #sheetGame (change)="changeTemplate(sheetGame.value)">
-        <ng-container *ngFor="let game of games">
-          <option *ngIf="sheet.game === game.code" selected="selected" value="{{ game.code }}">
-            <ng-container *ngIf="game.deprecated">[Obsolete] </ng-container>
-            {{ game.name }}
-          </option>
-          <option *ngIf="!game.deprecated && sheet.game !== game.code" value="{{ game.code }}">{{ game.name }}</option>
-        </ng-container>
-      </select>
-      <select #sheetMode (change)="changeMode(sheetMode.value)" *ngIf="metadata.modes && metadata.modes.length > 1">
-        <ng-container *ngFor="let mode of metadata.modes">
-          <option *ngIf="sheet.mode === mode.code" selected="selected" value="{{ mode.code }}">{{ mode.name }}</option>
-          <option *ngIf="sheet.mode !== mode.code" value="{{ mode.code }}">{{ mode.name }}</option>
-        </ng-container>
-      </select>
+<div class="playground" *ngIf="metadata && sheet">
+  <div>
+    <div class="sheet rows {{ page.pageNum === 0 ? 'first' : '' }}" *ngFor="let page of pages">
+      <div class="actions" *ngIf="page.pageNum === 0">
+        <button *ngIf="sheet.writable && (viewMode === mode.Edit || sheet.changed)" (click)="save()" class="{{ viewMode === mode.View ? 'save' : '' }}"><fa-icon [icon]="iconSave" title="Sauvegarder"/></button>
+        <button *ngIf="viewMode === mode.Play && metadata.dice" (click)="dice()"><fa-icon [icon]="iconDice" title="Mode Dés"/></button>
+        <button *ngIf="viewMode === mode.View || viewMode === mode.Dice" (click)="play()"><fa-icon [icon]="iconPlay" title="Mode Jeu"/></button>
+        <button *ngIf="sheet.writable && viewMode === mode.View" (click)="campain()" title="Campagnes" class="{{isCampain ? 'campain' : ''}}"><fa-icon [icon]="iconCampain"></fa-icon></button>
+        <button *ngIf="sheet.writable && viewMode === mode.View" (click)="edit()" title="Editer"><fa-icon [icon]="iconEdit"/></button>
+        <button *ngIf="sheet.deletable && viewMode === mode.View" (click)="delete()"><fa-icon [icon]="iconDelete" title="Supprimer"/></button>
+        <button *ngIf="sheet.deletable && viewMode === mode.Delete" (click)="delete()" class="delete"><fa-icon [icon]="iconDelete" title="Supprimer"/></button>
+        <button *ngIf="viewMode === mode.Edit || viewMode === mode.Delete" (click)="cancel()"><fa-icon [icon]="iconCancel" title="Annuler"/></button>
+        <button *ngIf="viewMode === mode.Play || viewMode === mode.Dice" (click)="stop()"><fa-icon [icon]="iconCancel" title="Annuler"/></button>
+      </div>
+      <app-campain *ngIf="page.pageNum === 0 && isCampain && !isCreation && viewMode === mode.View && sheet.writable"
+        [sheetId]="sheetId!"
+        [sheet]="sheet" />
+      <div *ngIf="page.pageNum === 0 && viewMode === mode.Edit">
+        <select #sheetGame (change)="changeTemplate(sheetGame.value)">
+          <ng-container *ngFor="let game of games">
+            <option *ngIf="sheet.game === game.code" selected="selected" value="{{ game.code }}">
+              <ng-container *ngIf="game.deprecated">[Obsolete] </ng-container>
+              {{ game.name }}
+            </option>
+            <option *ngIf="!game.deprecated && sheet.game !== game.code" value="{{ game.code }}">{{ game.name }}</option>
+          </ng-container>
+        </select>
+        <select #sheetMode (change)="changeMode(sheetMode.value)" *ngIf="metadata.modes && metadata.modes.length > 1">
+          <ng-container *ngFor="let mode of metadata.modes">
+            <option *ngIf="sheet.mode === mode.code" selected="selected" value="{{ mode.code }}">{{ mode.name }}</option>
+            <option *ngIf="sheet.mode !== mode.code" value="{{ mode.code }}">{{ mode.name }}</option>
+          </ng-container>
+        </select>
+      </div>
+      <app-row *ngFor="let gridRow of page.rows"
+        [row]="gridRow"
+        [metadata]="metadata"
+        [sheet]="sheet"
+        [viewMode]="viewMode"/>
     </div>
-    <app-row *ngFor="let gridRow of page.rows"
-      [row]="gridRow"
-      [metadata]="metadata"
-      [sheet]="sheet"
-      [viewMode]="viewMode"/>
   </div>
+  <app-dice *ngIf="viewMode === mode.Dice" [sheet]="sheet" [metadata]="metadata"/>
 </div>
 <div *ngIf="!isNewSheet && (!sheet || !metadata)" class="emptyPage"></div>
 <div *ngIf="isNewSheet" class="sheet">

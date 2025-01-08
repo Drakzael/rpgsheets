@@ -131,4 +131,8 @@ export class ScaleComponent implements OnInit {
       this.score = i;
     }
   }
+
+  clickDice() {
+    this.sheet.diceStat(this.score);
+  }
 }
