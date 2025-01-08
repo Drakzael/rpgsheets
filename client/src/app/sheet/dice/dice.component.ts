@@ -32,6 +32,8 @@ export class DiceComponent implements OnInit {
 
   iconD10 = d10;
 
+  resolve!: (dices: number[], input: { [key: string]: number | boolean | string }) => number | boolean;
+
   ngOnInit(): void {
     this.sheet.registerDiceStat((i) => this.diceStat.call(this, i));
     this.selectThrow(this.metadata.dice!.throws[0]);
@@ -51,6 +53,7 @@ export class DiceComponent implements OnInit {
         }
       }
     }
+    this.resolve = this.sheet.resolve(this.activeThrow.resultFunction) as (dices: number[], input: { [key: string]: number | boolean | string }) => number | boolean;
   }
 
   updateInput(code: string, value: string) {
@@ -78,8 +81,7 @@ export class DiceComponent implements OnInit {
   }
 
   result() {
-    const fnc = this.sheet.resolve(this.activeThrow.resultFunction) as (dices: number[], input: { [key: string]: number | boolean | string }) => number | boolean;
-    const res = fnc(this.dicePool, this.inputs);
+    const res = this.resolve(this.dicePool, this.inputs);
     switch (this.activeThrow.resultType) {
       case "number":
         this.numberResult = res as number;
