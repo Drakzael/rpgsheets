@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -31,7 +32,7 @@ import jakarta.inject.Inject;
 @ApplicationScoped
 public class MetadataRepository {
   private static final Log LOGGER = LogFactory.getLog(MetadataRepository.class);
-  private static final ObjectMapper MAPPER = new ObjectMapper()
+  private static final ObjectMapper MAPPER = new ObjectMapper(new YAMLFactory())
       .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
   private static final String RESOURCE_METADATA_DIRECTORY = "/metadata";
   private static final String LOCAL_METADATA_DIRECTORY = "metadata";
@@ -97,7 +98,7 @@ public class MetadataRepository {
       copyResources();
       final Map<String, JsonNode> metadata = new HashMap<>();
       try (final Stream<Path> files = Files.list(getCustomPath())) {
-        for (final Path file : files.filter(file -> file.toString().endsWith(".json")).toList()) {
+        for (final Path file : files.filter(file -> file.toString().endsWith(".json") || file.toString().endsWith(".yaml")).toList()) {
           final JsonNode node = MAPPER.readTree(Files.readAllBytes(file));
           LOGGER.info("Adding custom " + node.get("name").asText() + " metadata from "
               + getCustomPath().toAbsolutePath().toString());
@@ -107,7 +108,7 @@ public class MetadataRepository {
         throw new IllegalStateException("Can't list metadata files in " + LOCAL_METADATA_DIRECTORY, ex);
       }
       try (final Stream<Path> files = Files.list(getNativePath())) {
-        for (final Path file : files.filter(file -> file.toString().endsWith(".json")).toList()) {
+        for (final Path file : files.filter(file -> file.toString().endsWith(".json") || file.toString().endsWith(".yaml")).toList()) {
           final JsonNode node = MAPPER.readTree(Files.readAllBytes(file));
           if (metadata.values().stream().filter(meta -> node.get("code").asText().equals(meta.get("code").asText())).count() == 0) {
             LOGGER.info("Adding native " + node.get("name").asText() + " metadata from "
