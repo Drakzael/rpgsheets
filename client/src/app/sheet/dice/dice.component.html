@@ -39,7 +39,7 @@
       </select>
     </div>
   </div>
-  <div *ngIf="!diceThrown">
+  <div *ngIf="!diceThrown" class="dicebox">
     <ng-container *ngFor="let dice of dicePool">
       <app-icon *ngIf="activeThrow.dice === 10" [icon]="iconD10" class="dice"/>
       <div *ngIf="activeThrow.dice === 6">D6</div>
@@ -47,7 +47,7 @@
       <div *ngIf="![6, 10, 20].includes(activeThrow.dice)">D{{ activeThrow.dice }}</div>
     </ng-container>
   </div>
-  <div *ngIf="diceThrown">
+  <div *ngIf="diceThrown" class="dicebox">
     <ng-container *ngFor="let dice of dicePool">
       <div *ngIf="activeThrow.dice === 10" class="resultDice">
         <app-icon [icon]="iconD10" class="dice" [attr.style]="getColorStyle(resolveColor(dice, inputs).primary) + getGlowStyle(resolveColor(dice, inputs).glow)" />

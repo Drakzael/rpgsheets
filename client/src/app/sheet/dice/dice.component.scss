@@ -1,6 +1,5 @@
 .box {
   width: 26.6em;
-  height: 25em;
   border: 1px solid black;
   border-bottom-color: #666;
   border-right-color: #666;
@@ -60,4 +59,13 @@
   height: 2em;
   margin: 0.2em;
   padding: 0 0.45em;
+}
+
+.dicebox {
+  border: 1px solid #333333;
+  border-radius: 0.5em;
+  background-color: #dddddd;
+  min-height: 15em;
+  padding: 0.5em;
+  margin: 0.2em;
 }
