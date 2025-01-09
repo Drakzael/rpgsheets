@@ -7,11 +7,26 @@
       </ng-container>
     </select>
   </div>
-  <div>
-    <button (click)="addDice(1)">Ajouter</button>
-    <button (click)="resetPool()">Reset</button>
-    <button (click)="throwDice()">Lancer</button>
-    <button (click)="throwDice(false)" *ngIf="diceThrown">Relancer</button>
+  <div class="actions">
+    <button (click)="addDice(1)">
+      <fa-icon [icon]="iconPlus"/>
+      <app-icon [icon]="iconD10" *ngIf="activeThrow.dice == 10"/>
+    </button>
+    <button (click)="removeDice(1)" [disabled]="diceThrown || dicePool.length == 0">
+      <fa-icon [icon]="iconMinus"/>
+      <app-icon [icon]="iconD10" *ngIf="activeThrow.dice == 10"/>
+    </button>
+    <button (click)="resetPool()">
+      <fa-icon [icon]="iconReset"/>
+    </button>
+    <button (click)="throwDice()">
+      <fa-icon [icon]="iconThrow"/>
+      Lancer {{ dicePool.length || 1 }} D{{ activeThrow.dice }}
+    </button>
+    <button (click)="throwDice(false)" *ngIf="diceThrown">
+      <fa-icon [icon]="iconThrow"/>
+      Relancer {{ dicePool.length || 1 }} D{{ activeThrow.dice }}
+    </button>
   </div>
   <div class="inputs">
     <div *ngFor="let input of activeThrow.input | keyvalue" class="input">

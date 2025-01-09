@@ -4,13 +4,16 @@ import { GameMetadata, GameMetadataDiceThrow } from '../../_models/gamemetadata'
 import { CommonModule } from '@angular/common';
 import { d10 } from '../../_icons/dice';
 import { IconComponent } from '../../common/icon/icon.component';
+import { faCancel, faDice, faDiceD6, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'app-dice',
   standalone: true,
   imports: [
     CommonModule,
-    IconComponent
+    IconComponent,
+    FontAwesomeModule
   ],
   templateUrl: './dice.component.html',
   styleUrl: './dice.component.scss'
@@ -31,6 +34,11 @@ export class DiceComponent implements OnInit {
   inputs: { [key: string]: number | boolean | string } = {};
 
   iconD10 = d10;
+
+  iconPlus = faPlus;
+  iconMinus = faMinus;
+  iconReset = faCancel;
+  iconThrow = faDice;
 
   resolve!: (dices: number[], input: { [key: string]: number | boolean | string }) => number | boolean;
 
@@ -98,6 +106,14 @@ export class DiceComponent implements OnInit {
     }
     for (let i = 0; i < count; ++i) {
       this.dicePool.push(0);
+    }
+  }
+
+  removeDice(count: number) {
+    if (count >= this.dicePool.length) {
+      this.dicePool = [];
+    } else {
+      this.dicePool = this.dicePool.splice(0, count);
     }
   }
 
