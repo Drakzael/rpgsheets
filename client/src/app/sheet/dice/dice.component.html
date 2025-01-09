@@ -50,8 +50,8 @@
   <div *ngIf="diceThrown">
     <ng-container *ngFor="let dice of dicePool">
       <div *ngIf="activeThrow.dice === 10" class="resultDice">
-        <app-icon [icon]="iconD10" class="dice"/>
-        <div class="d10Value">{{ dice }}</div>
+        <app-icon [icon]="iconD10" class="dice" [attr.style]="getColorStyle(resolveColor(dice, inputs).primary) + getGlowStyle(resolveColor(dice, inputs).glow)" />
+        <div class="d10Value" [attr.style]="getColorStyle(resolveColor(dice, inputs).secondary)">{{ dice }}</div>
       </div>
       <div *ngIf="activeThrow.dice === 6">{{ dice }}</div>
       <div *ngIf="activeThrow.dice === 20">{{ dice }}</div>

@@ -4,7 +4,7 @@ import { GameMetadata, GameMetadataDiceThrow } from '../../_models/gamemetadata'
 import { CommonModule } from '@angular/common';
 import { d10 } from '../../_icons/dice';
 import { IconComponent } from '../../common/icon/icon.component';
-import { faCancel, faDice, faDiceD6, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faCancel, faDice, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
@@ -41,6 +41,7 @@ export class DiceComponent implements OnInit {
   iconThrow = faDice;
 
   resolve!: (dices: number[], input: { [key: string]: number | boolean | string }) => number | boolean;
+  resolveColor!: (dice: number, input: { [key: string]: number | boolean | string }) => { primary?: string, secondary?: string, glow?: string };
 
   ngOnInit(): void {
     this.sheet.registerDiceStat((i) => this.diceStat.call(this, i));
@@ -62,6 +63,11 @@ export class DiceComponent implements OnInit {
       }
     }
     this.resolve = this.sheet.resolve(this.activeThrow.resultFunction) as (dices: number[], input: { [key: string]: number | boolean | string }) => number | boolean;
+    if (this.activeThrow.resultColor) {
+      this.resolveColor = this.sheet.resolve(this.activeThrow.resultColor) as (dice: number, input: { [key: string]: number | boolean | string }) => { pouet?: any, primary?: string, secondary?: string, glow?: string };
+    } else {
+      this.resolveColor = () => ({});
+    }
   }
 
   updateInput(code: string, value: string) {
@@ -131,5 +137,20 @@ export class DiceComponent implements OnInit {
       this.addDice(1);
       this.throwDice();
     }
+  }
+
+  getColorStyle(color?: string) {
+    console.log(`resolving color ${color}`);
+    if (color) {
+      return `color: ${color};`;
+    }
+    return '';
+  }
+
+  getGlowStyle(color?: string) {
+    if (color) {
+      return `filter: drop-shadow( 0 0 0.2em ${color});`
+    }
+    return '';
   }
 }

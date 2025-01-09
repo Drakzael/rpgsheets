@@ -165,3 +165,18 @@ dice:
           return successCount;
         }
       }
+    resultColor: >-
+      ${
+        (dice, { diff, res1, res10 }) => {
+          if (dice == 1 && res1 != 'fail') {
+            return { primary: '#990000', secondary: '#ffffff', glow: '#ff3333' };
+          }
+          if (dice == 10 && res10 != 'success') {
+            return { primary: '#000099', secondary: '#ffffff', glow: '#0066ff' };
+          }
+          if (dice >= diff) {
+            return { primary: '#006600', secondary: '#ffffff' };
+          }
+          return { primary: '#000000', secondary: '#ffffff' };
+        }
+      }

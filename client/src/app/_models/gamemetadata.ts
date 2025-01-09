@@ -108,7 +108,7 @@ export class GameMetadataDiceThrow {
   input?: { [key: string]: GameMetadataDiceInput };
   resultType!: "number" | "boolean";
   resultFunction!: "string"; // (dices: number[], input: {[key: string]: number | boolean} ) => number | boolean
-  resultColor?: "string"; // (dice: number, input: {[key: string]: number | boolean} ) => string[];
+  resultColor?: "string"; // (dice: number, input: {[key: string]: number | boolean} ) => { primary: string, secondary?: string, glow?: string };
 }
 
 export class GameMetadataDice {
