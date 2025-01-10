@@ -49,7 +49,7 @@
   [defaultType]="editorCode"
   [viewMode]="viewMode"/>
 
-<div *ngIf="type === 'title'" class="title">{{ name }}</div>
-<div *ngIf="type === 'note'" class="note">{{ name }}</div>
+<div *ngIf="type === 'title'" class="title">{{ sheet.resolve(name) }}</div>
+<div *ngIf="type === 'note'" class="note">{{ sheet.resolve(name) }}</div>
 
 <div *ngIf="type === 'spacer'" class="spacer"></div>

@@ -122,12 +122,9 @@ export class Sheet {
           expr = expr.replace(`${match}`, "''");
         }
       });
-      let actions: { [key: string]: (x: number) => number } = {};
-      for (let match of expr.matchAll(/@([a-zA-Z0-9\.]+)\s*=\s*(.+?);/g)) {
-        const value = match[1];
-        const fnc = match[2];
-        actions[value] = window.eval(fnc) as (x: number) => number;
-      };
+      expr = expr.replaceAll(/@([a-zA-Z0-9\.]+)\s*=\s*(.+?);/g, "actions['$1'] = $2");
+      expr = `let actions = {}; ${expr}; actions;`;
+      let actions = window.eval(expr) as { [key: string]: (x: number) => number };
       this._tmpValues[group] = actions;
     }
     this._onChange.forEach(callback => callback.call(this));
@@ -139,6 +136,10 @@ export class Sheet {
 
   public resolve(code: string | number): any {
     if (typeof(code) === "string") {
+      if (code.startsWith("${{") && code.endsWith("}}")) {
+        let expr = code.substring(3, code.length - 2);
+        return this.resolve("${ (() => {" + expr + "})(); }");
+      }
       if (code.startsWith("${") && code.endsWith("}")) {
         let expr = code.substring(2, code.length - 1);
         expr.match(/\$[a-zA-Z0-9\.]+/g)?.forEach(match => {
