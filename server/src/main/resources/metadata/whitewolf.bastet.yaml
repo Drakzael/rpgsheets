@@ -1,0 +1,1056 @@
+---
+name: Bastet
+code: whitewolf.bastet
+inherit: whitewolf
+icon: bastet
+modes:
+- code: darkage
+  name: Age des Ténèbres
+- code: apocalypse
+  name: Apocalypse
+icons:
+  bastet:
+    viewBox: 0 0 105 100
+    path: M 6.3251953 8.435144 L 11.685075 44.983818 A 40 35 0 0 0 9.9999064 54.999744 A 40 35 0 0 0 50.000049 90.000191 A 40 35 0 0 0 90.000191 54.999744 A 40 35 0 0 0 88.315023 44.983818 L 93.674902 8.435144 L 70.457715 24.940597 A 40 35 0 0 0 50.000049 19.999813 A 40 35 0 0 0 29.542383 24.940597 L 6.3251953 8.435144 z M 32.903935 47.600712 C 36.247197 47.629093 40.211669 48.635987 41.91062 52.803495 C 41.91062 52.803495 41.141927 55.647089 35.186483 55.939221 C 29.231039 56.23135 27.487728 48.312297 27.487728 48.312297 C 27.487728 48.312297 29.953997 47.57567 32.903935 47.600712 z M 67.095646 47.600712 C 70.045584 47.57567 72.51237 48.312297 72.51237 48.312297 C 72.51237 48.312297 70.769059 56.23135 64.813615 55.939221 C 58.858171 55.647089 58.089478 52.803495 58.089478 52.803495 C 59.788428 48.635987 63.752384 47.629093 67.095646 47.600712 z
+editors:
+  renown:
+    type: doubleScale
+    min: 0
+    max: 10
+    overlap: true
+    icons:
+      firstEmpty: dot.empty
+      firstFull: dot.full
+      secondEmpty: square.empty
+      secondFull: square.full
+gridRows:
+- defaultType: text
+  gridColumns:
+  - rows:
+    - name: Nom
+      value: "$sheet.name"
+    - name: Joueur
+      readonly: true
+      value: "$sheet.player"
+  - rows:
+    - name: Lignée
+      value: general.breed
+      hint:
+      - Homidé
+      - Félin
+      - Métis
+    - name: Pryio
+      value: general.pryio
+      hint:
+      - Jour
+      - Crépuscule
+      - Nuit
+    - name: Clan
+      value: general.tribe
+      hint:
+      - Bagheera
+      - Balam
+      - Bubasti
+      - Ceilican
+      - Khan
+      - Pumonca
+      - Qualmi
+      - Simba
+      - Swara
+  - rows:
+    - name: Pride
+      value: general.pride
+    - name: Jamak
+      value: general.jamak
+    - name: Concept
+      value: general.concept
+- title: Attributs
+  defaultType: attribute
+  gridColumns:
+  - title: Physique
+    rows:
+    - name: Force
+      value: attribute.strength
+    - name: Dextérité
+      value: attribute.dexterity
+    - name: Vigueur
+      value: attribute.stamina
+  - title: Social
+    rows:
+    - name: Charisme
+      value: attribute.charisma
+    - name: Manipulation
+      value: attribute.manipulation
+    - name: Apparence
+      value: attribute.appearance
+  - title: Mental
+    rows:
+    - name: Perception
+      value: attribute.perception
+    - name: Intelligence
+      value: attribute.intelligence
+    - name: Astuce
+      value: attribute.wits
+- title: Capacités
+  defaultType: ability
+  gridColumns:
+  - title: Talents
+    rows:
+    - name: Athlétisme
+      value: ability.athletics
+    - name: Bagarre
+      value: ability.brawl
+    - name: Esquive
+      value: ability.dodge
+    - name: Empathie
+      value: ability.empathy
+    - name: Expression
+      value: ability.expression
+    - name: Intimidation
+      value: ability.intimidation
+    - name: Appel primal
+      value: ability.primalUrge
+    - name: Conn. de la rue
+      value: ability.streetWise
+    - name: Vigilance
+      value: ability.alertness
+    - name: Subterfuge
+      value: ability.subterfuge
+    - type: freeValue
+      prefix: ability.additionnal.talents
+  - title: Compétences
+    rows:
+    - name: Animaux
+      value: ability.animalKen
+    - name: Conduite
+      value: ability.drive
+      mode:
+      - apocalypse
+    - name: Equitation
+      value: ability.riding
+      mode:
+      - darkage
+    - name: Etiquette
+      value: ability.etiquette
+    - name: Armes à feu
+      value: ability.firearms
+      mode:
+      - apocalypse
+    - name: Tir à l'arc
+      value: ability.archery
+      mode:
+      - darkage
+    - name: Mélée
+      value: ability.melee
+    - name: Commandement
+      value: ability.leadership
+    - name: Représentation
+      value: ability.performance
+    - name: Artisanat
+      value: ability.repair
+    - name: Furtivité
+      value: ability.stealth
+    - name: Survie
+      value: ability.survival
+    - type: freeValue
+      prefix: ability.additionnal.skills
+  - title: Connaissances
+    rows:
+    - name: Informatique
+      value: ability.computer
+      mode:
+      - apocalypse
+    - name: Erudition
+      value: ability.erudition
+      mode:
+      - darkage
+    - name: Enigmes
+      value: ability.enigmas
+    - name: Investigation
+      value: ability.investigation
+    - name: Droit
+      value: ability.law
+    - name: Langues
+      value: ability.linguistics
+    - name: Médecine
+      value: ability.medecine
+    - name: Occultisme
+      value: ability.occult
+    - name: Politique
+      value: ability.politics
+    - name: Rituels
+      value: ability.rituals
+    - name: Sciences
+      value: ability.science
+    - type: freeValue
+      prefix: ability.additionnal.knowledges
+- title: Avantages
+  gridColumns:
+  - rows:
+    - type: freeValue
+      name: Historiques
+      prefix: backgrounds
+      defaultCount: 5
+      editor: ability
+  - rows:
+    - type: freeValue
+      name: Dons
+      prefix: gifts.1
+      defaultCount: 5
+  - rows:
+    - type: freeValue
+      name: Dons
+      prefix: gifts.2
+      defaultCount: 5
+- title: ''
+  gridColumns:
+  - title: Renom
+    defaultType: renown
+    rows:
+    - name: Férocité
+      values:
+      - renown.ferocity_perma
+      - renown.ferocity_tmp
+    - name: Honneur
+      values:
+      - renown.honor_perma
+      - renown.honor_tmp
+    - name: Cunning
+      values:
+      - renown.cunning_perma
+      - renown.cunning_tmp
+    - type: spacer
+    - name: Rang
+      editor: number
+      value: renown.rank
+  - defaultType: willpower
+    rows:
+    - type: title
+      name: Rage
+    - values:
+      - rage.max
+      - rage.current
+      defaultValue: >-
+        ${
+          let max = () => {
+            switch ($general.tribe) {
+              case 'Bubasti':
+                return 1;
+              case 'Bagheera':
+              case 'Qualmi':
+              case 'Swara':
+                return 2;
+              case 'Ceilican':
+              case 'Pumonca':
+                return 3;
+              case 'Balam':
+                return 4;
+              case 'Khan':
+              case 'Simba':
+                return 5;
+              default:
+                return 0;
+            }
+          };
+          [ max(), 0 ];
+        }
+    - type: spacer
+    - type: title
+      name: Gnose
+    - values:
+      - gnosis.max
+      - gnosis.current
+      defaultValue: >-
+        ${
+          let max = () => {
+            switch ($general.breed) {
+              case 'Homidé':
+                return 2;
+              case 'Félin':
+                return 6;
+              case 'Métis':
+                return 4;
+              default:
+                return 0;
+            }
+          };
+          [ max(), 0 ];
+        }
+    - type: spacer
+    - type: title
+      name: Volonté
+    - values:
+      - willpower.max
+      - willpower.current
+      defaultValue: >-
+        ${
+          let max = () => {
+            switch ($general.tribe) {
+              case 'Khan':
+              case 'Simba':
+                return 2;
+              case 'Balam':
+              case 'Ceilican':
+                return 3;
+              case 'Bagheera':
+              case 'Pumonca':
+              case 'Swara':
+                return 4;
+              case 'Bubasti':
+              case 'Qualmi':
+                return 5;
+              default:
+                return 0;
+            }
+          };
+          [ max(), 0 ];
+        }
+  - rows:
+    - name: Santé
+      editor: health
+      values:
+      - health.blunt
+      - health.lethal
+      - health.aggravated
+    - type: spacer
+    - type: title
+      name: Expérience
+    - editor: text
+      value: character.experience
+      defaultCount: 2
+- title: ''
+  pageBreak: true
+  gridColumns:
+  - rows:
+    - type: state-start
+      group: shape
+      value: humain
+      default: true
+    - type: title
+      name: Humain
+    - type: spacer
+    - type: spacer
+    - type: spacer
+    - type: spacer
+    - type: spacer
+    - type: spacer
+    - type: note
+      name: 'Difficulté: 6'
+    - type: state-end
+  - rows:
+    - type: state-start
+      group: shape
+      value: glabro
+      action: >-
+        ${
+          switch ($general.tribe) {
+            case 'Bagheera':
+              @attribute.strength = x => x + 1;
+              @attribute.dexterity = x => x + 1;
+              @attribute.stamina = x => x + 2;
+              @attribute.manipulation = x => x - 1;
+              @attribute.appearance = x => x - 1;
+              break;
+            case 'Balam':
+              @attribute.strength = x => x + 2;
+              @attribute.dexterity = x => x + 1;
+              @attribute.stamina = x => x + 2;
+              @attribute.manipulation = x => x - 1;
+              @attribute.appearance = x => x - 1;
+              break;
+            case 'Bubasti':
+              @attribute.strength = x => x;
+              @attribute.dexterity = x => x + 1;
+              @attribute.stamina = x => x;
+              @attribute.manipulation = x => x;
+              @attribute.appearance = x => x + 1;
+              break;
+            case 'Ceilican':
+              @attribute.strength = x => x;
+              @attribute.dexterity = x => x + 2;
+              @attribute.stamina = x => x + 1;
+              @attribute.manipulation = x => x;
+              @attribute.appearance = x => x + 1;
+              break;
+            case 'Khan':
+              @attribute.strength = x => x + 2;
+              @attribute.dexterity = x => x + 1;
+              @attribute.stamina = x => x + 2;
+              @attribute.manipulation = x => x - 1;
+              @attribute.appearance = x => x - 1;
+              break;
+            case 'Pumonca':
+              @attribute.strength = x => x + 1;
+              @attribute.dexterity = x => x + 2;
+              @attribute.stamina = x => x + 2;
+              @attribute.manipulation = x => x - 1;
+              @attribute.appearance = x => x;
+              break;
+            case 'Qualmi':
+              @attribute.strength = x => x;
+              @attribute.dexterity = x => x + 2;
+              @attribute.stamina = x => x;
+              @attribute.manipulation = x => x;
+              @attribute.appearance = x => x + 1;
+              break;
+            case 'Simba':
+              @attribute.strength = x => x + 2;
+              @attribute.dexterity = x => x + 1;
+              @attribute.stamina = x => x + 2;
+              @attribute.manipulation = x => x - 1;
+              @attribute.appearance = x => x + 1;
+              break;
+            case 'Swara':
+              @attribute.strength = x => x + 1;
+              @attribute.dexterity = x => x + 2;
+              @attribute.stamina = x => x + 1;
+              @attribute.manipulation = x => x - 1;
+              @attribute.appearance = x => x;
+              break;
+            default:
+              break;
+          }
+        }
+    - type: title
+      name: Sokto
+    - type: note
+      name: >-
+        ${{
+          switch ($general.tribe) {
+            case 'Bubasti':
+            case 'Ceilican':
+            case 'Qualmi':
+              return 'Force (+0)';
+            case 'Bagheera':
+            case 'Pumonca':
+            case 'Swara':
+              return 'Force (+1)';
+            case 'Balam':
+            case 'Khan':
+            case 'Simba':
+              return 'Force (+2)';
+            default:
+              return '';
+          }
+        }}
+    - type: note
+      name: >-
+        ${{
+          switch ($general.tribe) {
+            case 'Bagheera':
+            case 'Balam':
+            case 'Bubasti':
+            case 'Khan':
+            case 'Simba':
+              return 'Dextérité (+1)';
+            case 'Ceilican':
+            case 'Pumonca':
+            case 'Qualmi':
+            case 'Swara':
+              return 'Dextérité (+2)';
+            default:
+              return '';
+          }
+        }}
+    - type: note
+      name: >-
+        ${{
+          switch ($general.tribe) {
+            case 'Bubasti':
+            case 'Qualmi':
+              return 'Vigueur (+0)';
+            case 'Ceilican':
+            case 'Swara':
+              return 'Vigueur (+1)';
+            case 'Bagheera':
+            case 'Balam':
+            case 'Khan':
+            case 'Pumonca':
+            case 'Simba':
+              return 'Vigueur (+2)';
+            default:
+              return '';
+          }
+        }}
+    - type: note
+      name: >-
+        ${{
+          switch ($general.tribe) {
+            case 'Bubasti':
+            case 'Ceilican':
+            case 'Qualmi':
+              return 'Manipulation (+0)';
+            case 'Bagheera':
+            case 'Balam':
+            case 'Khan':
+            case 'Pumonca':
+            case 'Simba':
+            case 'Swara':
+              return 'Manipulation (-1)';
+            default:
+              return '';
+          }
+        }}
+    - type: note
+      name: >-
+        ${{
+          switch ($general.tribe) {
+            case 'Bagheera':
+            case 'Balam':
+            case 'Khan':
+              return 'Apparence (-1)';
+            case 'Pumonca':
+            case 'Swara':
+              return 'Apparence (+0)';
+            case 'Bubasti':
+            case 'Ceilican':
+            case 'Qualmi':
+            case 'Simba':
+              return 'Apparence (+1)';
+            default:
+              return '';
+          }
+        }}
+    - type: spacer
+    - type: note
+      name: 'Difficulté: 7'
+    - type: state-end
+  - rows:
+    - type: state-start
+      group: shape
+      value: crinos
+      action: >-
+        ${
+          switch ($general.tribe) {
+            case 'Bagheera':
+              @attribute.strength = x => x + 3;
+              @attribute.dexterity = x => x + 3;
+              @attribute.stamina = x => x + 3;
+              @attribute.manipulation = x => x - 3;
+              @attribute.appearance = x => 0;
+              break;
+            case 'Balam':
+              @attribute.strength = x => x + 3;
+              @attribute.dexterity = x => x + 3;
+              @attribute.stamina = x => x + 3;
+              @attribute.manipulation = x => x - 4;
+              @attribute.appearance = x => 0;
+              break;
+            case 'Bubasti':
+              @attribute.strength = x => x + 1;
+              @attribute.dexterity = x => x + 3;
+              @attribute.stamina = x => x + 1;
+              @attribute.manipulation = x => x - 2;
+              @attribute.appearance = x => x - 3;
+              break;
+            case 'Ceilican':
+              @attribute.strength = x => x + 1;
+              @attribute.dexterity = x => x + 3;
+              @attribute.stamina = x => x + 1;
+              @attribute.manipulation = x => x;
+              @attribute.appearance = x => x - 2;
+              break;
+            case 'Khan':
+              @attribute.strength = x => x + 3;
+              @attribute.dexterity = x => x + 2;
+              @attribute.stamina = x => x + 3;
+              @attribute.manipulation = x => x - 3;
+              @attribute.appearance = x => 0;
+              break;
+            case 'Pumonca':
+              @attribute.strength = x => x + 3;
+              @attribute.dexterity = x => x + 3;
+              @attribute.stamina = x => x + 4;
+              @attribute.manipulation = x => x - 3;
+              @attribute.appearance = x => 0;
+              break;
+            case 'Qualmi':
+              @attribute.strength = x => x + 1;
+              @attribute.dexterity = x => x + 3;
+              @attribute.stamina = x => x + 1;
+              @attribute.manipulation = x => x - 2;
+              @attribute.appearance = x => 0;
+              break;
+            case 'Simba':
+              @attribute.strength = x => x + 3;
+              @attribute.dexterity = x => x + 2;
+              @attribute.stamina = x => x + 3;
+              @attribute.manipulation = x => x - 2;
+              @attribute.appearance = x => 0;
+              break;
+            case 'Swara':
+              @attribute.strength = x => x + 2;
+              @attribute.dexterity = x => x + 4;
+              @attribute.stamina = x => x + 3;
+              @attribute.manipulation = x => x - 3;
+              @attribute.appearance = x => 0;
+              break;
+            default:
+              break;
+          }
+        }
+    - type: title
+      name: Crinos
+    - type: note
+      name: >-
+        ${{
+          switch ($general.tribe) {
+            case 'Bubasti':
+            case 'Ceilican':
+            case 'Qualmi':
+              return 'Force (+1)';
+            case 'Swara':
+              return 'Force (+2)';
+            case 'Bagheera':
+            case 'Balam':
+            case 'Khan':
+            case 'Pumonca':
+            case 'Simba':
+              return 'Force (+3)';
+            default:
+              return '';
+          }
+        }}
+    - type: note
+      name: >-
+        ${{
+          switch ($general.tribe) {
+            case 'Khan':
+            case 'Simba':
+              return 'Dextérité (+2)';
+            case 'Bagheera':
+            case 'Balam':
+            case 'Bubasti':
+            case 'Ceilican':
+            case 'Pumonca':
+            case 'Qualmi':
+              return 'Dextérité (+3)';
+            case 'Swara':
+              return 'Dextérité (+4)';
+            default:
+              return '';
+          }
+        }}
+    - type: note
+      name: >-
+        ${{
+          switch ($general.tribe) {
+            case 'Bubasti':
+            case 'Ceilican':
+            case 'Qualmi':
+              return 'Vigueur (+1)';
+            case 'Bagheera':
+            case 'Balam':
+            case 'Khan':
+            case 'Simba':
+            case 'Swara':
+              return 'Vigueur (+3)';
+            case 'Pumonca':
+              return 'Vigueur (+4)';
+            default:
+              return '';
+          }
+        }}
+    - type: note
+      name: >-
+        ${{
+          switch ($general.tribe) {
+            case 'Balam':
+              return 'Manipulation (-4)';
+            case 'Bagheera':
+            case 'Khan':
+            case 'Pumonca':
+            case 'Swara':
+              return 'Manipulation (-3)';
+            case 'Bubasti':
+            case 'Qualmi':
+            case 'Simba':
+              return 'Manipulation (-2)';
+            case 'Ceilican':
+              return 'Manipulation (+0)';
+            default:
+              return '';
+          }
+        }}
+    - type: note
+      name: >-
+        ${{
+          switch ($general.tribe) {
+            case 'Bagheera':
+            case 'Balam':
+            case 'Khan':
+            case 'Pumonca':
+            case 'Qualmi':
+            case 'Simba':
+            case 'Swara':
+              return 'Apparence (0)';
+            case 'Bubasti':
+              return 'Apparence (-3)';
+            case 'Ceilican':
+              return 'Apparence (-2)';
+            default:
+              return '';
+          }
+        }}
+    - type: spacer
+    - type: note
+      name: 'Difficulté: 6'
+    - type: state-end
+  - rows:
+    - type: state-start
+      group: shape
+      value: chatro
+      action: >-
+        ${
+          switch ($general.tribe) {
+            case 'Bagheera':
+              @attribute.strength = x => x + 2;
+              @attribute.dexterity = x => x + 3;
+              @attribute.stamina = x => x + 3;
+              @attribute.manipulation = x => x - 3;
+              @attribute.appearance = x => x - 2;
+              break;
+            case 'Balam':
+              @attribute.strength = x => x + 3;
+              @attribute.dexterity = x => x + 2;
+              @attribute.stamina = x => x + 3;
+              @attribute.manipulation = x => x - 4;
+              @attribute.appearance = x => 0;
+              break;
+            case 'Bubasti':
+              @attribute.strength = x => x + 2;
+              @attribute.dexterity = x => x + 4;
+              @attribute.stamina = x => x + 1;
+              @attribute.manipulation = x => x - 2;
+              @attribute.appearance = x => 0;
+              break;
+            case 'Ceilican':
+              @attribute.strength = x => x;
+              @attribute.dexterity = x => x + 4;
+              @attribute.stamina = x => x + 1;
+              @attribute.manipulation = x => x - 2;
+              @attribute.appearance = x => x - 2;
+              break;
+            case 'Khan':
+              @attribute.strength = x => x + 4;
+              @attribute.dexterity = x => x + 2;
+              @attribute.stamina = x => x + 3;
+              @attribute.manipulation = x => x - 3;
+              @attribute.appearance = x => 0;
+              break;
+            case 'Pumonca':
+              @attribute.strength = x => x + 3;
+              @attribute.dexterity = x => x + 3;
+              @attribute.stamina = x => x + 3;
+              @attribute.manipulation = x => x - 3;
+              @attribute.appearance = x => 0;
+              break;
+            case 'Qualmi':
+              @attribute.strength = x => x + 1;
+              @attribute.dexterity = x => x + 4;
+              @attribute.stamina = x => x + 1;
+              @attribute.manipulation = x => x - 2;
+              @attribute.appearance = x => 0;
+              break;
+            case 'Simba':
+              @attribute.strength = x => x + 3;
+              @attribute.dexterity = x => x + 2;
+              @attribute.stamina = x => x + 3;
+              @attribute.manipulation = x => x - 2;
+              @attribute.appearance = x => 0;
+              break;
+            case 'Swara':
+              @attribute.strength = x => x + 2;
+              @attribute.dexterity = x => x + 4;
+              @attribute.stamina = x => x + 3;
+              @attribute.manipulation = x => x - 3;
+              @attribute.appearance = x => 0;
+              break;
+            default:
+              break;
+          }
+        }
+    - type: title
+      name: Chatro
+    - type: note
+      name: >-
+        ${{
+          switch ($general.tribe) {
+            case 'Ceilican':
+              return 'Force (+0)';
+            case 'Qualmi':
+              return 'Force (+1)';
+            case 'Bagheera':
+            case 'Bubasti':
+            case 'Swara':
+              return 'Force (+2)';
+            case 'Balam':
+            case 'Pumonca':
+            case 'Simba':
+              return 'Force (+3)';
+            case 'Khan':
+              return 'Force (+4)';
+            default:
+              return '';
+          }
+        }}
+    - type: note
+      name: >-
+        ${{
+          switch ($general.tribe) {
+            case 'Balam':
+            case 'Khan':
+            case 'Simba':
+              return 'Dextérité (+2)';
+            case 'Bagheera':
+            case 'Pumonca':
+              return 'Dextérité (+3)';
+            case 'Bubasti':
+            case 'Ceilican':
+            case 'Qualmi':
+            case 'Swara':
+              return 'Dextérité (+4)';
+            default:
+              return '';
+          }
+        }}
+    - type: note
+      name: >-
+        ${{
+          switch ($general.tribe) {
+            case 'Bubasti':
+            case 'Ceilican':
+            case 'Qualmi':
+              return 'Vigueur (+1)';
+            case 'Bagheera':
+            case 'Balam':
+            case 'Khan':
+            case 'Pumonca':
+            case 'Simba':
+            case 'Swara':
+              return 'Vigueur (+3)';
+            default:
+              return '';
+          }
+        }}
+    - type: note
+      name: >-
+        ${{
+          switch ($general.tribe) {
+            case 'Balam':
+              return 'Manipulation (-4)';
+            case 'Bagheera':
+            case 'Khan':
+            case 'Pumonca':
+            case 'Swara':
+              return 'Manipulation (-3)';
+            case 'Bubasti':
+            case 'Ceilican':
+            case 'Qualmi':
+            case 'Simba':
+              return 'Manipulation (-2)';
+            default:
+              return '';
+          }
+        }}
+    - type: note
+      name: >-
+        ${{
+          switch ($general.tribe) {
+            case 'Balam':
+            case 'Bubasti':
+            case 'Khan':
+            case 'Pumonca':
+            case 'Qualmi':
+            case 'Simba':
+            case 'Swara':
+              return 'Apparence (0)';
+            case 'Bagheera':
+            case 'Ceilican':
+              return 'Apparence (-2)';
+            default:
+              return '';
+          }
+        }}
+    - type: spacer
+    - type: note
+      name: 'Difficulté: 7'
+    - type: state-end
+  - rows:
+    - type: state-start
+      group: shape
+      value: feline
+      action: >-
+        ${
+          switch ($general.tribe) {
+            case 'Bagheera':
+              @attribute.strength = x => x + 1;
+              @attribute.dexterity = x => x + 3;
+              @attribute.stamina = x => x + 2;
+              @attribute.manipulation = x => x - 3;
+              break;
+            case 'Balam':
+              @attribute.strength = x => x + 2;
+              @attribute.dexterity = x => x + 3;
+              @attribute.stamina = x => x + 2;
+              @attribute.manipulation = x => x - 3;
+              break;
+            case 'Bubasti':
+              @attribute.strength = x => x - 1;
+              @attribute.dexterity = x => x + 4;
+              @attribute.stamina = x => x + 1;
+              @attribute.manipulation = x => x;
+              break;
+            case 'Ceilican':
+              @attribute.strength = x => x - 1;
+              @attribute.dexterity = x => x + 4;
+              @attribute.stamina = x => x;
+              @attribute.manipulation = x => x - 2;
+              break;
+            case 'Khan':
+              @attribute.strength = x => x + 2;
+              @attribute.dexterity = x => x + 2;
+              @attribute.stamina = x => x + 3;
+              @attribute.manipulation = x => x - 3;
+              break;
+            case 'Pumonca':
+              @attribute.strength = x => x + 2;
+              @attribute.dexterity = x => x + 3;
+              @attribute.stamina = x => x + 3;
+              @attribute.manipulation = x => x;
+              break;
+            case 'Qualmi':
+              @attribute.strength = x => x;
+              @attribute.dexterity = x => x + 4;
+              @attribute.stamina = x => x;
+              @attribute.manipulation = x => x - 2;
+              break;
+            case 'Simba':
+              @attribute.strength = x => x + 3;
+              @attribute.dexterity = x => x + 3;
+              @attribute.stamina = x => x + 2;
+              @attribute.manipulation = x => x - 1;
+              break;
+            case 'Swara':
+              @attribute.strength = x => x + 1;
+              @attribute.dexterity = x => x + 4;
+              @attribute.stamina = x => x + 2;
+              @attribute.manipulation = x => x - 3;
+              break;
+            default:
+              break;
+          }
+        }
+    - type: title
+      name: Feline
+    - type: note
+      name: >-
+        ${{
+          switch ($general.tribe) {
+            case 'Bubasti':
+            case 'Ceilican':
+              return 'Force (-1)';
+            case 'Qualmi':
+              return 'Force (+0)';
+            case 'Bagheera':
+            case 'Swara':
+              return 'Force (+1)';
+            case 'Balam':
+            case 'Khan':
+            case 'Pumonca':
+              return 'Force (+2)';
+            case 'Simba':
+              return 'Force (+3)';
+            default:
+              return '';
+          }
+        }}
+    - type: note
+      name: >-
+        ${{
+          switch ($general.tribe) {
+            case 'Khan':
+              return 'Dextérité (+2)';
+            case 'Bagheera':
+            case 'Balam':
+            case 'Pumonca':
+            case 'Simba':
+              return 'Dextérité (+3)';
+            case 'Bubasti':
+            case 'Ceilican':
+            case 'Qualmi':
+            case 'Swara':
+              return 'Dextérité (+4)';
+            default:
+              return '';
+          }
+        }}
+    - type: note
+      name: >-
+        ${{
+          switch ($general.tribe) {
+            case 'Ceilican':
+            case 'Qualmi':
+              return 'Vigueur (+0)';
+            case 'Bubasti':
+              return 'Vigueur (+1)';
+            case 'Bagheera':
+            case 'Balam':
+            case 'Simba':
+            case 'Swara':
+              return 'Vigueur (+2)';
+            case 'Khan':
+            case 'Pumonca':
+              return 'Vigueur (+3)';
+            default:
+              return '';
+          }
+        }}
+    - type: note
+      name: >-
+        ${{
+          switch ($general.tribe) {
+            case 'Bagheera':
+            case 'Balam':
+            case 'Khan':
+            case 'Swara':
+              return 'Manipulation (-3)';
+            case 'Ceilican':
+            case 'Qualmi':
+              return 'Manipulation (-2)';
+            case 'Simba':
+              return 'Manipulation (-1)';
+            case 'Bubasti':
+            case 'Pumonca':
+              return 'Manipulation (+0)';
+            default:
+              return '';
+          }
+        }}
+    - type: spacer
+    - type: spacer
+    - type: note
+      name: 'Difficulté: 6'
+    - type: state-end
+- title: ''
+  gridColumns:
+  - rows:
+    - type: title
+      name: Atouts
+    - type: freeValue
+      prefix: advantage.advantage
+      defaultCount: 4
+    - type: spacer
+    - type: title
+      name: Faiblesses
+    - type: freeValue
+      prefix: advantage.weakness
+      defaultCount: 4
+  - {}
+  - {}
+- title: Notes
+  gridColumns:
+  - rows:
+    - editor: text
+      defaultCount: 30
+      value: notes.1
