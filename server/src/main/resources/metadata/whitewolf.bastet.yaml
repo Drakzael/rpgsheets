@@ -215,7 +215,7 @@ gridRows:
       values:
       - renown.honor_perma
       - renown.honor_tmp
-    - name: Cunning
+    - name: Ruse
       values:
       - renown.cunning_perma
       - renown.cunning_tmp
