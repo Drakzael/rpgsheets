@@ -70,6 +70,8 @@ editors:
     icons: 
       firstEmpty: "dot.empty"
       firstFull: "dot.full"
+      firstPlus: dot.plus
+      firstMinus: dot.minus
       secondEmpty: "square.empty"
       secondFull: "square.crossed"
   health: 
