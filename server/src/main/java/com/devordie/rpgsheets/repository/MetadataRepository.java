@@ -12,7 +12,6 @@ import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.stream.Stream;
 
 import org.apache.commons.logging.Log;
@@ -20,6 +19,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.devordie.rpgsheets.entities.Icon;
 import com.devordie.rpgsheets.entities.MetadataOverview;
+import com.devordie.rpgsheets.tools.JsonUtils;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -37,6 +37,7 @@ public class MetadataRepository {
   private static final String RESOURCE_METADATA_DIRECTORY = "/metadata";
   private static final String LOCAL_METADATA_DIRECTORY = "metadata";
   private static final String LOCAL_SOURCE_DIRECTORY = "metadata.source";
+  private final JsonUtils jsonUtils = new JsonUtils();
   private List<JsonNode> metadata = null;
 
   @Inject
@@ -97,30 +98,23 @@ public class MetadataRepository {
     if (this.metadata == null) {
       copyResources();
       final Map<String, JsonNode> metadata = new HashMap<>();
-      try (final Stream<Path> files = Files.list(getCustomPath())) {
-        for (final Path file : files.filter(file -> file.toString().endsWith(".json") || file.toString().endsWith(".yaml")).toList()) {
-          final JsonNode node = MAPPER.readTree(Files.readAllBytes(file));
-          LOGGER.info("Adding custom " + node.get("name").asText() + " metadata from "
-              + getCustomPath().toAbsolutePath().toString());
-          metadata.put(node.get("code").asText(), node);
-        }
-      } catch (IOException ex) {
-        throw new IllegalStateException("Can't list metadata files in " + LOCAL_METADATA_DIRECTORY, ex);
+
+      for (final JsonNode node : jsonUtils.loadDirectory(getCustomPath()).values()) {
+        LOGGER.info("Adding custom " + node.get("name").asText() + " metadata from "
+            + getCustomPath().toAbsolutePath().toString());
+        metadata.put(node.get("code").asText(), node);
       }
-      try (final Stream<Path> files = Files.list(getNativePath())) {
-        for (final Path file : files.filter(file -> file.toString().endsWith(".json") || file.toString().endsWith(".yaml")).toList()) {
-          final JsonNode node = MAPPER.readTree(Files.readAllBytes(file));
-          if (metadata.values().stream().filter(meta -> node.get("code").asText().equals(meta.get("code").asText())).count() == 0) {
-            LOGGER.info("Adding native " + node.get("name").asText() + " metadata from "
-                + getNativePath().toAbsolutePath().toString());
-            metadata.put(node.get("code").asText(), node);
-          } else {
-            LOGGER.debug("Skipping native " + node.get("name").asText() + " metadata from "
-                + getNativePath().toAbsolutePath().toString() + " : already added");
-          }
+
+      for (final JsonNode node : jsonUtils.loadDirectory(getNativePath()).values()) {
+        if (metadata.values().stream().filter(meta -> node.get("code").asText().equals(meta.get("code").asText()))
+            .count() == 0) {
+          LOGGER.info("Adding native " + node.get("name").asText() + " metadata from "
+              + getNativePath().toAbsolutePath().toString());
+          metadata.put(node.get("code").asText(), node);
+        } else {
+          LOGGER.debug("Skipping native " + node.get("name").asText() + " metadata from "
+              + getNativePath().toAbsolutePath().toString() + " : already added");
         }
-      } catch (IOException ex) {
-        throw new IllegalStateException("Can't list metadata files in " + LOCAL_SOURCE_DIRECTORY, ex);
       }
 
       this.metadata = metadata.values().stream()
@@ -133,24 +127,9 @@ public class MetadataRepository {
     return metadata;
   }
 
-  private ObjectNode inheritMetadataAux(JsonNode child, JsonNode parent) {
-    final ObjectNode node = new ObjectNode(null);
-    for (final Entry<String, JsonNode> jsonNode : parent.properties()) {
-      node.set(jsonNode.getKey(), jsonNode.getValue().deepCopy());
-    }
-    for (final Entry<String, JsonNode> jsonNode : child.properties()) {
-      if (node.has(jsonNode.getKey()) && jsonNode.getValue().isObject()) {
-        node.set(jsonNode.getKey(), inheritMetadataAux(jsonNode.getValue(), parent.get(jsonNode.getKey())));
-      } else {
-        node.set(jsonNode.getKey(), jsonNode.getValue());
-      }
-    }
-    return node;
-  }
-
   private JsonNode inheritMetadata(JsonNode child, JsonNode parent) {
     LOGGER.info("Inheriting " + child.get("name").asText() + " from " + parent.get("name").asText());
-    final ObjectNode node = inheritMetadataAux(child, parent);
+    final ObjectNode node = jsonUtils.inherit(child, parent);
     node.remove("inherit");
     node.remove("technical");
     return node;
