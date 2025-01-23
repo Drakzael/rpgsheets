@@ -1,7 +1,7 @@
 ---
 code: "whitewolf"
 name: "WhiteWolf parent"
-technical: "true"
+technical: true
 icons: 
   dot.empty: 
     viewBox: "0 0 100 105"
@@ -65,8 +65,8 @@ editors:
   willpower: 
     type: "doubleScale"
     max: 10
-    overlap: "false"
-    freeEditSquares: "true"
+    overlap: false
+    freeEditSquares: true
     icons: 
       firstEmpty: "dot.empty"
       firstFull: "dot.full"
@@ -95,7 +95,7 @@ editors:
       values: 
       - name: "Contondants"
         icon: "damage.blunt"
-        overlap: "true"
+        overlap: true
       - name: "Létaux"
         icon: "damage.lethal"
       - name: "Aggravés"
