@@ -150,7 +150,7 @@ export class Sheet {
           if (this.numericValues[valueCode] !== undefined) {
             expr = expr.replace(`${match}`, this.numericValues[valueCode].toString());
           } else if (this.stringValues[valueCode] !== undefined) {
-            expr = expr.replace(`${match}`, `"${this.stringValues[valueCode]}"`);
+            expr = expr.replace(`${match}`, `"${this.stringValues[valueCode].replace('"', '\\"')}"`);
           } else {
             expr = expr.replace(`${match}`, "''");
           }
