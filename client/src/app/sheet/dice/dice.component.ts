@@ -45,21 +45,55 @@ export class DiceComponent implements OnInit {
 
   ngOnInit(): void {
     this.sheet.registerDiceStat((i) => this.diceStat.call(this, i));
-    this.selectThrow(this.metadata.dice!.throws[0]);
+    this.selectThrow(this.defaultThrow);
+  }
+
+  get defaultThrow(): GameMetadataDiceThrow {
+    const throwCode = localStorage.getItem(`diceThrow-${this.sheet.game}`);
+    return this.metadata.dice!.throws.find(diceThrow => diceThrow.code === throwCode) || this.metadata.dice!.throws[0];
+  }
+
+  set defaultThrow(diceThrow) {
+    localStorage.setItem(`diceThrow-${this.sheet.game}`, diceThrow.code);
+  }
+
+  private getInputValue(inputCode: string): string | boolean | number {
+    const input = this.activeThrow.input![inputCode];
+    let value: string | boolean | number | null = localStorage.getItem(`diceThrow-${this.sheet.game}-${this.activeThrow.code}-input-${inputCode}`);
+    if (value === null) {
+      return input.defaultValue;
+    }
+    switch (input.valueType) {
+      case 'boolean':
+        value = Boolean(value);
+        break;
+      case 'number':
+        value = Number(value);
+        break;
+    }
+    if (input.type === "select" && !input.values!.filter(v => v.value === value).length) {
+      return input.defaultValue;
+    }
+    return value!;
+  }
+
+  private setDefaultInput(inputCode: string, value: string | number | boolean) {
+    localStorage.setItem(`diceThrow-${this.sheet.game}-${this.activeThrow.code}-input-${inputCode}`, value.toString());
   }
 
   selectThrow(activeThrow: GameMetadataDiceThrow) {
     this.activeThrow = activeThrow;
+    this.defaultThrow = activeThrow;
     this.inputs = {};
     if (this.activeThrow.input) {
       for (let inputKey of Object.keys(this.activeThrow.input!)) {
         const input = this.activeThrow.input![inputKey];
-        this.inputs[inputKey] = input.defaultValue;
         if (input.type === "select" && !input.values) {
           input.values = Array(input.max! - input.min! + 1).fill(0)
             .map((_, i) => i + input.min!)
             .map(i => ({ name: i.toString(), value: i }));
         }
+        this.inputs[inputKey] = this.getInputValue(inputKey);
       }
     }
     this.resolve = this.sheet.resolve(this.activeThrow.resultFunction) as (dices: number[], input: { [key: string]: number | boolean | string }) => number | boolean;
@@ -82,6 +116,7 @@ export class DiceComponent implements OnInit {
         this.inputs[code] = value;
         break;
     }
+    this.setDefaultInput(code, value);
     this.result();
   }
 
@@ -140,7 +175,6 @@ export class DiceComponent implements OnInit {
   }
 
   getColorStyle(color?: string) {
-    console.log(`resolving color ${color}`);
     if (color) {
       return `color: ${color};`;
     }
