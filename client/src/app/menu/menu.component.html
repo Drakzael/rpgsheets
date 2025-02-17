@@ -18,10 +18,18 @@
       <div [routerLink]="['/campain', campain.id]" class="campain link">
         <div class="campainName">{{ campain.name === "" ? "Campagne sans nom": campain.name }}</div>
       </div>
-      <div *ngFor="let sheet of campain.sheets">
-        <div [routerLink]="['/sheet', sheet.id]" class="campainsheet link {{ sheet.mine ? 'mine' : 'notmine' }}">
+      <div *ngFor="let sheet of campain.pcSheets">
+        <div [routerLink]="['/sheet', sheet.id]" class="campainsheet link notmine">
           <app-icon [icon]="metadata[sheet.game!].icon!" *ngIf="metadata && metadata[sheet.game!]?.icon" />
           {{ sheet.name === "" ? "Fiche sans nom" : sheet.name }}</div>
+      </div>
+      <div *ngIf="campain.npcSheets.length" class="campainNpcs">
+        <div class="subtitle">PNJ</div>
+        <div *ngFor="let sheet of campain.npcSheets">
+          <div [routerLink]="['/sheet', sheet.id]" class="campainsheet link mine">
+            <app-icon [icon]="metadata[sheet.game!].icon!" *ngIf="metadata && metadata[sheet.game!]?.icon" />
+            {{ sheet.name === "" ? "Fiche sans nom" : sheet.name }}</div>
+        </div>
       </div>
     </div>
     <div [routerLink]="['/campain', 'new']" class="link new"><fa-icon [icon]="iconAdd"/> Nouvelle campagne</div>

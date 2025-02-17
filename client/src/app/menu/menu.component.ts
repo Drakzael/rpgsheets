@@ -48,7 +48,12 @@ export class MenuComponent implements OnInit {
   }
 
   get gmCampains() {
-    return this.campains.filter(campain => campain.mine);
+    return this.campains.filter(campain => campain.mine).map(campain => ({
+      name: campain.name,
+      id: campain.id,
+      pcSheets: campain.sheets.filter(sheet => !sheet.mine),
+      npcSheets: campain.sheets.filter(sheet => sheet.mine)
+    }));
   }
 
   get playerCampains() {
