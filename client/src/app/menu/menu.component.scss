@@ -3,11 +3,18 @@ nav {
   padding: 0.5em;
 }
 
+.link {
+  cursor: pointer;
+  display: inline-block;
+  color: black;
+  text-decoration: none;
+}
+
 .user {
   text-align: right;
 }
 
-.user div {
+.user a {
   display: inline-block;
   text-decoration: underline;
   cursor: pointer;
@@ -30,20 +37,15 @@ nav {
   color: #555;
 }
 
-.campainName {
-  display: inline;
-  text-decoration: underline;
-}
-
 .gmName {
   display: inline;
   margin-left: 0.3em;
   font-style: italic;
 }
 
-.link {
-  cursor: pointer;
-  display: inline-block;
+.campainName {
+  display: inline;
+  text-decoration: underline;
 }
 
 .new {
@@ -73,7 +75,7 @@ nav {
   color: #555;
 }
 
-.title {
+.title, .title .link {
   background-color: black;
   color: white;
   padding-left: 0.3em;

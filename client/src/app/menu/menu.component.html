@@ -1,71 +1,75 @@
 <nav *ngIf="me">
   <div class="user">
     <fa-icon [icon]="iconUser" />
-    <div [routerLink]="['/user', me.username]">{{ me.alias || me.username }}</div>
+    <a class="link" [routerLink]="['/user', me.username]">{{ me.alias || me.username }}</a>
     <button (click)="logout()" title="Déconnexion" class="icon-button"><fa-icon [icon]="iconLogout" /></button>
   </div>
 
   <div class="title" *ngIf="me.roles?.includes(Role.Admin)">
-    <div class="link" [routerLink]="['/users']">
+    <a class="link" [routerLink]="['/users']">
       <fa-icon [icon]="iconUsers" />
       Utilisateurs
-    </div>
+    </a>
   </div>
 
   <div class="campains">
-    <div class="title"><fa-icon [icon]="iconCampain"/> Campagnes (MJ)</div>
+    <div class="title"><fa-icon [icon]="iconCampain" /> Campagnes (MJ)</div>
     <div *ngFor="let campain of gmCampains">
-      <div [routerLink]="['/campain', campain.id]" class="campain link">
-        <div class="campainName">{{ campain.name === "" ? "Campagne sans nom": campain.name }}</div>
-      </div>
+      <a [routerLink]="['/campain', campain.id]" class="campain link campainName">
+        {{ campain.name === "" ? "Campagne sans nom": campain.name }}
+      </a>
       <div *ngFor="let sheet of campain.pcSheets">
-        <div [routerLink]="['/sheet', sheet.id]" class="campainsheet link notmine">
+        <a [routerLink]="['/sheet', sheet.id]" class="campainsheet link notmine">
           <app-icon [icon]="metadata[sheet.game!].icon!" *ngIf="metadata && metadata[sheet.game!]?.icon" />
-          {{ sheet.name === "" ? "Fiche sans nom" : sheet.name }}</div>
+          {{ sheet.name === "" ? "Fiche sans nom" : sheet.name }}
+        </a>
       </div>
       <div *ngIf="campain.npcSheets.length" class="campainNpcs">
         <div class="subtitle">PNJ</div>
         <div *ngFor="let sheet of campain.npcSheets">
-          <div [routerLink]="['/sheet', sheet.id]" class="campainsheet link mine">
+          <a [routerLink]="['/sheet', sheet.id]" class="campainsheet link mine">
             <app-icon [icon]="metadata[sheet.game!].icon!" *ngIf="metadata && metadata[sheet.game!]?.icon" />
-            {{ sheet.name === "" ? "Fiche sans nom" : sheet.name }}</div>
+            {{ sheet.name === "" ? "Fiche sans nom" : sheet.name }}
+          </a>
         </div>
       </div>
     </div>
-    <div [routerLink]="['/campain', 'new']" class="link new"><fa-icon [icon]="iconAdd"/> Nouvelle campagne</div>
+    <a [routerLink]="['/campain', 'new']" class="link new"><fa-icon [icon]="iconAdd" /> Nouvelle campagne</a>
   </div>
 
   <div class="campains" *ngIf="playerCampains.length">
-    <div class="title"><fa-icon [icon]="iconCampain"/> Campagnes (PJ)</div>
+    <div class="title"><fa-icon [icon]="iconCampain" /> Campagnes (PJ)</div>
     <div *ngFor="let campain of playerCampains">
-      <div [routerLink]="['/campain', campain.id]" class="campain link">
+      <a [routerLink]="['/campain', campain.id]" class="campain link">
         <div class="campainName">{{ campain.name === "" ? "Campagne sans nom": campain.name }}</div>
         <div class="gmName">({{ campain.gmName }})</div>
-      </div>
+      </a>
       <div *ngFor="let sheet of campain.sheets">
-        <div [routerLink]="['/sheet', sheet.id]" class="campainsheet link">
+        <a [routerLink]="['/sheet', sheet.id]" class="campainsheet link">
           <fa-icon [icon]="iconCharacter" *ngIf="!sheet.mine" />
           <app-icon [icon]="metadata[sheet.game!].icon!" *ngIf="metadata && metadata[sheet.game!]?.icon" />
-          {{ sheet.name === "" ? "Fiche sans nom" : sheet.name }}</div>
+          {{ sheet.name === "" ? "Fiche sans nom" : sheet.name }}
+        </a>
       </div>
     </div>
   </div>
 
   <div class="sheets">
     <div class="title">
-      <div><fa-icon [icon]="iconCharacter"/></div>
+      <div><fa-icon [icon]="iconCharacter" /></div>
       <div>Personnages</div>
-      <div><input #chkAllSheets type="checkbox" (change)="allSheets = chkAllSheets.checked" title="Afficher aussi les fiches incluses dans une campagne"/></div>
+      <div><input #chkAllSheets type="checkbox" (change)="allSheets = chkAllSheets.checked"
+          title="Afficher aussi les fiches incluses dans une campagne" /></div>
     </div>
     <div *ngFor="let sheet of sheets">
-      <div [routerLink]="['/sheet', sheet.id]" class="link">
+      <a [routerLink]="['/sheet', sheet.id]" class="link">
         <fa-icon [icon]="iconDeprecated" *ngIf="sheet.deprecated" />
         <app-icon [icon]="metadata[sheet.game!].icon!" *ngIf="metadata && metadata[sheet.game!]?.icon" />
         {{ sheet.name === "" ? "Fiche sans nom" : sheet.name }}
-      </div>
+      </a>
     </div>
     <div>
-      <div [routerLink]="['/sheet', 'new']" class="link new"><fa-icon [icon]="iconAdd"/> Nouvelle feuille</div>
+      <a [routerLink]="['/sheet', 'new']" class="link new"><fa-icon [icon]="iconAdd" /> Nouvelle feuille</a>
     </div>
   </div>
 
