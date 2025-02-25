@@ -7,8 +7,8 @@
 </div>
 <div *ngIf="viewMode !== mode.Edit" class="campain">
   <div class="name">{{ campain?.name }}</div>
-  <div class="description">{{ campain?.gmDescription }}</div>
-  <div class="description">{{ campain?.description }}</div>
+  <div class="description" [innerHtml]="gmDescription"></div>
+  <div class="description" [innerHtml]="description"></div>
   <div class="characters">
     <div>Personnages :</div>
     <div class="character" [routerLink]="['/sheet', sheet.id]" *ngFor="let sheet of campain?.sheets">{{ sheet.name }}</div>
@@ -18,10 +18,10 @@
   <div>Nom de la campagne : <input #inputName type="text" class="name" value="{{ campain?.name }}" (change)="updateName(inputName.value)"></div>
   <div>
     <div>Description :</div>
-    <textarea #inputDescription class="description" (change)="updateDescription(inputDescription.value)" rows="20">{{ campain?.description }}</textarea>
+    <textarea #inputDescription class="description" (change)="updateDescription(inputDescription.value)" rows="20">{{ campain!.description }}</textarea>
   </div>
   <div>
     <div>Notes de GM :</div>
-    <textarea #inputGmDescription class="description" (change)="updateGmDescription(inputGmDescription.value)" rows="20">{{ campain?.gmDescription }}</textarea>
+    <textarea #inputGmDescription class="description" (change)="updateGmDescription(inputGmDescription.value)" rows="20">{{ campain!.gmDescription }}</textarea>
   </div>
 </div>

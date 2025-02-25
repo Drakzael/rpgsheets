@@ -1,7 +1,5 @@
 // import { transpile } from "typescript";
 
-import { AccountService } from "../_services/account.service";
-
 export class SheetData {
   name: string = "";
   userAlias!: string;
@@ -170,14 +168,6 @@ export class Sheet {
       }
     }
     return code;
-  }
-
-  public format(text: string) {
-    return text?.replaceAll("<", "&lt;").replaceAll(">", "&gt;")
-    .replaceAll(/--(.+?)--/g, "<strike>$1</strike>")
-    .replaceAll(/\/\/(.+?)\/\//g, "<i>$1</i>")
-    .replaceAll(/__(.+?)__/g, "<u>$1</u>")
-    .replaceAll(/\*\*(.+?)\*\*/g, "<b>$1</b>");
   }
 
   hasNumber(code: string): boolean {

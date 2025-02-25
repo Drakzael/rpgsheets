@@ -3,6 +3,7 @@ import { GameMetadata, GameMetadataEditor, GameMetadataValue } from '../../../_m
 import { ViewMode } from '../../../_models/viewmode';
 import { Sheet } from '../../../_models/sheet';
 import { CommonModule } from '@angular/common';
+import { format } from '../../../_models/text';
 
 let uniqueId = 0;
 
@@ -44,7 +45,7 @@ export class TextComponent implements OnInit {
   set text(s: string) {
     this.sheet.setString(this.value.value, s);
     if (this.multiline) {
-      this.formattedText = this.sheet.format(s);
+      this.formattedText = format(s);
     }
   }
 
@@ -56,7 +57,7 @@ export class TextComponent implements OnInit {
     this.multiline = Boolean(this.value.defaultCount) || Boolean(this.editor?.max) || false;
     this.rowCount = this.value.defaultCount || this.editor?.max;
     if (this.multiline) {
-      this.formattedText = this.sheet.format(this.text);
+      this.formattedText = format(this.text);
     }
   }
 

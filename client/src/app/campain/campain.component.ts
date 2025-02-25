@@ -6,6 +6,7 @@ import { ViewMode } from '../_models/viewmode';
 import { faCancel, faPen, faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CommonModule } from '@angular/common';
+import { format } from '../_models/text';
 
 @Component({
   selector: 'app-campain',
@@ -23,6 +24,8 @@ export class CampainComponent implements OnInit {
   campain?: Campain;
   viewMode: ViewMode = ViewMode.View;
   mode = ViewMode;
+  private _description!: string;
+  private _gmDescription!: string;
 
   iconSave = faSave;
   iconEdit = faPen;
@@ -51,6 +54,8 @@ export class CampainComponent implements OnInit {
     if (this.campainId) {
       this.campainService.getCampain(this.campainId!).subscribe(campain => {
         this.campain = campain;
+        this._description = format(campain.description);
+        this._gmDescription = format(campain.gmDescription || "");
       })
     }
   }
@@ -61,7 +66,28 @@ export class CampainComponent implements OnInit {
     this.campain.deletable = false;
     this.campain.sheets = [];
     this.campain.gmDescription = "";
+    this.campain.description = "";
+    this.description = "";
+    this.gmDescription = "";
     this.viewMode = ViewMode.Edit;
+  }
+
+  get description() {
+    return this._description;
+  }
+
+  set description(text: string) {
+    this._description = format(text);
+    this.campain!.description = text;
+  }
+
+  get gmDescription() {
+    return this._gmDescription;
+  }
+
+  set gmDescription(text: string) {
+    this._gmDescription = format(text);
+    this.campain!.gmDescription = text;
   }
 
   updateName(name: string) {
