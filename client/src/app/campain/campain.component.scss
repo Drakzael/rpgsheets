@@ -25,6 +25,14 @@
   animation: dblink 1.2s infinite;
 }
 
+a {
+  color: pink;
+}
+
+.link {
+  color: green;
+}
+
 @keyframes dblink {
   0%,50% {background-color: #cc0000;}
   50%,75% {background-color: #dddddd;}

@@ -32,6 +32,10 @@ export class SheetService {
     return this.sheetsSubject.value;
   }
 
+  public getSheetName(id: string) {
+    return this.sheets.find((sheet) => sheet.id === id)?.name;
+  }
+
   getMetadata(game: string): Observable<GameMetadata> {
     if (this.metadataCache[game]) {
       return of(this.metadataCache[game]);

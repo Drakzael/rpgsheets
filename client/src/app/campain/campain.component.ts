@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
+import { ActivatedRoute, Router, RouterLink, RouterModule } from '@angular/router';
 import { CampainService } from '../_services/campain.service';
 import { Campain } from '../_models/campain';
 import { ViewMode } from '../_models/viewmode';
 import { faCancel, faPen, faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CommonModule } from '@angular/common';
-import { format } from '../_models/text';
+import { TextFormatter } from '../_models/text';
 
 @Component({
   selector: 'app-campain',
@@ -14,7 +14,8 @@ import { format } from '../_models/text';
   imports: [
     CommonModule,
     FontAwesomeModule,
-    RouterLink
+    RouterLink,
+    RouterModule
   ],
   templateUrl: './campain.component.html',
   styleUrl: './campain.component.scss'
@@ -34,9 +35,11 @@ export class CampainComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private campainService: CampainService
+    private campainService: CampainService,
+    private router: Router,
+    private ref: ElementRef,
+    private formatter: TextFormatter
   ) {
-
   }
 
   ngOnInit(): void {
@@ -50,14 +53,42 @@ export class CampainComponent implements OnInit {
     })
   }
 
+  private querySelector<keyof, HTMLElementTagMapName>(root: Element, selectors: string): Element[] {
+    const results = Array.from(root.querySelectorAll(selectors));
+
+    root.querySelectorAll("*").forEach((element: Element) => {
+      this.querySelector(element, selectors).forEach((childElement: Element) => {
+        if (!results.includes(childElement as HTMLElement)) {
+          results.push(childElement as HTMLElement);
+        }
+      });
+    });
+    return results;
+  }
+
+  @HostListener("click", ["$event"])
+  onClick(e: any) {
+    e.preventDefault();
+    const href = e.target.getAttribute("href");
+    href && this.router.navigate([href]);
+  }
+
   getCampain() {
     if (this.campainId) {
       this.campainService.getCampain(this.campainId!).subscribe(campain => {
         this.campain = campain;
-        this._description = format(campain.description);
-        this._gmDescription = format(campain.gmDescription || "");
-      })
-    }
+        this.description = campain.description;
+        this.gmDescription = campain.gmDescription || "";
+      });
+    };
+    setTimeout(() => {
+      this.querySelector(this.ref.nativeElement, "div.description").forEach((description) =>
+        this.querySelector(description, "a").forEach(a => {
+          const href = a.getAttribute("href");
+          href && a.classList.add("link");
+        })
+      );
+    }, 500);
   }
 
   prepareNewCampain() {
@@ -77,7 +108,7 @@ export class CampainComponent implements OnInit {
   }
 
   set description(text: string) {
-    this._description = format(text);
+    this._description = this.formatter.formatWithLinks(text);
     this.campain!.description = text;
   }
 
@@ -86,7 +117,7 @@ export class CampainComponent implements OnInit {
   }
 
   set gmDescription(text: string) {
-    this._gmDescription = format(text);
+    this._gmDescription = this.formatter.formatWithLinks(text);
     this.campain!.gmDescription = text;
   }
 

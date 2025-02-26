@@ -29,6 +29,12 @@ export class CampainService {
     return this.campainsSubject.value;
   }
 
+  public getSheetName(id: string) {
+    return this.campains
+      .map(campain => campain.sheets.find(sheet => sheet.id === id)?.name)
+      .find(name => name);
+  }
+
   private refreshCampains() {
     this.http.get<Campain[]>("/api/campain")
       .subscribe(campains => {
@@ -37,8 +43,8 @@ export class CampainService {
       })
   }
 
-  allCampains(): Observable<{name: string, id: string}[]> {
-    return this.http.get<{name: string, id: string}[]>("/api/campain/all");
+  allCampains(): Observable<{ name: string, id: string }[]> {
+    return this.http.get<{ name: string, id: string }[]>("/api/campain/all");
   }
 
   getCampain(id: string): Observable<Campain> {
@@ -57,7 +63,7 @@ export class CampainService {
     return this.http.put<void>(`/api/campain/${id}`, campain)
       .pipe(map(() => {
         this.refreshCampains();
-        return ;
+        return;
       }));
   }
 
@@ -65,7 +71,7 @@ export class CampainService {
     return this.http.delete<void>(`/api/campain/${id}`)
       .pipe(map(() => {
         this.refreshCampains();
-        return ;
+        return;
       }));
   }
 
@@ -73,7 +79,7 @@ export class CampainService {
     return this.http.post<void>(`/api/campain/${campainId}/${sheetId}`, {})
       .pipe(map(() => {
         this.refreshCampains();
-        return ;
+        return;
       }));
   }
 
@@ -81,7 +87,7 @@ export class CampainService {
     return this.http.delete<void>(`/api/campain/${campainId}/${sheetId}`)
       .pipe(map(() => {
         this.refreshCampains();
-        return ;
+        return;
       }));
   }
 
