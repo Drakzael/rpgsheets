@@ -22,6 +22,10 @@ input[type=text] {
   width: calc(100% - 0.5em);
 }
 
+a {
+  color: inherit;
+}
+
 @media print {
   html {
     background-color: inherit;

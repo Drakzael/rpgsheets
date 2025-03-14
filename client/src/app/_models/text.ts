@@ -19,10 +19,15 @@ export class TextFormatter {
   }
   formatWithLinks(text: string) {
     text = format(text);
-    for (const match of text.matchAll(/\[character:(.*?):(\d+?)\]/g)) {
+    for (const match of text.matchAll(/\[character:?(.*?):(\d+?)\]/g)) {
       const id = match[2];
       const name = match[1] || this.sheetService.getSheetName(id) || this.campainService.getSheetName(id) || "Personnage sans nom";;
       text = text.replaceAll(match[0], `<a href=\"/sheet/${id}\">${name}</a>`);
+    }
+    for (const match of text.matchAll(/\$\{character:(\d+?)\}/g)) {
+      const id = match[1];
+      const name = this.sheetService.getSheetName(id) || this.campainService.getSheetName(id) || "Personnage sans nom";;
+      text = text.replaceAll(match[0], name);
     }
     return text;
   }
