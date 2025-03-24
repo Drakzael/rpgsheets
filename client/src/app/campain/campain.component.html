@@ -7,8 +7,11 @@
 </div>
 <div *ngIf="viewMode !== mode.Edit" class="campain">
   <div class="name">{{ campain?.name }}</div>
-  <div class="description" [innerHtml]="gmDescription"></div>
   <div class="description" [innerHtml]="description"></div>
+  <fieldset *ngIf="gmDescription">
+    <legend>Notes de GM</legend>
+    <div class="description" [innerHtml]="gmDescription"></div>
+  </fieldset>
   <div class="characters">
     <div>Personnages :</div>
     <div class="character" [routerLink]="['/sheet', sheet.id]" *ngFor="let sheet of campain?.sheets">{{ sheet.name }}</div>
