@@ -7,10 +7,10 @@
 </div>
 <div *ngIf="viewMode !== mode.Edit" class="campain">
   <div class="name">{{ campain?.name }}</div>
-  <div class="description" [innerHtml]="description"></div>
+  <div class="description" [innerHtml]="description" (click)="descriptionClick($event)"></div>
   <fieldset *ngIf="gmDescription">
     <legend>Notes de GM</legend>
-    <div class="description" [innerHtml]="gmDescription"></div>
+    <div class="description" [innerHtml]="gmDescription" (click)="descriptionClick($event)"></div>
   </fieldset>
   <div class="characters">
     <div>Personnages :</div>

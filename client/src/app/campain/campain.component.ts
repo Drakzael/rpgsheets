@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink, RouterModule } from '@angular/router';
 import { CampainService } from '../_services/campain.service';
 import { Campain } from '../_models/campain';
@@ -6,7 +6,8 @@ import { ViewMode } from '../_models/viewmode';
 import { faCancel, faPen, faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CommonModule } from '@angular/common';
-import { TextFormatter } from '../_models/text';
+import { FormatStyle, TextFormatter } from '../_models/text';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-campain',
@@ -25,20 +26,32 @@ export class CampainComponent implements OnInit {
   campain?: Campain;
   viewMode: ViewMode = ViewMode.View;
   mode = ViewMode;
-  private _description!: string;
-  private _gmDescription!: string;
+  private _description!: any;
+  private _gmDescription!: any;
 
   iconSave = faSave;
   iconEdit = faPen;
   iconCancel = faCancel;
   iconDelete = faTrash;
 
+  private formatStyle: FormatStyle = {
+    hr: {
+      borderTop: "1px solid gray",
+      borderBottom: "1px solid white"
+    },
+    a: {
+      color: "inherit",
+      underline: true
+    }
+  };
+
   constructor(
     private route: ActivatedRoute,
     private campainService: CampainService,
     private router: Router,
     private ref: ElementRef,
-    private formatter: TextFormatter
+    private formatter: TextFormatter,
+    private sanitized: DomSanitizer
   ) {
   }
 
@@ -66,11 +79,14 @@ export class CampainComponent implements OnInit {
     return results;
   }
 
-  @HostListener("click", ["$event"])
-  onClick(e: any) {
-    e.preventDefault();
-    const href = e.target.getAttribute("href");
-    href && this.router.navigate([href]);
+  descriptionClick(e: any) {
+    const element: HTMLElement = e.target;
+    if (element.nodeName === 'A') {
+      e.preventDefault();
+      const link = element.getAttribute('href');
+      console.log(link);
+      this.router.navigate([link]);
+    }
   }
 
   getCampain() {
@@ -81,14 +97,6 @@ export class CampainComponent implements OnInit {
         this.gmDescription = campain.gmDescription || "";
       });
     };
-    setTimeout(() => {
-      this.querySelector(this.ref.nativeElement, "div.description").forEach((description) =>
-        this.querySelector(description, "a").forEach(a => {
-          const href = a.getAttribute("href");
-          href && a.classList.add("link");
-        })
-      );
-    }, 500);
   }
 
   prepareNewCampain() {
@@ -108,7 +116,7 @@ export class CampainComponent implements OnInit {
   }
 
   set description(text: string) {
-    this._description = this.formatter.formatWithLinks(text);
+    this._description = this.sanitized.bypassSecurityTrustHtml(this.formatter.formatWithLinks(text, this.formatStyle));
     this.campain!.description = text;
   }
 
@@ -117,7 +125,7 @@ export class CampainComponent implements OnInit {
   }
 
   set gmDescription(text: string) {
-    this._gmDescription = this.formatter.formatWithLinks(text);
+    this._gmDescription = this.sanitized.bypassSecurityTrustHtml(this.formatter.formatWithLinks(text, this.formatStyle));
     this.campain!.gmDescription = text;
   }
 
