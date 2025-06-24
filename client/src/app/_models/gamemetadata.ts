@@ -65,6 +65,7 @@ export class GameMetadataValue {
   group?: string; // state
   action?: string; // state;
   default?: boolean; //state;
+  note?: string;
 }
 
 export class GameMetadataFreeValue {

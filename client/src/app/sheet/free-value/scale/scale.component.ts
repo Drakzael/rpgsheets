@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { Icon } from '../../../_models/icon';
 import { IconComponent } from '../../../common/icon/icon.component';
 import { IconDotEmpty, IconDotFull, IconDotMinus, IconDotPlus } from '../../../_icons/dot';
+import { IconTagEmpty, IconTagFull } from '../../../_icons/tag';
 
 let uniqueId = 0;
 
@@ -31,9 +32,11 @@ export class ScaleComponent implements OnInit {
   iconEmpty!: Icon;
   iconPlus!: Icon;
   iconMinus!: Icon;
+  iconNote = IconTagFull;
+  iconNoNote = IconTagEmpty;
 
   editor!: GameMetadataEditor;
-  rows!: { name: string, index: number, value: number, scores: number[] }[];
+  rows!: { name: string, index: number, value: number, scores: number[], note: string, isEditNote: boolean }[];
   max!: number;
   inputId = `free-dot-input-${uniqueId++}`;
   hints?: string[];
@@ -92,13 +95,20 @@ export class ScaleComponent implements OnInit {
   computeRows() {
     this.cleanRows();
     const rows = this.sheet.getNumbersStartingWith(this.prefix)
-      .map((value, index) => ({ name: value.key.substring(this.prefix.length), index, value: value.value, scores: [value.value, value.value, value.value] }));
+      .map((value, index) => ({
+        name: value.key.substring(this.prefix.length),
+        index,
+        value: value.value,
+        scores: [value.value, value.value, value.value],
+        note: this.sheet.getString(`__notes.${value.key}`),
+        isEditNote: false
+      }));
     if (rows.length < this.value.defaultCount - 1) {
       for (let i = rows.length; i < this.value.defaultCount; ++i) {
-        rows.push({ name: "", index: rows.length, value: 0, scores: [0, 0, 0] });
+        rows.push({ name: "", index: rows.length, value: 0, scores: [0, 0, 0], note: "", isEditNote: false });
       }
     } else {
-      rows.push({ name: "", index: rows.length, value: 0, scores: [0, 0, 0] });
+      rows.push({ name: "", index: rows.length, value: 0, scores: [0, 0, 0], note: "", isEditNote: false });
     }
     return rows;
   }
@@ -118,7 +128,7 @@ export class ScaleComponent implements OnInit {
     this.rows[index].name = text;
 
     if (text && index === this.rows.length - 1) { // if non empty text on last row, add new row
-      this.rows.push({ name: "", index: this.rows.length, value: 0, scores: [0, 0, 0] });
+      this.rows.push({ name: "", index: this.rows.length, value: 0, scores: [0, 0, 0], note: "", isEditNote: false });
     }
     // remove additionnal rows
     for (let i = this.rows.length - 1; i >= this.value.defaultCount && !this.rows[i].name && !this.rows[i - 1].name; --i) {
@@ -132,7 +142,11 @@ export class ScaleComponent implements OnInit {
     this.sheet.getNumbersStartingWith(this.prefix)
       .map((value, _) => value.key.substring(this.prefix.length))
       .filter(value => !value)
-      .forEach(name => this.sheet.setString(`${this.prefix}${name}`, null));
+      .forEach(name => {
+        console.log(`removing ${this.prefix}${name} and __notes.${this.prefix}${name}`);
+        this.sheet.setString(`${this.prefix}${name}`, null);
+        this.sheet.setString(`__notes.${this.prefix}${name}`, null);
+      });
   }
 
   updateHint() {
@@ -159,5 +173,21 @@ export class ScaleComponent implements OnInit {
 
   clickDice(i: number) {
     this.sheet.diceStat(i);
+  }
+
+  editNote(i: number, input: HTMLTextAreaElement) {
+    this.rows[i].isEditNote = true;
+    setTimeout(() => input.focus(), 100);
+  }
+
+  confirmNote(i: number, value: string) {
+    if (value && value.trim()) {
+      console.log(this.rows[i].name);
+      this.sheet.setString(`__notes.${this.prefix}${this.rows[i].name}`, value);
+    } else {
+      this.sheet.setString(`__notes.${this.prefix}${this.rows[i].name}`, null);
+    }
+    this.rows[i].note = value;
+    this.rows[i].isEditNote = false;
   }
 }

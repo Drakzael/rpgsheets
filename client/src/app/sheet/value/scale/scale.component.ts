@@ -6,6 +6,7 @@ import { ViewMode } from '../../../_models/viewmode';
 import { Icon } from '../../../_models/icon';
 import { IconComponent } from '../../../common/icon/icon.component';
 import { IconDotEmpty, IconDotFull, IconDotMinus, IconDotPlus } from '../../../_icons/dot';
+import { IconTagFull, IconTagEmpty } from '../../../_icons/tag';
 
 @Component({
   selector: 'app-scale',
@@ -29,17 +30,21 @@ export class ScaleComponent implements OnInit {
   iconEmpty!: Icon;
   iconPlus!: Icon;
   iconMinus!: Icon;
+  iconNote = IconTagFull;
+  iconNoNote = IconTagEmpty;
 
   editor!: GameMetadataEditor;
   max!: number;
   name!: string;
+
+  isEditNote = false;
 
   originalScore!: number;
 
   get values(): number[] {
     return Array(this.max).fill(0).map((_, i) => i + 1);
   }
-
+  
   ngOnInit(): void {
     this.editor = this.metadata.editors![this.editorCode];
     if (this.value.nameValue) {
@@ -81,6 +86,10 @@ export class ScaleComponent implements OnInit {
 
   get freeEdit(): boolean {
     return this.editor.freeEdit || false;
+  }
+
+  get note(): string | undefined {
+    return this.sheet.getString(`__notes.${this.value.value}`);
   }
 
   get score(): number {
@@ -134,5 +143,19 @@ export class ScaleComponent implements OnInit {
 
   clickDice() {
     this.sheet.diceStat(this.score);
+  }
+
+  editNote(input: HTMLTextAreaElement) {
+    this.isEditNote = true;
+    setTimeout(() => input.focus(), 100);
+  }
+
+  confirmNote(value: string) {
+    if (value && value.trim()) {
+      this.sheet.setString(`__notes.${this.value.value}`, value);
+    } else {
+      this.sheet.setString(`notes.${this.value.value}`, null);
+    }
+    this.isEditNote = false;
   }
 }

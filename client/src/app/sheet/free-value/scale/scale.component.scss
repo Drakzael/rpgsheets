@@ -20,7 +20,7 @@
 
 .row {
   display: grid;
-  grid-template-columns: auto max-content;
+  grid-template-columns: max-content auto max-content;
 }
 
 .row.edit {
@@ -33,5 +33,42 @@
 }
 
 .button {
+  cursor: pointer;
+}
+
+app-icon.editNote {
+  position: relative;
+}
+
+div.editNote {
+  display: none;
+  position: absolute;
+  background-color: white;
+  z-index: 1;
+}
+
+div.editNote.edit {
+  display: inherit;
+}
+
+div.editNote textarea {
+  resize: both;
+  width: 20em;
+  height: 10em;
+}
+
+div.note {
+  border-bottom: 1px solid #666666;
+}
+
+div.note app-icon {
+  margin-right: 0.2em;
+}
+
+div.note app-icon.note {
+  cursor: inherit;
+}
+
+div.note app-icon.edit {
   cursor: pointer;
 }
