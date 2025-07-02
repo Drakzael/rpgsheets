@@ -1,7 +1,7 @@
 <div class="scale {{ viewMode === mode.Dice ? 'dice' : '' }} {{ value.name ? '' : 'unamed' }}" (click)="viewMode === mode.Dice && clickDice()">
   <div class="note">
     <ng-container *ngIf="note || viewMode === mode.Edit">
-      <app-icon *ngIf="viewMode !== mode.Edit" [icon]="iconNote" title="{{ note }}"></app-icon>
+      <app-icon *ngIf="viewMode !== mode.Edit" [icon]="iconNote" [tooltip]="note"></app-icon>
       <app-icon *ngIf="viewMode === mode.Edit" [icon]="note ? iconNote : iconNoNote" (click)="editNote(noteInput);" class="editNote"></app-icon>
       <div class="editNote {{ viewMode == mode.Edit && isEditNote ? 'edit' : ''}}">
         <textarea #noteInput (blur)="confirmNote(noteInput.value)">{{ note }}</textarea>

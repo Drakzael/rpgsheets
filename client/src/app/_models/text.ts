@@ -43,7 +43,10 @@ export function format(text: string = "", styles?: FormatStyle) {
     .replaceAll(/--(.+?)--/g, "<strike>$1</strike>")
     .replaceAll(/\/\/(.+?)\/\//g, "<i>$1</i>")
     .replaceAll(/__(.+?)__/g, "<u>$1</u>")
-    .replaceAll(/\*\*(.+?)\*\*/g, "<b>$1</b>");
+    .replaceAll(/\*\*(.+?)\*\*/g, "<b>$1</b>")
+    .replaceAll(/\r\n/g, "<br/>")
+    .replaceAll(/\r/g, "<br/>")
+    .replaceAll(/\n/g, "<br/>");
 };
 
 @Injectable({ providedIn: "root" })

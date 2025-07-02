@@ -1,0 +1,4 @@
+<div *ngIf="display" class="note-outer" (mouseover)="open()" (mouseout)="close()">
+  <div class="note-inner" [innerHTML]="formattedText">
+  </div>
+</div>

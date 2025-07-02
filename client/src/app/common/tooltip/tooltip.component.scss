@@ -1,0 +1,12 @@
+.note-outer {
+  position: absolute;
+  background-image: url(/img/tooltip.png);
+  background-size: 100% 100%;
+  transition: all 1s;
+  box-shadow: 0 0 0.5em 0.1em #333;
+  max-width: 30em;
+}
+
+.note-inner {
+  padding: 0.5em;
+}

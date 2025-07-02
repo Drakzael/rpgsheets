@@ -1,7 +1,7 @@
 <div class="row" *ngFor="let row of rows">
   <div class="note">
     <ng-container *ngIf="row.name && (row.note || viewMode === mode.Edit)">
-      <app-icon class="note" *ngIf="viewMode !== mode.Edit" [icon]="iconNote" title="{{ row.note }}"></app-icon>
+      <app-icon class="note" *ngIf="viewMode !== mode.Edit" [icon]="iconNote" [tooltip]="row.note"></app-icon>
       <app-icon class="edit" *ngIf="viewMode === mode.Edit" [icon]="row.note ? iconNote : iconNoNote" (click)="editNote(row.index, noteInput);" class="editNote"></app-icon>
       <div class="editNote {{ viewMode == mode.Edit && row.isEditNote ? 'edit' : ''}}">
         <textarea #noteInput (blur)="confirmNote(row.index, noteInput.value)">{{ row.note }}</textarea>
