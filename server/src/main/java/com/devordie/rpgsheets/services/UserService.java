@@ -1,5 +1,8 @@
 package com.devordie.rpgsheets.services;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
@@ -10,11 +13,14 @@ import org.apache.commons.logging.LogFactory;
 
 import com.devordie.rpgsheets.entities.Role;
 import com.devordie.rpgsheets.entities.User;
+import com.devordie.rpgsheets.repository.LocalRepository;
 import com.devordie.rpgsheets.repository.UserRepository;
 
 import io.quarkus.elytron.security.common.BcryptUtil;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.event.Observes;
+import jakarta.enterprise.event.Startup;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.core.SecurityContext;
 
@@ -27,6 +33,9 @@ public final class UserService {
 
   @Inject
   private UserRepository userRepository;
+
+  @Inject
+  private LocalRepository localRepository;
 
   public List<User> allUsers() {
     return userRepository.findAll();
@@ -49,6 +58,12 @@ public final class UserService {
     return BcryptUtil.matches(password, encodedPassword);
   }
 
+  /*
+   * Force initialization to allow @PostConstruct method to run.
+   */
+  private void forceEagerInitialization(@Observes Startup startup) {
+  }
+  
   @PostConstruct
   public void checkUsers() {
     if (userRepository.findAll().stream().anyMatch(user -> user.hasRole(Role.Admin))) {
@@ -82,6 +97,14 @@ public final class UserService {
 
     LOGGER.warn("Creating user '" + username + "' with password '" + password + "'");
     LOGGER.warn("It is suggested you either change this password or create another admin account and remove this one.");
+    final Path defaultPasswordPath = localRepository.getBasePath().resolve("admin.pwd");
+    try {
+      Files.writeString(defaultPasswordPath, password);
+      LOGGER.warn("Find this password in file " + defaultPasswordPath.toAbsolutePath().toString());
+    } catch (IOException ex) {
+      LOGGER.error("Error writing default generated admin password file", ex);
+      throw new IllegalStateException(ex);
+    }
   }
 
   public String createUser(User user) {
