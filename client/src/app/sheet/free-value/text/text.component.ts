@@ -31,29 +31,18 @@ export class TextComponent implements OnInit {
   inputId = `free-text-input-${uniqueId++}`;
 
   ngOnInit(): void {
-    this.rows = this.computeRows();
-  }
-
-  get prefix() {
-    return `${this.value.prefix}.`;
-  }
-
-  computeRows() {
-    const rows = this.sheet.getStringsStartingWith(this.prefix)
+    this.rows = this.sheet.getStringsStartingWith(this.prefix)
       .map((value, index) => ({
         name: value.key.substring(this.prefix.length),
         index,
         note: this.sheet.getString(`__notes.${value.key}`),
         isEditNote: false
       }));
-    if (rows.length < this.value.defaultCount - 1) {
-      for (let i = rows.length; i < this.value.defaultCount; ++i) {
-        rows.push({ name: "", index: rows.length, note: "", isEditNote: false });
-      }
-    } else {
-      rows.push({ name: "", index: rows.length, note: "", isEditNote: false });
-    }
-    return rows;
+    this.cleanRows();
+  }
+
+  get prefix() {
+    return `${this.value.prefix}.`;
   }
 
   updateRow(index: number, text: string) {
@@ -68,12 +57,18 @@ export class TextComponent implements OnInit {
     }
     this.rows[index].name = text;
 
-    if (text && index === this.rows.length - 1) { // if non empty text on last row, add new row
+    this.cleanRows();
+  }
+
+  private cleanRows() {
+    this.rows = this.rows.filter(({ name }) => name);
+    const defaultCount = this.value.defaultCount || (this.viewMode === ViewMode.Edit ? 1 : 0);
+    if (this.rows.length >= defaultCount) {
       this.rows.push({ name: "", index: this.rows.length, note: "", isEditNote: false });
-    }
-    // remove additionnal rows
-    for (let i = this.rows.length - 1; i >= this.value.defaultCount && !this.rows[i].name && !this.rows[i - 1].name; --i) {
-      this.rows.pop();
+    } else {
+      for (let i = this.rows.length; i < defaultCount; ++i) {
+        this.rows.push({ name: "", index: this.rows.length, note: "", isEditNote: false });
+      }
     }
   }
 
