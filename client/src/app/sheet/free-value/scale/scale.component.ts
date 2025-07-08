@@ -45,7 +45,17 @@ export class ScaleComponent implements OnInit {
 
   ngOnInit(): void {
     this.editor = this.metadata.editors![this.editorCode];
-    this.rows = this.computeRows();
+    this.rows = this.sheet.getNumbersStartingWith(this.prefix)
+      .filter(({ key }) => key.substring(this.prefix.length))
+      .map((value, index) => ({
+        name: value.key.substring(this.prefix.length),
+        index,
+        value: value.value,
+        scores: [value.value, value.value, value.value],
+        note: this.sheet.getString(`__notes.${value.key}`),
+        isEditNote: false
+      }));
+    this.cleanRows();
 
     this.iconEmpty = this.editor.icons?.empty && this.metadata.icons![this.editor.icons?.empty]
       || IconDotEmpty;
@@ -92,27 +102,6 @@ export class ScaleComponent implements OnInit {
     return Array(this.max).fill(0).map((_, i) => i + 1);
   }
 
-  computeRows() {
-    this.cleanRows();
-    const rows = this.sheet.getNumbersStartingWith(this.prefix)
-      .map((value, index) => ({
-        name: value.key.substring(this.prefix.length),
-        index,
-        value: value.value,
-        scores: [value.value, value.value, value.value],
-        note: this.sheet.getString(`__notes.${value.key}`),
-        isEditNote: false
-      }));
-    if (rows.length < this.value.defaultCount - 1) {
-      for (let i = rows.length; i < this.value.defaultCount; ++i) {
-        rows.push({ name: "", index: rows.length, value: 0, scores: [0, 0, 0], note: "", isEditNote: false });
-      }
-    } else {
-      rows.push({ name: "", index: rows.length, value: 0, scores: [0, 0, 0], note: "", isEditNote: false });
-    }
-    return rows;
-  }
-
   updateRow(index: number, text: string) {
     if (this.rows[index].name) {
       this.sheet.setNumber(`${this.prefix}${this.rows[index].name}`, null);
@@ -127,26 +116,20 @@ export class ScaleComponent implements OnInit {
     }
     this.rows[index].name = text;
 
-    if (text && index === this.rows.length - 1) { // if non empty text on last row, add new row
-      this.rows.push({ name: "", index: this.rows.length, value: 0, scores: [0, 0, 0], note: "", isEditNote: false });
-    }
-    // remove additionnal rows
-    for (let i = this.rows.length - 1; i >= this.value.defaultCount && !this.rows[i].name && !this.rows[i - 1].name; --i) {
-      this.rows.pop();
-    }
     this.cleanRows();
     this.updateHint();
   }
 
   private cleanRows() {
-    this.sheet.getNumbersStartingWith(this.prefix)
-      .map((value, _) => value.key.substring(this.prefix.length))
-      .filter(value => !value)
-      .forEach(name => {
-        console.log(`removing ${this.prefix}${name} and __notes.${this.prefix}${name}`);
-        this.sheet.setString(`${this.prefix}${name}`, null);
-        this.sheet.setString(`__notes.${this.prefix}${name}`, null);
-      });
+    this.rows = this.rows.filter(({ name }) => name);
+    const defaultCount = this.value.defaultCount || (this.viewMode === ViewMode.Edit ? 1 : 0);
+    if (this.rows.length >= defaultCount) {
+      this.rows.push({ name: "", index: this.rows.length, value: 0, scores: [0, 0, 0], note: "", isEditNote: false });
+    } else {
+      for (let i = this.rows.length; i < defaultCount; ++i) {
+        this.rows.push({ name: "", index: this.rows.length, value: 0, scores: [0, 0, 0], note: "", isEditNote: false });
+      }
+    }
   }
 
   updateHint() {
@@ -182,7 +165,6 @@ export class ScaleComponent implements OnInit {
 
   confirmNote(i: number, value: string) {
     if (value && value.trim()) {
-      console.log(this.rows[i].name);
       this.sheet.setString(`__notes.${this.prefix}${this.rows[i].name}`, value);
     } else {
       this.sheet.setString(`__notes.${this.prefix}${this.rows[i].name}`, null);
