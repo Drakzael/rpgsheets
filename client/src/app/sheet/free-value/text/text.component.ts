@@ -29,6 +29,7 @@ export class TextComponent implements OnInit {
   mode = ViewMode;
   rows!: { name: string, index: number, note: string, isEditNote: boolean, isEditFreeRow: boolean }[];
   inputId = `free-text-input-${uniqueId++}`;
+  hints?: string[];
 
   ngOnInit(): void {
     this.rows = this.sheet.getStringsStartingWith(this.prefix)
@@ -59,6 +60,7 @@ export class TextComponent implements OnInit {
     this.rows[index].name = text;
 
     this.cleanRows();
+    this.updateHint();
   }
 
   private cleanRows() {
@@ -70,6 +72,12 @@ export class TextComponent implements OnInit {
       for (let i = this.rows.length; i < defaultCount; ++i) {
         this.rows.push({ name: "", index: this.rows.length, note: "", isEditNote: false, isEditFreeRow: false });
       }
+    }
+  }
+
+  updateHint() {
+    if (this.value.hint) {
+      this.hints = this.value.hint.filter(hint => !this.rows.find(row => row.name === hint));
     }
   }
 
