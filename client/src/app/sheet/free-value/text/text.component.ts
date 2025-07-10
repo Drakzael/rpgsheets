@@ -27,7 +27,7 @@ export class TextComponent implements OnInit {
   iconNoNote = IconTagEmpty;
 
   mode = ViewMode;
-  rows!: { name: string, index: number, note: string, isEditNote: boolean }[];
+  rows!: { name: string, index: number, note: string, isEditNote: boolean, isEditFreeRow: boolean }[];
   inputId = `free-text-input-${uniqueId++}`;
 
   ngOnInit(): void {
@@ -36,7 +36,8 @@ export class TextComponent implements OnInit {
         name: value.key.substring(this.prefix.length),
         index,
         note: this.sheet.getString(`__notes.${value.key}`),
-        isEditNote: false
+        isEditNote: false,
+        isEditFreeRow: false
       }));
     this.cleanRows();
   }
@@ -62,12 +63,12 @@ export class TextComponent implements OnInit {
 
   private cleanRows() {
     this.rows = this.rows.filter(({ name }) => name);
-    const defaultCount = this.value.defaultCount || (this.viewMode === ViewMode.Edit ? 1 : 0);
+    const defaultCount = this.value.defaultCount || 0;
     if (this.rows.length >= defaultCount) {
-      this.rows.push({ name: "", index: this.rows.length, note: "", isEditNote: false });
+      this.rows.push({ name: "", index: this.rows.length, note: "", isEditNote: false, isEditFreeRow: true });
     } else {
       for (let i = this.rows.length; i < defaultCount; ++i) {
-        this.rows.push({ name: "", index: this.rows.length, note: "", isEditNote: false });
+        this.rows.push({ name: "", index: this.rows.length, note: "", isEditNote: false, isEditFreeRow: false });
       }
     }
   }

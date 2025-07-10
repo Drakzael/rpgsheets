@@ -10,6 +10,10 @@ import { IconTagEmpty, IconTagFull } from '../../../_icons/tag';
 
 let uniqueId = 0;
 
+class Row {
+
+};
+
 @Component({
   selector: 'app-scale',
   standalone: true,
@@ -36,7 +40,7 @@ export class ScaleComponent implements OnInit {
   iconNoNote = IconTagEmpty;
 
   editor!: GameMetadataEditor;
-  rows!: { name: string, index: number, value: number, scores: number[], note: string, isEditNote: boolean }[];
+  rows!: { name: string, index: number, value: number, scores: number[], note: string, isEditNote: boolean, isEditFreeRow: boolean }[];
   max!: number;
   inputId = `free-dot-input-${uniqueId++}`;
   hints?: string[];
@@ -53,7 +57,8 @@ export class ScaleComponent implements OnInit {
         value: value.value,
         scores: [value.value, value.value, value.value],
         note: this.sheet.getString(`__notes.${value.key}`),
-        isEditNote: false
+        isEditNote: false,
+        isEditFreeRow: false
       }));
     this.cleanRows();
 
@@ -122,12 +127,12 @@ export class ScaleComponent implements OnInit {
 
   private cleanRows() {
     this.rows = this.rows.filter(({ name }) => name);
-    const defaultCount = this.value.defaultCount || (this.viewMode === ViewMode.Edit ? 1 : 0);
+    const defaultCount = this.value.defaultCount || 0;
     if (this.rows.length >= defaultCount) {
-      this.rows.push({ name: "", index: this.rows.length, value: 0, scores: [0, 0, 0], note: "", isEditNote: false });
+      this.rows.push({ name: "", index: this.rows.length, value: 0, scores: [0, 0, 0], note: "", isEditNote: false, isEditFreeRow: true });
     } else {
       for (let i = this.rows.length; i < defaultCount; ++i) {
-        this.rows.push({ name: "", index: this.rows.length, value: 0, scores: [0, 0, 0], note: "", isEditNote: false });
+        this.rows.push({ name: "", index: this.rows.length, value: 0, scores: [0, 0, 0], note: "", isEditNote: false, isEditFreeRow: false });
       }
     }
   }
