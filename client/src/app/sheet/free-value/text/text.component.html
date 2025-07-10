@@ -15,5 +15,5 @@
   </ng-container>
 </div>
 <datalist id="{{ inputId }}" *ngIf="viewMode === mode.Edit && value.hint">
-  <option *ngFor="let hint of value.hint" [value]="hint">
+  <option *ngFor="let hint of hints" [value]="hint">
 </datalist>
