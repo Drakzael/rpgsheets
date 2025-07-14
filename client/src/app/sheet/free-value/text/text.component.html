@@ -1,5 +1,5 @@
-<div class="row" *ngFor="let row of rows">
-  <ng-container *ngIf="viewMode === mode.Edit || !row.isEditFreeRow">
+<ng-container *ngFor="let row of rows">
+  <div class="row" *ngIf="viewMode === mode.Edit || !row.isEditFreeRow">
     <div class="note">
       <ng-container *ngIf="row.name && (row.note || viewMode === mode.Edit)">
         <app-icon class="note" *ngIf="viewMode !== mode.Edit" [icon]="iconNote" [tooltip]="row.note"></app-icon>
@@ -12,8 +12,8 @@
     <div *ngIf="viewMode !== mode.Edit" class="value">{{ row.name }}</div>
     <input *ngIf="viewMode === mode.Edit && value.hint" #textValue class="value edit" type="text" (change)="updateRow(row.index, textValue.value)" value="{{ row.name }}" [attr.list]="inputId"/>
     <input *ngIf="viewMode === mode.Edit && !value.hint" #textValue class="value edit" type="text" (change)="updateRow(row.index, textValue.value)" value="{{ row.name }}"/>
-  </ng-container>
-</div>
+  </div>
+</ng-container>
 <datalist id="{{ inputId }}" *ngIf="viewMode === mode.Edit && value.hint">
   <option *ngFor="let hint of hints" [value]="hint">
 </datalist>

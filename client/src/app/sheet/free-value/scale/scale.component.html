@@ -1,5 +1,5 @@
-<div *ngFor="let row of rows" class="row {{ viewMode === mode.Edit ? 'edit' : '' }} {{ row.name && viewMode === mode.Dice ? 'dice' : '' }}" (click)="clickDice(row.value)">
-  <ng-container *ngIf="viewMode === mode.Edit || !row.isEditFreeRow">
+<ng-container *ngFor="let row of rows">
+  <div *ngIf="viewMode === mode.Edit || !row.isEditFreeRow" class="row {{ viewMode === mode.Edit ? 'edit' : '' }} {{ row.name && viewMode === mode.Dice ? 'dice' : '' }}" (click)="clickDice(row.value)">
     <div class="note">
       <ng-container *ngIf="row.name && (row.note || viewMode === mode.Edit)">
         <app-icon class="note" *ngIf="viewMode !== mode.Edit" [icon]="iconNote" [tooltip]="row.note"></app-icon>
@@ -15,8 +15,8 @@
     <div class="values">
       <app-icon *ngFor="let i of values" [icon]="i <= row.scores[0] ? iconFull : i <= row.scores[1] ? iconMinus : i <= row.scores[2] ? iconPlus : iconEmpty" (click)="clickValue(row.index, i)" class="{{ viewMode === mode.Edit ? 'button' : '' }}" />
     </div>
-  </ng-container>
-</div>
+  </div>
+</ng-container>
 <datalist id="{{ inputId }}" *ngIf="viewMode === mode.Edit && value.hint">
   <option *ngFor="let hint of hints" [value]="hint">
 </datalist>
