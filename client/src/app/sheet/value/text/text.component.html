@@ -1,7 +1,7 @@
 <div class="{{ value.name ? 'text' : 'singleText' }}">
   <div *ngIf="value.name">{{ value.name }}</div>
   <ng-container *ngIf="!multiline">
-    <div *ngIf="!isEdit" class="value">{{ text }}</div>
+    <div *ngIf="!isEdit" class="value {{ isCharacterName && sheet.dead ? 'dead' : '' }}">{{ text }}</div>
     <div *ngIf="isEdit && value.hint">
       <input #textValue class="value" [attr.list]="inputId" type="text" (change)="updateText(textValue.value)" value="{{ text }}" />
       <datalist id="{{ inputId }}">

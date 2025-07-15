@@ -19,7 +19,7 @@
         {{ campain.name === "" ? "Campagne sans nom": campain.name }}
       </a>
       <div *ngFor="let sheet of campain.pcSheets">
-        <a [routerLink]="['/sheet', sheet.id]" class="campainsheet link notmine">
+        <a [routerLink]="['/sheet', sheet.id]" class="campainsheet link notmine {{ sheet.dead ? 'dead' : '' }}">
           <app-icon [icon]="metadata[sheet.game!].icon!" *ngIf="metadata && metadata[sheet.game!]?.icon" />
           {{ sheet.name === "" ? "Fiche sans nom" : sheet.name }}
         </a>
@@ -27,10 +27,10 @@
       <div *ngIf="campain.npcSheets.length" class="campainNpcs">
         <div class="subtitle">PNJ</div>
         <div *ngFor="let sheet of campain.npcSheets">
-          <a [routerLink]="['/sheet', sheet.id]" class="campainsheet link mine">
+          <a [routerLink]="['/sheet', sheet.id]" class="campainsheet link mine {{ sheet.dead ? 'dead' : '' }}">
             <app-icon [icon]="metadata[sheet.game!].icon!" *ngIf="metadata && metadata[sheet.game!]?.icon" />
             {{ sheet.name === "" ? "Fiche sans nom" : sheet.name }}
-          </a>
+            </a>
         </div>
       </div>
     </div>
@@ -45,7 +45,7 @@
         <div class="gmName">({{ campain.gmName }})</div>
       </a>
       <div *ngFor="let sheet of campain.sheets">
-        <a [routerLink]="['/sheet', sheet.id]" class="campainsheet link">
+        <a [routerLink]="['/sheet', sheet.id]" class="campainsheet link {{ sheet.dead ? 'dead' : '' }}">
           <fa-icon [icon]="iconCharacter" *ngIf="!sheet.mine" />
           <app-icon [icon]="metadata[sheet.game!].icon!" *ngIf="metadata && metadata[sheet.game!]?.icon" />
           {{ sheet.name === "" ? "Fiche sans nom" : sheet.name }}
@@ -62,7 +62,7 @@
           title="Afficher aussi les fiches incluses dans une campagne" /></div>
     </div>
     <div *ngFor="let sheet of sheets">
-      <a [routerLink]="['/sheet', sheet.id]" class="link">
+      <a [routerLink]="['/sheet', sheet.id]" class="link {{ sheet.dead ? 'dead' : '' }}">
         <fa-icon [icon]="iconDeprecated" *ngIf="sheet.deprecated" />
         <app-icon [icon]="metadata[sheet.game!].icon!" *ngIf="metadata && metadata[sheet.game!]?.icon" />
         {{ sheet.name === "" ? "Fiche sans nom" : sheet.name }}

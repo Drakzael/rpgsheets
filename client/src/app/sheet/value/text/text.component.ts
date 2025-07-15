@@ -29,6 +29,7 @@ export class TextComponent implements OnInit {
   rowCount?: number;
   multiline = false; 
   formattedText?: string;
+  isCharacterName!: boolean;
 
   get isEdit(): boolean {
     return !this.value.readonly && this.viewMode === ViewMode.Edit;
@@ -59,6 +60,7 @@ export class TextComponent implements OnInit {
     if (this.multiline) {
       this.formattedText = format(this.text);
     }
+    this.isCharacterName = this.sheet.isCharacterName(this.value.value);
   }
 
   updateText(s: string) {

@@ -20,6 +20,7 @@ public class Sheet {
   private String mode;
   private Map<String, Integer> numericValues;
   private Map<String, String> stringValues;
+  private Boolean dead;
 
   public String getId() {
     return id;
@@ -100,6 +101,15 @@ public class Sheet {
 
   public Sheet setMode(String mode) {
     this.mode = mode;
+    return this;
+  }
+
+  public Boolean isDead() {
+    return dead;
+  }
+
+  public Sheet setDead(Boolean dead) {
+    this.dead = dead;
     return this;
   }
 }
