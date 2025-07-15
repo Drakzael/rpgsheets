@@ -94,7 +94,7 @@ export class ScaleComponent implements OnInit {
 
   get score(): number {
     const defaultValue = this.editor.defaultValue as number || this.editor.min || 0;
-    if (this.viewMode === ViewMode.Play) {
+    if (this.viewMode === ViewMode.Play || this.viewMode === ViewMode.Dice) {
       return this.sheet.getNumber(this.value.value, defaultValue, true);
     } else {
       return this.sheet.getNumber(this.value.value, defaultValue);
@@ -107,7 +107,7 @@ export class ScaleComponent implements OnInit {
       valueDefault = (this.sheet.resolve(this.value.defaultValue) as number);
     }
     const defaultValue = valueDefault || this.editor.defaultValue as number || this.editor.min || 0;
-    if (this.viewMode === ViewMode.Play) {
+    if (this.viewMode === ViewMode.Play || this.viewMode === ViewMode.Dice) {
       const current = this.sheet.getNumber(this.value.value, defaultValue, true);
       const normal = this.sheet.getNumber(this.value.value, defaultValue);
       return [current < normal ? current : normal, normal, current > normal ? current : normal];
