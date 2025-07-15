@@ -1,0 +1,398 @@
+---
+name: "Vampire"
+code: "vampire"
+inherit: "whitewolf"
+icon: "vampire"
+modes: 
+- name: "Age des Ténèbres"
+  code: "darkage"
+- name: "La Mascarade"
+  code: "mascarade"
+icons: 
+  vampire: 
+    viewBox: "0 0 100 105"
+    path: "M 33.825326 5.0002116 L 19.314067 31.562415 L 35.87688 94.999886 L 35.87998 94.995235 L 35.87998 94.999886 L 64.120117 94.999886 L 64.120117 94.995235 L 64.123218 94.999886 L 80.686031 31.562415 L 66.174772 5.0002116 L 66.170121 5.0038289 L 66.170121 5.0002116 L 33.829976 5.0002116 L 33.829976 5.0038289 L 33.825326 5.0002116 z M 44.999837 17.999935 L 54.999744 17.999935 L 54.999744 27.999841 L 65.000167 27.999841 L 65.000167 37.999748 L 54.999744 37.999748 L 54.999744 62.999772 L 44.999837 62.999772 L 44.999837 37.999748 L 34.999931 37.999748 L 34.999931 27.999841 L 44.999837 27.999841 L 44.999837 17.999935 z "
+  blood.full: 
+    viewBox: "0 0 100 105"
+    path: "M 49.971627,0 A 35,35 0 0 1 32.000114,29.530497 v 0.04599 A 40,42.5 0 0 0 9.9999064,67.499756 40,42.5 0 0 0 10.048999,68.96685 40,30 0 0 0 9.9999064,69.999862 40,30 0 0 0 50.000049,100.0001 40,30 0 0 0 90.000191,69.999862 40,30 0 0 0 89.959884,68.691931 40,42.5 0 0 0 90.000191,67.499756 40,42.5 0 0 0 67.999984,29.576489 v -0.04599 A 35,35 0 0 1 50.028471,0 Z m 30.751094,56.927275 a 15,20 0 0 1 1.277442,8.072892 15,20 0 0 1 -11.067025,19.288745 3.5150001,3.5225 0 0 1 -1.418001,0.302307 3.5150001,3.5225 0 0 1 -3.515031,-3.522782 3.5150001,3.5225 0 0 1 1.547709,-2.918685 h -0.02119 A 27.500895,29.385445 0 0 0 80.722721,56.927275 Z"
+  blood.empty: 
+    viewBox: "0 0 100 105"
+    path: "M 49.971627 0 A 35 35 0 0 1 32.000114 29.530497 L 32.000114 29.576489 A 40 42.5 0 0 0 9.9999064 67.499756 A 40 42.5 0 0 0 10.048999 68.96685 A 40 30 0 0 0 9.9999064 69.999862 A 40 30 0 0 0 50.000049 100.0001 A 40 30 0 0 0 90.000191 69.999862 A 40 30 0 0 0 89.959884 68.691931 A 40 42.5 0 0 0 90.000191 67.499756 A 40 42.5 0 0 0 67.999984 29.576489 L 67.999984 29.530497 A 35 35 0 0 1 50.028471 0 L 49.971627 0 z M 50.004183 27.668079 A 13.503692 15.39 0 0 0 57.864168 36.236548 A 30 35 0 0 1 79.980648 69.318766 A 30 20 0 0 1 79.999768 69.999862 A 30 20 0 0 1 50.000049 90.000191 A 30 20 0 0 1 19.999813 69.999862 A 30 35 0 0 1 42.137996 36.235514 A 13.503692 15.39 0 0 0 50.004183 27.668079 z "
+editors: 
+  attribute: 
+    type: "scale"
+    min: 1
+    maxExpr: "${ $general.generation ? Math.max(5, 13 - $general.generation) : 5 }"
+  attribute.appearance: 
+    type: "scale"
+    min: 1
+    maxExpr: "${ $general.clan === 'Nosferatu' ? 0 : $general.generation ? Math.max(5, 13 - $general.generation) : 5 }"
+    icons: 
+      empty: "dot.empty"
+      full: "dot.full"
+      plus: "dot.plus"
+      minus: "dot.minus"
+  ability: 
+    type: "scale"
+    maxExpr: "${ $general.generation ? Math.max(5, 13 - $general.generation) : 5 }"
+  discipline: 
+    type: "scale"
+    maxExpr: "${ $general.generation ? Math.max(5, 13 - $general.generation) : 5 }"
+    icons: 
+      empty: "dot.empty"
+      full: "dot.full"
+      plus: "dot.plus"
+      minus: "dot.minus"
+  blood: 
+    type: "scale"
+    display: "grid"
+    columns: 10
+    maxExpr: >-
+      ${
+        if ($general.generation) switch (Number($general.generation)) {
+          case 4: 50; break;
+          case 5: 40; break
+          case 6: 30; break;
+          case 7: 20; break;
+          default: Math.max(10, 23 - Number($general.generation)); break;
+        }
+        else 10
+      }
+    freeEdit: "true"
+    icons: 
+      empty: "blood.empty"
+      full: "blood.full"
+  path: 
+    type: "scale"
+    max: 10
+    icons: 
+      empty: "dot.empty"
+      full: "dot.full"
+      plus: "dot.plus"
+      minus: "dot.minus"
+  virtue: 
+    type: "scale"
+    defaultValue: 1
+    max: 5
+    icons: 
+      empty: "dot.empty"
+      full: "dot.full"
+      plus: "dot.plus"
+      minus: "dot.minus"
+gridRows: 
+- defaultType: "text"
+  gridColumns: 
+  - rows: 
+    - name: "Nom"
+      value: "$sheet.name"
+    - name: "Joueur"
+      readonly: "true"
+      value: "$sheet.player"
+  - rows: 
+    - name: "Nature"
+      value: "general.nature"
+    - name: "Attitude"
+      value: "general.attitude"
+    - name: "Concept"
+      value: "general.concept"
+  - rows: 
+    - name: "Clan"
+      value: "general.clan"
+      hint: 
+      - "Assamite"
+      - "Brujah"
+      - "Disciple de Set"
+      - "Gangrel"
+      - "Cappadocien"
+      - "Lasombra"
+      - "Malkavien"
+      - "Nosferatu"
+      - "Ravnos"
+      - "Toréador"
+      - "Tremere"
+      - "Tzimisce"
+      - "Ventrue"
+    - name: "Génération"
+      value: "general.generation"
+      defaultValue: "${ 12 - $background.generation }"
+    - name: "Sire"
+      value: "general.sire"
+- title: "Attributs"
+  defaultType: "attribute"
+  gridColumns: 
+  - title: "Physique"
+    rows: 
+    - name: "Force"
+      value: "attribute.strength"
+    - name: "Dextérité"
+      value: "attribute.dexterity"
+    - name: "Vigueur"
+      value: "attribute.stamina"
+  - title: "Social"
+    rows: 
+    - name: "Charisme"
+      value: "attribute.charisma"
+    - name: "Manipulation"
+      value: "attribute.manipulation"
+    - name: "Apparence"
+      value: "attribute.appearance"
+      editor: "attribute.appearance"
+  - title: "Mental"
+    rows: 
+    - name: "Perception"
+      value: "attribute.perception"
+    - name: "Intelligence"
+      value: "attribute.intelligence"
+    - name: "Astuce"
+      value: "attribute.wits"
+- title: "Capacités"
+  defaultType: "ability"
+  gridColumns: 
+  - title: "Talents"
+    rows: 
+    - name: "Athlétisme"
+      value: "ability.athletics"
+    - name: "Bagarre"
+      value: "ability.brawl"
+    - name: "Commandement"
+      value: "ability.command"
+    - name: "Empathie"
+      value: "ability.empathy"
+    - name: "Esquive"
+      value: "ability.dodge"
+      mode: 
+      - "darkage"
+    - name: "Larcin"
+      value: "ability.larceny"
+      mode: 
+      - "darkage"
+    - name: "Exp. de la rue"
+      value: "ability.streetWise"
+      mode: 
+      - "mascarade"
+    - name: "Expression"
+      value: "ability.expression"
+    - name: "Intimidation"
+      value: "ability.intimidation"
+    - name: "Intuition"
+      value: "ability.intuition"
+      mode: 
+      - "mascarade"
+    - name: "Subterfuge"
+      value: "ability.subterfuge"
+    - name: "Vigilance"
+      value: "ability.alertness"
+    - type: "freeValue"
+      prefix: "ability.additionnal.talents"
+  - title: "Compétences"
+    rows: 
+    - name: "Animaux"
+      value: "ability.animalKen"
+    - name: "Archerie"
+      value: "ability.archery"
+      mode: 
+      - "darkage"
+    - name: "Armes à Feu"
+      value: "ability.firearms"
+      mode: 
+      - "mascarade"
+    - name: "Artisanat"
+      value: "ability.craftmanship"
+    - name: "Commerce"
+      value: "ability.trading"
+    - name: "Conduite"
+      value: "ability.driving"
+      mode: 
+      - "mascarade"
+    - name: "Equitation"
+      value: "ability.riding"
+      mode: 
+      - "darkage"
+    - name: "Etiquette"
+      value: "ability.etiquette"
+    - name: "Furtivité"
+      value: "ability.stealth"
+    - name: "Mélée"
+      value: "ability.melee"
+    - name: "Représentation"
+      value: "ability.performance"
+    - name: "Survie"
+      value: "ability.survival"
+    - type: "freeValue"
+      prefix: "ability.additionnal.skills"
+  - title: "Connaissances"
+    rows: 
+    - name: "Droit"
+      value: "ability.law"
+    - name: "Erudition"
+      value: "ability.erudition"
+    - name: "Sagesse populaire"
+      value: "ability.popWisdom"
+      mode: 
+      - "darkage"
+    - name: "Finances"
+      value: "ability.financials"
+      mode: 
+      - "mascarade"
+    - name: "Informatique"
+      value: "ability.computer"
+      mode: 
+      - "mascarade"
+    - name: "Linguistique"
+      value: "ability.languages"
+      mode: 
+      - "darkage"
+    - name: "Investigation"
+      value: "ability.investigation"
+    - name: "Médecine"
+      value: "ability.medecine"
+    - name: "Occultisme"
+      value: "ability.occult"
+    - name: "Politique"
+      value: "ability.politics"
+    - name: "Sciences"
+      value: "ability.science"
+      mode: 
+      - "mascarade"
+    - name: "Sénéchal"
+      value: "ability.ledgerdemain"
+      mode: 
+      - "darkage"
+    - name: "Théologie"
+      value: "ability.theology"
+    - type: "freeValue"
+      prefix: "ability.additionnal.knowledges"
+- title: "Avantages"
+  gridColumns: 
+  - title: "Disciplines"
+    rows: 
+    - type: "freeValue"
+      prefix: "discipline"
+      defaultCount: 6
+      editor: "discipline"
+      hint: 
+      - "Aliénation"
+      - "Animalisme"
+      - "Auspex"
+      - "Célérité"
+      - "Chimérie"
+      - "Domination"
+      - "Force d'âme"
+      - "Obténétration"
+      - "Occultation"
+      - "Présence"
+      - "Protéisme"
+      - "Puissance"
+      - "Quietus"
+      - "Serpentis"
+      - "Vicissitude"
+      - "Nécromancie"
+      - "Thaumaturgie"
+  - defaultType: "background"
+    title: "Historiques"
+    rows: 
+    - name: "Génération"
+      value: "background.generation"
+    - type: "freeValue"
+      prefix: "backgrounds"
+      defaultCount: 5
+      hint: 
+      - "Alliés"
+      - "Contacts"
+      - "Domaine"
+      - "Fausse identité"
+      - "Influence"
+      - "Membre de la main noire"
+      - "Mentor"
+      - "Renommée"
+      - "Ressources"
+      - "Rites"
+      - "Servants"
+      - "Statut"
+      - "Troupeau"
+  - title: "Vertus"
+    defaultType: "virtue"
+    rows: 
+    - type: "spacer"
+    - name: "Conscience/Conviction"
+      nameValue: "virtue.conscience.name"
+      value: "virtue.conscience.value"
+    - name: "Maitrise de soi/Instinct"
+      nameValue: "virtue.instinct.name"
+      value: "virtue.instinct.value"
+    - name: "Courage"
+      nameValue: "virtue.courage.name"
+      value: "virtue.courage.value"
+- title: ""
+  gridColumns: 
+  - rows: 
+    - type: "title"
+      name: "Atouts"
+    - type: "freeValue"
+      prefix: "advantage.advantage"
+      defaultCount: 4
+    - type: "spacer"
+    - type: "title"
+      name: "Faiblesses"
+    - type: "freeValue"
+      prefix: "advantage.weakness"
+      defaultCount: 4
+  - rows: 
+    - type: "title"
+      name: "Voie"
+    - type: "value"
+      editor: "text"
+      value: "path.path"
+    - type: "value"
+      editor: "path"
+      value: "path.score"
+      defaultValue: "${ $virtue.conscience.value + $virtue.instinct.value }"
+    - type: "spacer"
+    - type: "title"
+      name: "Volonté"
+    - type: "value"
+      editor: "willpower"
+      values: 
+      - "willpower.max"
+      - "willpower.current"
+      defaultValue: "${ [ $virtue.courage.value, 0 ] }"
+    - type: "spacer"
+    - type: "title"
+      name: "Points de Sang"
+      nameExpr: >-
+        ${
+          let blood = 1;
+          switch (Number($general.generation)) {
+            case 4: blood = 10; break;
+            case 5: blood = 8; break;
+            case 6: blood = 6; break;
+            case 7: blood = 4; break;
+            case 8: blood = 3; break;
+            case 9: blood = 2; break;
+            default: break;
+          }
+          'Points de Sang (max ' + blood + ' / tour)';
+        }
+    - type: "value"
+      editor: "blood"
+      value: "blood.value"
+  - rows: 
+    - name: "Santé"
+      editor: "health"
+      values: 
+      - "health.blunt"
+      - "health.lethal"
+      - "health.aggravated"
+    - type: "spacer"
+    - type: "title"
+      name: "Expérience"
+    - editor: "text"
+      value: "character.experience"
+      defaultCount: 2
+- title: "Notes"
+  pageBreak: "true"
+  gridColumns: 
+  - rows: 
+    - editor: "text"
+      defaultCount: "30"
+      value: "notes.1"
