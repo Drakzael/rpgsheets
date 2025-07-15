@@ -16,6 +16,7 @@ public class SheetResponse {
   private Map<String, Integer> numericValues;
   private Map<String, String> stringValues;
   private List<IdName> campains;
+  private Boolean dead;
 
   public SheetResponse() {
   }
@@ -32,6 +33,7 @@ public class SheetResponse {
     this.writable = sheet.isWritable();
     this.deletable = sheet.isDeletable();
     this.campains = new ArrayList<>();
+    this.dead = sheet.isDead();
   }
 
   public String getId() {
@@ -130,6 +132,15 @@ public class SheetResponse {
 
   public SheetResponse setCampains(List<IdName> campains) {
     this.campains = campains;
+    return this;
+  }
+
+  public Boolean isDead() {
+    return dead;
+  }
+
+  public SheetResponse setDead(Boolean dead) {
+    this.dead = dead;
     return this;
   }
 }

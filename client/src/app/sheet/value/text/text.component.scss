@@ -13,6 +13,10 @@
   height: 1.325em;
 }
 
+.value.dead {
+  text-decoration: line-through;
+}
+
 input.value {
   height: 1.3em;
   border: 1px solid #999999;

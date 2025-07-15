@@ -9,6 +9,7 @@ public class SheetOverviewResponse {
   private String game;
   private Boolean mine = null;
   private Boolean deprecated = null;
+  private Boolean dead = null;
 
   public String getName() {
     return name;
@@ -52,6 +53,15 @@ public class SheetOverviewResponse {
 
   public SheetOverviewResponse setGame(String game) {
     this.game = game;
+    return this;
+  }
+
+  public Boolean getDead() {
+    return dead;
+  }
+
+  public SheetOverviewResponse setDead(Boolean dead) {
+    this.dead = dead;
     return this;
   }
 }

@@ -16,21 +16,29 @@
         [sheetId]="sheetId!"
         [sheet]="sheet" />
       <div *ngIf="page.pageNum === 0 && viewMode === mode.Edit">
-        <select #sheetGame (change)="changeTemplate(sheetGame.value)">
-          <ng-container *ngFor="let game of games">
-            <option *ngIf="sheet.game === game.code" selected="selected" value="{{ game.code }}">
-              <ng-container *ngIf="game.deprecated">[Obsolete] </ng-container>
-              {{ game.name }}
-            </option>
-            <option *ngIf="!game.deprecated && sheet.game !== game.code" value="{{ game.code }}">{{ game.name }}</option>
-          </ng-container>
-        </select>
-        <select #sheetMode (change)="changeMode(sheetMode.value)" *ngIf="metadata.modes && metadata.modes.length > 1">
-          <ng-container *ngFor="let mode of metadata.modes">
-            <option *ngIf="sheet.mode === mode.code" selected="selected" value="{{ mode.code }}">{{ mode.name }}</option>
-            <option *ngIf="sheet.mode !== mode.code" value="{{ mode.code }}">{{ mode.name }}</option>
-          </ng-container>
-        </select>
+        <div class="gameMode">
+          <select #sheetGame (change)="changeTemplate(sheetGame.value)">
+            <ng-container *ngFor="let game of games">
+              <option *ngIf="sheet.game === game.code" selected="selected" value="{{ game.code }}">
+                <ng-container *ngIf="game.deprecated">[Obsolete] </ng-container>
+                {{ game.name }}
+              </option>
+              <option *ngIf="!game.deprecated && sheet.game !== game.code" value="{{ game.code }}">{{ game.name }}</option>
+            </ng-container>
+          </select>
+          <select #sheetMode (change)="changeMode(sheetMode.value)" *ngIf="metadata.modes && metadata.modes.length > 1">
+            <ng-container *ngFor="let mode of metadata.modes">
+              <option *ngIf="sheet.mode === mode.code" selected="selected" value="{{ mode.code }}">{{ mode.name }}</option>
+              <option *ngIf="sheet.mode !== mode.code" value="{{ mode.code }}">{{ mode.name }}</option>
+            </ng-container>
+          </select>
+        </div>
+        <div class="characterState">
+          <label>
+            <input type="checkbox" [checked]="sheet.dead" #chkDead (change)="sheet.dead = chkDead.checked"/>
+            Personnage mort
+          </label>
+        </div>
       </div>
       <app-row *ngFor="let gridRow of page.rows"
         [row]="gridRow"

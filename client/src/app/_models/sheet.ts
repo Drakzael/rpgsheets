@@ -4,6 +4,7 @@ export class SheetData {
   name: string = "";
   userAlias!: string;
   game!: string;
+  dead?: boolean;
   mode?: string;
   numericValues: { [key: string]: number } = {};
   stringValues: { [key: string]: string } = {};
@@ -64,6 +65,18 @@ export class Sheet {
 
   public set game(game: string) {
     this.data!.game = game;
+  }
+
+  public get dead(): boolean {
+    return this.data!.dead || false;
+  }
+
+  public set dead(dead: boolean) {
+    if (dead) {
+      this.data!.dead = true;
+    } else {
+      delete this.data!.dead;
+    }
   }
 
   public get mode(): string | undefined {
@@ -130,6 +143,10 @@ export class Sheet {
 
   public isSelectedState(group: string, value: string, defaultState = false): boolean {
     return this._states[group] === undefined ? defaultState : this._states[group].value === value;
+  }
+
+  public isCharacterName(code: string): boolean {
+    return code === "$sheet.name";
   }
 
   public resolve(code: string | number): any {
@@ -257,4 +274,5 @@ export class SheetOverview {
   mine?: boolean;
   game?: string;
   deprecated?: boolean;
+  dead?: boolean;
 }

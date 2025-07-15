@@ -66,17 +66,22 @@ public class SheetController {
   public List<SheetOverviewResponse> listMySheets() {
     LOGGER.debug("User " + userService.getCurrentUser().getUsername() + " accesses its sheets.");
     return sheetService.listMySheets().stream()
-        .map(sheet -> {
-          SheetOverviewResponse res = new SheetOverviewResponse()
-              .setName(sheet.getName())
-              .setId(sheet.getId())
-              .setGame(sheet.getGame());
-          if (metadataService.getMetadataOverview(sheet.getGame()).deprecated()) {
-            res.setDeprecated(true);
-          }
-          return res;
-        })
+        .map(this::getSheetOverview)
         .toList();
+  }
+
+  private SheetOverviewResponse getSheetOverview(Sheet sheet) {
+    final SheetOverviewResponse res = new SheetOverviewResponse()
+        .setName(sheet.getName())
+        .setId(sheet.getId())
+        .setGame(sheet.getGame());
+    if (Boolean.TRUE.equals(sheet.isDead())) {
+      res.setDead(sheet.isDead());
+    }
+    if (metadataService.getMetadataOverview(sheet.getGame()).deprecated()) {
+      res.setDeprecated(true);
+    }
+    return res;
   }
 
   @PUT

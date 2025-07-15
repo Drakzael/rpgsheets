@@ -3,6 +3,7 @@ package com.devordie.rpgsheets.controller;
 import com.devordie.rpgsheets.entities.Campain;
 import com.devordie.rpgsheets.entities.CampainResponse;
 import com.devordie.rpgsheets.entities.IdName;
+import com.devordie.rpgsheets.entities.Sheet;
 import com.devordie.rpgsheets.entities.SheetOverviewResponse;
 import com.devordie.rpgsheets.services.CampainService;
 import com.devordie.rpgsheets.services.SheetService;
@@ -50,16 +51,24 @@ public class CampainController {
             .map(sheetId -> this.sheetService.getSheet(sheetId))
             .filter(sheet -> sheet != null)
             .filter(sheet -> sheet.getUsername().equals(userService.getCurrentUser().getUsername()) || campain.getUsername().equals(userService.getCurrentUser().getUsername()))
-            .map(sheet -> new SheetOverviewResponse()
-                .setName(sheet.getName())
-                .setId(sheet.getId())
-                .setGame(sheet.getGame())
-                .setMine(sheet.getUsername().equals(userService.getCurrentUser().getUsername())))
+            .map(this::getSheetOverview)
             .toList());
     if (campain.getUsername().equals(userService.getCurrentUser().getUsername())) {
       res.setGmDescription(campain.getGmDescription());
     }
     return res;
+  }
+
+  private SheetOverviewResponse getSheetOverview(Sheet sheet) {
+    final SheetOverviewResponse sh = new SheetOverviewResponse()
+        .setName(sheet.getName())
+        .setId(sheet.getId())
+        .setGame(sheet.getGame())
+        .setMine(sheet.getUsername().equals(userService.getCurrentUser().getUsername()));
+    if (Boolean.TRUE.equals(sheet.isDead())) {
+      sh.setDead(true);
+    }
+    return sh;
   }
 
   @GET
@@ -74,11 +83,7 @@ public class CampainController {
                 .map(sheetId -> this.sheetService.getSheet(sheetId))
                 .filter(sheet -> sheet != null)
                 .filter(sheet -> sheet.getUsername().equals(userService.getCurrentUser().getUsername()) || campain.getUsername().equals(userService.getCurrentUser().getUsername()))
-                .map(sheet -> new SheetOverviewResponse()
-                    .setName(sheet.getName())
-                    .setId(sheet.getId())
-                    .setGame(sheet.getGame())
-                    .setMine(sheet.getUsername().equals(userService.getCurrentUser().getUsername())))
+                .map(this::getSheetOverview)
                 .toList()))
         .toList();
   }
