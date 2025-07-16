@@ -17,7 +17,6 @@ import com.devordie.rpgsheets.repository.LocalRepository;
 import com.devordie.rpgsheets.repository.UserRepository;
 
 import io.quarkus.elytron.security.common.BcryptUtil;
-import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Observes;
 import jakarta.enterprise.event.Startup;
@@ -58,15 +57,7 @@ public final class UserService {
     return BcryptUtil.matches(password, encodedPassword);
   }
 
-  /*
-   * Force initialization to allow @PostConstruct method to run.
-   */
-  @SuppressWarnings("unused")
-  private void forceEagerInitialization(@Observes Startup startup) {
-  }
-  
-  @PostConstruct
-  public void checkUsers() {
+  public void checkUsers(@Observes Startup startup) {
     if (userRepository.findAll().stream().anyMatch(user -> user.hasRole(Role.Admin))) {
       return;
     }
