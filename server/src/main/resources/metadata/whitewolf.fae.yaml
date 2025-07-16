@@ -1,0 +1,282 @@
+---
+name: "Fée"
+code: "whitewolf.fae"
+inherit: "whitewolf"
+icon: "fae"
+icons: 
+  fae: 
+    viewBox: "0 0 100 105"
+    path: "M 57.92618 0.30230713 C 51.656375 0.34812043 44.012032 1.6772894 40.014095 4.907194 C 35.749633 8.3524263 34.750856 14.002254 34.184477 21.929928 C 33.618094 29.857602 37.163106 41.885299 37.163106 41.885299 L 40.300382 45.447355 C 40.300382 45.447355 80.162935 19.082291 78.902161 11.288717 C 77.641385 3.4951448 65.628674 0.44075146 59.160213 0.31005859 C 58.755934 0.3018903 58.344167 0.29925291 57.92618 0.30230713 z M 13.369727 25.885242 A 6.491147 7.1296883 0 0 0 6.8786499 33.015039 A 6.491147 7.1296883 0 0 0 13.369727 40.144836 A 6.491147 7.1296883 0 0 0 19.860803 33.015039 A 6.491147 7.1296883 0 0 0 13.369727 25.885242 z M 83.314811 29.188916 C 80.113535 29.274612 72.847137 32.237623 67.898698 34.889343 C 62.243341 37.91988 45.589982 51.474377 45.589982 51.474377 L 49.031116 55.988314 C 49.031116 55.988314 88.620111 62.168692 90.266325 51.248551 C 91.912539 40.328412 86.601592 30.253593 84.419137 29.337744 C 84.14633 29.223263 83.772136 29.176674 83.314811 29.188916 z M 23.553601 40.23527 C 21.433684 40.237724 19.661285 41.178067 18.729089 42.448055 C 17.071852 44.705814 15.176679 49.924995 36.526969 72.105676 C 57.877259 94.286357 67.526235 101.07057 68.587028 99.542244 C 69.647823 98.013915 69.945964 96.040227 69.276392 92.160783 C 52.669179 66.10582 33.097362 45.460424 28.898494 42.217578 C 27.06149 40.798833 25.202425 40.233362 23.553601 40.23527 z "
+editors: 
+  attribute: 
+    type: "scale"
+    min: 1
+    max: 6
+  dominion: 
+    type: "scale"
+    max: 5
+gridRows: 
+- defaultType: "text"
+  gridColumns: 
+  - rows: 
+    - name: "Nom"
+      value: "$sheet.name"
+    - name: "Joueur"
+      readonly: "true"
+      value: "$sheet.player"
+  - rows: 
+    - name: "Nature"
+      value: "general.nature"
+    - name: "Attitude"
+      value: "general.attitude"
+    - name: "Concept"
+      value: "general.concept"
+  - rows: 
+    - name: "Court"
+      value: "general.court"
+      hint: 
+      - "Printemps"
+      - "Eté"
+      - "Automne"
+      - "Hivers"
+      - "Solstice"
+    - name: "Naissance"
+      value: "general.origin"
+      hint: 
+      - "Vraie Fée"
+      - "Changelin"
+      - "Elémentaire"
+    - name: "Agenda"
+      value: "general.agenda"
+- title: "Attributs"
+  defaultType: "attribute"
+  gridColumns: 
+  - title: "Physique"
+    rows: 
+    - name: "Force"
+      value: "attribute.strength"
+    - name: "Dextérité"
+      value: "attribute.dexterity"
+    - name: "Vigueur"
+      value: "attribute.stamina"
+  - title: "Social"
+    rows: 
+    - name: "Charisme"
+      value: "attribute.charisma"
+    - name: "Manipulation"
+      value: "attribute.manipulation"
+    - name: "Apparence"
+      value: "attribute.appearance"
+  - title: "Mental"
+    rows: 
+    - name: "Perception"
+      value: "attribute.perception"
+    - name: "Intelligence"
+      value: "attribute.intelligence"
+    - name: "Astuce"
+      value: "attribute.wits"
+- title: "Capacités"
+  defaultType: "ability"
+  gridColumns: 
+  - title: "Talents"
+    rows: 
+    - name: "Athlétisme"
+      value: "ability.athletics"
+    - name: "Bagarre"
+      value: "ability.brawl"
+    - name: "Commandement"
+      value: "ability.command"
+    - name: "/Kenning/"
+      value: "ability.kenning"
+    - name: "Prestigitation"
+      value: "ability.legerdemain"
+    - name: "Expression"
+      value: "ability.expression"
+    - name: "Intimidation"
+      value: "ability.intimidation"
+    - name: "Esquive"
+      value: "ability.dodge"
+    - name: "Subterfuge"
+      value: "ability.subterfuge"
+    - name: "Vigilance"
+      value: "ability.alertness"
+    - type: "freeValue"
+      prefix: "ability.additionnal.talents"
+  - title: "Compétences"
+    rows: 
+    - name: "Animaux"
+      value: "ability.animalKen"
+    - name: "Archerie"
+      value: "ability.archery"
+    - name: "Commerce"
+      value: "ability.commerce"
+    - name: "Artisanat"
+      value: "ability.craftmanship"
+    - name: "Equitation"
+      value: "ability.riding"
+    - name: "Etiquette"
+      value: "ability.etiquette"
+    - name: "Furtivité"
+      value: "ability.stealth"
+    - name: "Mélée"
+      value: "ability.melee"
+    - name: "Représentation"
+      value: "ability.performance"
+    - name: "Survie"
+      value: "ability.survival"
+    - type: "freeValue"
+      prefix: "ability.additionnal.skills"
+  - title: "Connaissances"
+    rows: 
+    - name: "Enigmes"
+      value: "ability.enigmas"
+    - name: "Arcanes"
+      value: "ability.grammarye"
+    - name: "Sag. populaire"
+      value: "ability.hearthWisdom"
+    - name: "Investigation"
+      value: "ability.investigation"
+    - name: "Droit"
+      value: "ability.law"
+    - name: "Langues"
+      value: "ability.linguistics"
+    - name: "Médecine"
+      value: "ability.medecine"
+    - name: "Occultisme"
+      value: "ability.occult"
+    - name: "Politique"
+      value: "ability.politics"
+    - name: "Sénéchal"
+      value: "ability.seneschal"
+    - type: "freeValue"
+      prefix: "ability.additionnal.knowledges"
+- title: "Avantages"
+  gridColumns: 
+  - title: "Dominions"
+    defaultType: "dominion"
+    rows: 
+    - name: "Aube"
+      value: "dominion.dawn"
+    - name: "Jour"
+      value: "dominion.day"
+    - name: "Crépuscule"
+      value: "dominion.dusk"
+    - name: "Nuit"
+      value: "dominion.night"
+  - defaultType: "background"
+    title: "Historiques"
+    rows: 
+    - type: "freeValue"
+      prefix: "backgrounds"
+      defaultCount: 5
+  - title: "Enchantements"
+    rows: 
+    - type: "freeValue"
+      prefix: "advantage.cantrips"
+      defaultCount: 5
+- title: ""
+  gridColumns: 
+  - title: "Traits Féériques"
+    rows: 
+    - type: "freeValue"
+      prefix: "advantage.traits"
+      defaultCount: 5
+  - title: "Pactes"
+    rows: 
+    - type: "freeValue"
+      prefix: "advantage.pacts"
+      defaultCount: 5
+  - title: "Echos"
+    rows: 
+    - type: "freeValue"
+      prefix: "advantage.echos"
+      defaultCount: 5
+- title: ""
+  gridColumns: 
+  - rows: 
+    - type: "title"
+      name: "Atouts"
+    - type: "freeValue"
+      prefix: "advantage.advantage"
+      defaultCount: 4
+    - type: "spacer"
+    - type: "title"
+      name: "Faiblesses"
+    - type: "freeValue"
+      prefix: "advantage.weakness"
+      defaultCount: 4
+  - defaultType: "willpower"
+    rows: 
+    - type: "title"
+      name: "Volonté"
+    - type: "value"
+      values: ["willpower.max", "willpower.current"]
+      defaultValue: [4, 0]
+    - type: "spacer"
+    - type: "title"
+      name: "/Mist/"
+    - type: "value"
+      values: ["mist.max", "mist.current"]
+      defaultValue: >-
+        ${
+          let max;
+          switch ($general.origin) {
+            case 'Vraie Fée':
+              max = 4;
+              break;
+            case 'Changelin':
+              max = 2;
+              break;
+            case 'Elémentaire':
+              max = 3;
+              break;
+            default:
+              max = 0;
+              break;
+          }
+          [ max, 0 ];
+        }
+    - type: "spacer"
+    - type: "title"
+      name: "/Weaving/"
+    - type: "value"
+      values: ["weaving.max", "weaving.current"]
+      defaultValue: >-
+        ${
+          let max;
+          switch ($general.origin) {
+            case 'Vraie Fée':
+              max = 2;
+              break;
+            case 'Changelin':
+              max = 4;
+              break;
+            case 'Elémentaire':
+              max = 3;
+              break;
+            default:
+              max = 0;
+              break;
+          }
+          [ max, 0 ];
+        }
+  - rows: 
+    - name: "Santé"
+      editor: "health"
+      values: 
+      - "health.blunt"
+      - "health.lethal"
+      - "health.aggravated"
+    - type: "spacer"
+    - type: "title"
+      name: "Expérience"
+    - editor: "text"
+      value: "character.experience"
+      defaultCount: 2
+- title: "Notes"
+  pageBreak: "true"
+  gridColumns: 
+  - rows: 
+    - editor: "text"
+      defaultCount: 30
+      value: "notes.1"
